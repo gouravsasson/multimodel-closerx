@@ -11,7 +11,6 @@ function ConsultationRoom() {
   const [websocketEnabled, setWebsocketEnabled] = useState<boolean>();
   const [webrtcEnabled, setWebrtcEnabled] = useState<boolean>();
   const [geminiApiKey, setGeminiApiKey] = useState<string>("");
-
   useEffect(() => {
     const abort = new AbortController();
     fetch(`${import.meta.env.VITE_SERVER_URL}/`, {
