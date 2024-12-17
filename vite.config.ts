@@ -7,7 +7,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      process: "process/browser",
     },
+  },
+  define: {
+    "process.env": {}, 
   },
   build: {
     lib: {
