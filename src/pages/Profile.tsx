@@ -270,7 +270,7 @@ export const Profile: React.FC = () => {
     avatar: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Axios GET request to fetch profile data
@@ -313,7 +313,7 @@ export const Profile: React.FC = () => {
       phone: Yup.string().required("Phone number is required"),
     }),
     onSubmit: (values) => {
-      setLoading(true);
+      // setLoading(true);
       // Axios POST request to update profile
       axios
         .put("https://api.example.com/user/profile", values) // Replace with your API endpoint
@@ -325,7 +325,7 @@ export const Profile: React.FC = () => {
           console.error("Error updating profile", error);
         })
         .finally(() => {
-          setLoading(false);
+          // setLoading(false);
         });
     },
   });

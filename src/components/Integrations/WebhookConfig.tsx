@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Webhook, Plus, Copy, Check, Trash2 } from "lucide-react";
+import { Webhook, Plus, Copy,Trash2 } from "lucide-react";
 
 interface WebhookEndpoint {
   id: string;

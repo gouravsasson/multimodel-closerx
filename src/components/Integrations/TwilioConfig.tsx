@@ -6,7 +6,6 @@ import {
   Check,
   Loader2,
   RefreshCw,
-  Globe,
   ChevronDown,
 } from "lucide-react";
 

@@ -1,34 +1,34 @@
 import React from "react";
-import { TemplateCard } from "./TemplateCard";
+// import { TemplateCard } from "./TemplateCard";
 import { motion } from "framer-motion";
 import { Filter } from "lucide-react";
 
-const templates = [
-  {
-    title: "Customer Support Assistant",
-    description:
-      "Friendly AI assistant optimized for customer service interactions",
-    category: "Support",
-    successRate: 98,
-    usageCount: 15420,
-  },
-  {
-    title: "Technical Documentation Writer",
-    description:
-      "Specialized in creating clear and concise technical documentation",
-    category: "Documentation",
-    successRate: 95,
-    usageCount: 8750,
-  },
-  {
-    title: "Code Review Assistant",
-    description:
-      "AI-powered code reviewer with security and best practices focus",
-    category: "Development",
-    successRate: 92,
-    usageCount: 12300,
-  },
-];
+// const templates = [
+//   {
+//     title: "Customer Support Assistant",
+//     description:
+//       "Friendly AI assistant optimized for customer service interactions",
+//     category: "Support",
+//     successRate: 98,
+//     usageCount: 15420,
+//   },
+//   {
+//     title: "Technical Documentation Writer",
+//     description:
+//       "Specialized in creating clear and concise technical documentation",
+//     category: "Documentation",
+//     successRate: 95,
+//     usageCount: 8750,
+//   },
+//   {
+//     title: "Code Review Assistant",
+//     description:
+//       "AI-powered code reviewer with security and best practices focus",
+//     category: "Development",
+//     successRate: 92,
+//     usageCount: 12300,
+//   },
+// ];
 
 export const TemplateLibrary: React.FC = () => {
   return (
@@ -50,9 +50,10 @@ export const TemplateLibrary: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {templates.map((template, index) => (
-          <TemplateCard key={index} {...template} />
-        ))}
+        {/* {templates.map(( index) => (
+          // <TemplateCard key={index} {...template} />
+          <div key={index}></div>
+        ))} */}
       </motion.div>
     </div>
   );

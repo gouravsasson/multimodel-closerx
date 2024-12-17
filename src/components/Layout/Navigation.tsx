@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  LayoutDashboard,
-  BarChart,
-  Building2,
-  Link2,
+  // LayoutDashboard,
+  // BarChart,
+  // Building2,
+  // Link2,
   Video,
 } from "lucide-react";
 import { UserProfile } from "./UserProfile";
@@ -17,11 +17,11 @@ export const Navigation: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
-            <Link to="/" className="text-white font-semibold text-lg">
+            {/* <Link to="/" className="text-white font-semibold text-lg">
               AI Assistant
-            </Link>
+            </Link> */}
             <div className="flex space-x-4">
-              <Link
+              {/* <Link
                 to="/"
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all
                   ${
@@ -32,7 +32,7 @@ export const Navigation: React.FC = () => {
               >
                 <LayoutDashboard className="w-4 h-4" />
                 <span>Agent</span>
-              </Link>
+              </Link> */}
               <Link
                 to="/consultation"
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all
@@ -45,7 +45,7 @@ export const Navigation: React.FC = () => {
                 <Video className="w-4 h-4" />
                 <span>Consultation</span>
               </Link>
-              <Link
+              {/* <Link
                 to="/analytics"
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all
                   ${
@@ -56,8 +56,8 @@ export const Navigation: React.FC = () => {
               >
                 <BarChart className="w-4 h-4" />
                 <span>Analytics</span>
-              </Link>
-              <Link
+              </Link> */}
+              {/* <Link
                 to="/agency"
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all
                   ${
@@ -68,8 +68,8 @@ export const Navigation: React.FC = () => {
               >
                 <Building2 className="w-4 h-4" />
                 <span>Agency</span>
-              </Link>
-              <Link
+              </Link> */}
+              {/* <Link
                 to="/integrations"
                 className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-all
                   ${
@@ -80,7 +80,7 @@ export const Navigation: React.FC = () => {
               >
                 <Link2 className="w-4 h-4" />
                 <span>Integrations</span>
-              </Link>
+              </Link> */}
             </div>
           </div>
           <UserProfile />
