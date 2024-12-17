@@ -19,7 +19,7 @@ export const JavaScriptSnippet: React.FC = () => {
   };
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+    <div className="bg-white/5  rounded-2xl p-6 border border-white/10">
       <div className="flex items-center space-x-3 mb-6">
         <div className="p-2 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg">
           <Code className="w-5 h-5 text-primary-light" />

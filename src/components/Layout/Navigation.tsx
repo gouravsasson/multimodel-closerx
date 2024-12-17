@@ -71,7 +71,7 @@ export const Navigation: React.FC = () => {
               </Link>
               <Link
                 to="/integrations"
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all
+                className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-all
                   ${
                     location.pathname === "/integrations"
                       ? "bg-primary/20 text-white"

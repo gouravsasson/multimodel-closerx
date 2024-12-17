@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { ArrowRight, BookTemplate } from "lucide-react";
 import { motion } from "framer-motion";
-import { templates } from "./templates";
 import { TemplateModal } from "./TemplateModal";
+import type { Template } from "./templates";
+import axios from "axios";
 
 interface EditorProps {
   onNext: () => void;
@@ -11,6 +12,25 @@ interface EditorProps {
 export const Editor: React.FC<EditorProps> = ({ onNext }) => {
   const [prompt, setPrompt] = useState("");
   const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
+  const [templates, setTemplates] = useState<Template[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchTemplates = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get("https://api.example.com/templates");
+      setTemplates(response.data);
+    } catch (error) {
+      console.error("Error fetching templates:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOpenTemplateModal = () => {
+    fetchTemplates();
+    setIsTemplateModalOpen(true);
+  };
 
   const handleTemplateSelect = (templatePrompt: string) => {
     setPrompt(templatePrompt);
@@ -29,12 +49,14 @@ export const Editor: React.FC<EditorProps> = ({ onNext }) => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setIsTemplateModalOpen(true)}
+              onClick={handleOpenTemplateModal}
               className="flex items-center space-x-2 px-4 py-2 bg-accent/20 hover:bg-accent/30 
                        rounded-lg transition-all"
             >
               <BookTemplate className="w-4 h-4 text-accent-light" />
-              <span className="text-white">Templates</span>
+              <span className="text-white">
+                {loading ? "Loading..." : "Templates"}
+              </span>
             </motion.button>
             <motion.button
               onClick={onNext}

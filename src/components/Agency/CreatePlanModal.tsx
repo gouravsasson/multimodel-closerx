@@ -64,7 +64,7 @@ export const CreatePlanModal: React.FC<CreatePlanModalProps> = ({
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
           className="bg-gradient-to-br from-gray-900/95 to-purple-900/95 backdrop-blur-xl p-8 rounded-2xl 
-                   border border-white/20 w-full max-w-lg shadow-2xl"
+                   border border-white/20 w-full max-w-lg shadow-2xl  "
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between items-center mb-8">
@@ -100,7 +100,7 @@ export const CreatePlanModal: React.FC<CreatePlanModalProps> = ({
                 placeholder="e.g., Professional Plan"
                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3
                          text-white placeholder-white/40 focus:outline-none focus:ring-2
-                         focus:ring-primary/50"
+                         focus:ring-primary/50 "
               />
             </div>
 

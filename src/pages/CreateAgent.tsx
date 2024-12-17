@@ -64,6 +64,27 @@ export const CreateAgent: React.FC = () => {
     navigate(`/agent/${agentId}`);
   };
 
+  // const handleCreateAgent = async () => {
+  //   if (!agentName || !selectedType) return;
+
+  //   try {
+  //     const response = await axios.post(
+  //       "https://api.example.com/create-agent",
+  //       {
+  //         name: agentName,
+  //         type: selectedType,
+  //       }
+  //     );
+
+  //     // On success, navigate to the new agent's configuration page
+  //     const agentId = response.data.id; // Assuming the response contains the new agent ID
+  //     navigate(`/agent/${agentId}`);
+  //   } catch (error) {
+  //     console.error("Error creating agent:", error);
+  //     alert("Failed to create agent. Please try again.");
+  //   }
+  // };
+
   const getAgentTypeInfo = (typeId: string) => {
     return agentTypes.find((type) => type.id === typeId);
   };

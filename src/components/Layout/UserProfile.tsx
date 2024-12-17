@@ -8,7 +8,7 @@ export const UserProfile: React.FC = () => {
     <motion.div whileHover={{ scale: 1.02 }} className="relative group">
       <Link
         to="/profile"
-        className="flex items-center space-x-3 px-4 py-2 rounded-xl hover:bg-white/5 transition-all"
+        className="flex items-center space-x-3 px-4 py-1 rounded-xl hover:bg-white/5 transition-all"
       >
         <div className="relative">
           <div

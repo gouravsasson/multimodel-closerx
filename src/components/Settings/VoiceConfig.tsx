@@ -3,11 +3,39 @@ import { Volume2, Mic } from "lucide-react";
 import { motion } from "framer-motion";
 import { VoiceSlider } from "./VoiceSlider";
 import { voices } from "./voices";
+import axios from "axios";
 
 export const VoiceConfig: React.FC = () => {
   const [selectedVoice, setSelectedVoice] = useState(voices[0].id);
   const [speed, setSpeed] = useState(50);
   const [pitch, setPitch] = useState(50);
+  const [loading, setLoading] = useState(false);
+
+  const handleTestVoice = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        "https://api.example.com/voice-config",
+        {
+          voiceId: selectedVoice,
+          speed,
+          pitch,
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Voice tested successfully:", response.data);
+        alert("Voice test successful!");
+      } else {
+        throw new Error("Voice test failed.");
+      }
+    } catch (error) {
+      console.error("Error testing voice:", error);
+      alert("Failed to test voice. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -20,10 +48,16 @@ export const VoiceConfig: React.FC = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center space-x-2 px-4 py-2 bg-accent/20 rounded-lg hover:bg-accent/30 transition-all"
+            onClick={handleTestVoice}
+            disabled={loading}
+            className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+              loading
+                ? "bg-accent/10 text-white/50 cursor-not-allowed"
+                : "bg-accent/20 hover:bg-accent/30 text-white"
+            }`}
           >
             <Mic className="w-4 h-4 text-accent-light" />
-            <span className="text-white">Test Voice</span>
+            <span>{loading ? "Testing..." : "Test Voice"}</span>
           </motion.button>
         </div>
 
