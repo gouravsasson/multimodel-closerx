@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import ConsultationRoom from './pages/ConsultationRoom';
 import './index.css';
 
 class ReactWidget extends HTMLElement {
@@ -18,7 +18,7 @@ class ReactWidget extends HTMLElement {
     this.root = ReactDOM.createRoot(container);
     this.root.render(
       <React.StrictMode>
-        <App />
+        <ConsultationRoom />
       </React.StrictMode>
     );
   }
