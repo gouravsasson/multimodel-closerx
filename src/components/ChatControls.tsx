@@ -230,7 +230,9 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
   const handleTextSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
 
-    if (processingAction || isUploadingFile || !rtviClient) return;
+    if (processingAction ||
+      //  isUploadingFile || 
+       !rtviClient) return;
 
     setProcessingAction(true);
 
@@ -693,7 +695,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
                 "scale-100 opacity-100": text,
               }
             )}
-            disabled={!webrtcEnabled || isUploadingFile}
+            disabled={!webrtcEnabled}
             size="icon"
             variant="outline"
             type="submit"
