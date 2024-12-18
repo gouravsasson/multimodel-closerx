@@ -270,7 +270,7 @@ export const Profile: React.FC = () => {
     avatar: "",
   });
 
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Axios GET request to fetch profile data
@@ -278,6 +278,7 @@ export const Profile: React.FC = () => {
       .get("https://api.example.com/user/profile") // Replace with your API endpoint
       .then((response) => {
         setProfile(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching profile data", error);

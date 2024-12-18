@@ -1,5 +1,5 @@
 import React from "react";
-// import { TemplateCard } from "./TemplateCard";
+import { TemplateCard } from "./TemplateCard";
 import { motion } from "framer-motion";
 import { Filter } from "lucide-react";
 
@@ -66,9 +66,8 @@ export const TemplateLibrary: React.FC = () => {
         {templates.map((template, index) => (
           <TemplateCard
             key={index}
-            template={template} // Pass the template object
-            onSelect={() => handleSelect(template)} // Pass a handler for selection
-          />
+            template={template} 
+            onSelect={() => handleSelect(template)}           />
         ))}
       </motion.div>
     </div>
