@@ -7,7 +7,7 @@
     "dev": "vite --host",
     "build:widget": "vite build --mode widget",
     "build:app": "vite build --mode app",
-    "build": "npm run build:widget && npm run build:app",
+    "build": "npm run build:app",
     "lint": "eslint .",
     "preview": "vite preview"
   },
