@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc -b && vite build",
     "build:widget": "vite build --mode widget",
     "build:app": "vite build --mode app",
+    "build": "npm run build:widget && npm run build:app",
     "lint": "eslint .",
     "preview": "vite preview"
   },
