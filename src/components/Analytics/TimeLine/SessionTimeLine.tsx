@@ -10,7 +10,6 @@ interface SessionTimelineProps {
 
 export const SessionTimeline: React.FC<SessionTimelineProps> = ({
   sessions,
-  isLoading,
 }) => {
   return (
     <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10">

@@ -27,7 +27,6 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
   setAgentName,
   selectedType,
   setSelectedType,
-  agentTypes,
   onCancel,
   onSubmit,
 }) => {

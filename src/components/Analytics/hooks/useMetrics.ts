@@ -13,8 +13,15 @@ export const useMetrics = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    // Fetch metrics here
+
+    // Simulate fetching updated metrics
     setTimeout(() => {
+      setMetrics({
+        totalClients: 160,
+        weeklySessionCount: 45,
+        activeSessionCount: 5,
+        averageSessionDuration: 30,
+      });
       setIsLoading(false);
     }, 1000);
   }, []);

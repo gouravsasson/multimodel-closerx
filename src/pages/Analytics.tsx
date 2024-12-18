@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
-import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeline";
+import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeLine";
 import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
 import { SessionTags } from "../components/Analytics/Tags/SessionTags";
 import { ParticleBackground } from "../components/Particles/ParticleBackground";
@@ -18,6 +17,10 @@ interface Session {
   id: string;
   title: string;
   timestamp: string;
+  clientName: string;
+  type: string;
+  status: string;
+  startTime: string;
 }
 
 export const Analytics: React.FC = () => {
@@ -32,8 +35,12 @@ export const Analytics: React.FC = () => {
         setIsLoading(true);
         setError(null);
 
-        const metricsResponse = await axios.get("https://api.example.com/metrics");
-        const sessionsResponse = await axios.get("https://api.example.com/sessions");
+        const metricsResponse = await axios.get(
+          "https://api.example.com/metrics",
+        );
+        const sessionsResponse = await axios.get(
+          "https://api.example.com/sessions",
+        );
 
         setMetrics(metricsResponse.data);
         setSessions(sessionsResponse.data);
@@ -64,9 +71,7 @@ export const Analytics: React.FC = () => {
         </header>
 
         {error ? (
-          <div className="text-center text-red-400 font-semibold">
-            {error}
-          </div>
+          <div className="text-center text-red-400 font-semibold">{error}</div>
         ) : (
           <div className="max-w-7xl mx-auto space-y-8">
             <SessionMetrics metrics={metrics} isLoading={isLoading} />
@@ -82,34 +87,6 @@ export const Analytics: React.FC = () => {
             </div>
           </div>
         )}
-      </div>
-    </div>
-  );
-};
-
-// Updated SessionMetrics.tsx to handle null safely
-interface SessionMetricsProps {
-  metrics: Metrics | null;
-  isLoading: boolean;
-}
-
-export const SessionMetrics: React.FC<SessionMetricsProps> = ({ metrics, isLoading }) => {
-  if (isLoading) {
-    return <div className="text-white text-center">Loading metrics...</div>;
-  }
-
-  if (!metrics) {
-    return <div className="text-white text-center">No metrics available</div>;
-  }
-
-  return (
-    <div className="bg-white/5 p-6 rounded-lg">
-      <h2 className="text-white text-lg mb-4">Session Metrics</h2>
-      <div className="text-white">
-        <p>Total Clients: {metrics.totalClients}</p>
-        <p>Total Sessions: {metrics.sessionsCount}</p>
-        <p>Average Session Time: {metrics.avgSessionTime} mins</p>
-        <p>Performance: {metrics.performance}%</p>
       </div>
     </div>
   );

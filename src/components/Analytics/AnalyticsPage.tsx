@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { SessionMetrics } from "./Metrics/SessionMetrics";
-import { SessionTimeline } from "./Timeline/SessionTimeline";
+import { SessionTimeline } from "./Timeline/SessionTimeLine";
 import { SessionNotes } from "./Notes/SessionNotes";
 import { SessionTags } from "./Tags/SessionTags";
 import { useAnalytics } from "./hooks/useAnalytics";

@@ -36,8 +36,21 @@ export const useSessions = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    // Fetch sessions here
+
+    // Simulate fetching updated session data
     setTimeout(() => {
+      setSessions((prevSessions) => [
+        ...prevSessions,
+        {
+          id: "4",
+          clientName: "John Doe",
+          type: "audio",
+          status: "completed",
+          startTime: "2024-03-15T17:00:00",
+          duration: 20,
+          tags: ["Feedback Requested"],
+        },
+      ]);
       setIsLoading(false);
     }, 1000);
   }, []);
