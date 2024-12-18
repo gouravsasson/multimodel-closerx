@@ -3,34 +3,47 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Filter } from "lucide-react";
 
-// const templates = [
-//   {
-//     title: "Customer Support Assistant",
-//     description:
-//       "Friendly AI assistant optimized for customer service interactions",
-//     category: "Support",
-//     successRate: 98,
-//     usageCount: 15420,
-//   },
-//   {
-//     title: "Technical Documentation Writer",
-//     description:
-//       "Specialized in creating clear and concise technical documentation",
-//     category: "Documentation",
-//     successRate: 95,
-//     usageCount: 8750,
-//   },
-//   {
-//     title: "Code Review Assistant",
-//     description:
-//       "AI-powered code reviewer with security and best practices focus",
-//     category: "Development",
-//     successRate: 92,
-//     usageCount: 12300,
-//   },
-// ];
+const templates = [
+  {
+    id: "1",
+    title: "Customer Support Assistant",
+    description:
+      "Friendly AI assistant optimized for customer service interactions",
+    category: "Support",
+    successRate: 98,
+    usageCount: 15420,
+    prompt: "How can I assist you today?",
+    rating: 4.8,
+  },
+  {
+    id: "2",
+    title: "Technical Documentation Writer",
+    description:
+      "Specialized in creating clear and concise technical documentation",
+    category: "Documentation",
+    successRate: 95,
+    usageCount: 8750,
+    prompt: "Generate technical documentation for a software module.",
+    rating: 4.6,
+  },
+  {
+    id: "3",
+    title: "Code Review Assistant",
+    description:
+      "AI-powered code reviewer with security and best practices focus",
+    category: "Development",
+    successRate: 92,
+    usageCount: 12300,
+    prompt: "Review this code snippet for potential issues.",
+    rating: 4.7,
+  },
+];
 
 export const TemplateLibrary: React.FC = () => {
+  const handleSelect = (template: (typeof templates)[0]) => {
+    console.log("Selected template:", template);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -50,10 +63,13 @@ export const TemplateLibrary: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* {templates.map(( index) => (
-          // <TemplateCard key={index} {...template} />
-          <div key={index}></div>
-        ))} */}
+        {templates.map((template, index) => (
+          <TemplateCard
+            key={index}
+            template={template} // Pass the template object
+            onSelect={() => handleSelect(template)} // Pass a handler for selection
+          />
+        ))}
       </motion.div>
     </div>
   );

@@ -330,6 +330,14 @@ export const Profile: React.FC = () => {
     },
   });
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="loader text-white text-lg">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative">
       <ParticleBackground />

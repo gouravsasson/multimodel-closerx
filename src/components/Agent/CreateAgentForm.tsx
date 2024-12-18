@@ -10,14 +10,14 @@ import {
   BarChart,
   Zap,
 } from "lucide-react";
-import type { AgentType } from "./types";
+// import type { AgentType } from "./types";
 
 interface CreateAgentFormProps {
   agentName: string;
   setAgentName: (name: string) => void;
   selectedType: string | null;
   setSelectedType: (type: string) => void;
-  agentTypes: AgentType[];
+  // agentTypes: AgentType[];
   onCancel: () => void;
   onSubmit: () => void;
 }
@@ -59,6 +59,7 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
           </label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Sales Agent Card */}
+
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
