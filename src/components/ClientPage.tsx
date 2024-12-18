@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { VoiceIndicator } from "@/components/VoiceIndicator";
-import { WebSocketVoiceChat } from "@/components/WebSocketVoiceChat";
+// import { WebSocketVoiceChat } from "@/components/WebSocketVoiceChat";
 import { useAppState } from "@/hooks/useAppState";
 import { useConversation } from "@/hooks/useConversation";
 import emitter from "@/lib/eventEmitter";
@@ -26,10 +26,10 @@ const defaultRequestData = {
   bot_profile: "vision",
 };
 
-export function ClientPage() {
+export function   ClientPage() {
   const {
     conversationId,
-    conversationType,
+    // conversationType,
     setConversationType,
     geminiApiKey,
     webrtcEnabled,
@@ -37,6 +37,7 @@ export function ClientPage() {
   } = useAppState();
 
   const { conversation, isFetching } = useConversation(conversationId);
+  const conversationType ="text-voice"
   const messages = conversation?.messages ?? [];
   const visibleMessages = messages.filter((m) => m.content.role !== "system");
 
@@ -67,7 +68,7 @@ export function ClientPage() {
 
     const newClient = new RTVIClient({
       enableCam: false,
-      enableMic: conversationType === "voice-to-voice",
+      // enableMic: conversationType === "voice-to-voice",
       transport:
         conversationType === "voice-to-voice"
           ? new GeminiLiveWebsocketTransport({
@@ -75,9 +76,9 @@ export function ClientPage() {
             })
           : new DailyTransport(),
       params: {
-        baseUrl: import.meta.env.VITE_SERVER_URL,
+        baseUrl: "https://test-fly-fplgrg.fly.dev",
         endpoints: {
-          connect: "/bot/connect",
+          connect: "/connect",
           action: "/bot/action",
         },
         requestData: {
@@ -183,24 +184,27 @@ export function ClientPage() {
 
   return (
     <RTVIClientProvider client={client!}>
-      <div className=" flex h-[calc(100vh-8rem)]">
+      <div className=" flex h-[calc(100vh-8rem)] gap-4 justify-between">
         {/* Chat controls */}
         {conversationType === "text-voice" && (
-          <div className=" flex-none h-fit bg-background sticky bottom-0  z-10">
+          <div className=" w-full h-fit ">
             <ChatControls vision />
             {/* Prevents scroll content from showing up below chat controls */}
-            <div className="h-4 bg-background w-full" />
+            {/* <div className="h-4 bg-background w-full" /> */}
           </div>
         )}
-        <div className=" container overflow-y-scroll w-96  bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10  flex flex-col ">
+        <div className="  w-96 overflow-auto   bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10  flex flex-col ">
           <div className="p-4 border-b  border-white/10 flex items-center justify-between">
             <h3 className="text-white font-medium">Chat</h3>
           </div>
           {/* Messages */}
           <div className=" p-4  space-y-4">
-            {conversationType === "voice-to-voice" ? (
-              <WebSocketVoiceChat />
-            ) : isFetching ? (
+            {
+            // conversationType === "voice-to-voice" ? (
+            //   <WebSocketVoiceChat />
+            // ) 
+            // :
+             isFetching ? (
               <div className="flex-grow flex items-center justify-center">
                 <LoaderCircleIcon className="animate-spin" />
               </div>

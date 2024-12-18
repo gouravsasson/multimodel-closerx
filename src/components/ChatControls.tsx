@@ -1,19 +1,19 @@
-import BotReadyAudio from "@/components/BotReadyAudio";
+// import BotReadyAudio from "@/components/BotReadyAudio";
 import ExpiryCountdown from "@/components/ExpiryCountdown";
 import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
+// import {
+//   Carousel,
+//   CarouselContent,
+//   CarouselItem,
+//   CarouselNext,
+//   CarouselPrevious,
+// } from "@/components/ui/carousel";
+// import {
+//   Dialog,
+//   DialogClose,
+//   DialogContent,
+//   DialogTitle,
+// } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Tooltip,
@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useAppState } from "@/hooks/useAppState";
 import emitter from "@/lib/eventEmitter";
-import { ImageContent, Message } from "@/lib/messages";
+import { ImageContent, Message } from "@/lib/mssages";
 import { cn } from "@/lib/utils";
 import { RTVIClient, RTVIEvent, RTVIMessage } from "@pipecat-ai/client-js";
 import {
@@ -35,28 +35,28 @@ import {
   VoiceVisualizer,
 } from "@pipecat-ai/client-react";
 import {
-  AlertCircleIcon,
-  ArrowLeftToLineIcon,
-  ArrowRightToLineIcon,
+  // AlertCircleIcon,
+  // ArrowLeftToLineIcon,
+  // ArrowRightToLineIcon,
   ArrowUpIcon,
   LoaderCircle,
   LoaderCircleIcon,
-  Maximize2Icon,
+  // Maximize2Icon,
   MicIcon,
   MicOffIcon,
-  Minimize2Icon,
+  // Minimize2Icon,
   Speech,
   TriangleAlertIcon,
-  UploadCloudIcon,
+  // UploadCloudIcon,
   WebcamIcon,
-  X,
+  // X,
   XIcon,
 } from "lucide-react";
 import {
   FormEvent,
   KeyboardEvent,
   useCallback,
-  useEffect,
+  // useEffect,
   useRef,
   useState,
 } from "react";
@@ -78,23 +78,25 @@ interface Props {
   vision?: boolean;
 }
 
-type VideoSize = "small" | "large";
-type VideoPlacement = "left" | "right";
+// type VideoSize = "small" | "large";
+// type VideoPlacement = "left" | "right";
 
-type UploadStatus = "done" | "error";
+// type UploadStatus = "done" | "error";
 
-const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
+const ChatControls: React.FC<Props> = ({ onChangeMode, 
+  // vision = false 
+}) => {
   const { conversationId, setConversationId, webrtcEnabled } = useAppState();
 
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [isCamMuted, setIsCamMuted] = useState(true);
   const [isMicMuted, setIsMicMuted] = useState(false);
-  const [videoSize, setVideoSize] = useState<VideoSize>("small");
-  const [videoPlacement, setVideoPlacement] = useState<VideoPlacement>("right");
-  const [, setSelectedImages] = useState<File[]>([]); // Track selected image files
+  // const [videoSize, setVideoSize] = useState<VideoSize>("small");
+  // const [videoPlacement, setVideoPlacement] = useState<VideoPlacement>("right");
+  // const [, setSelectedImages] = useState<File[]>([]); // Track selected image files
   const [previewUrls, setPreviewUrls] = useState<string[]>([]); // Track preview URLs
-  const [imageZoom, setImageZoom] = useState(false);
-  const [startIndex, setStartIndex] = useState(0);
+  // const [imageZoom, setImageZoom] = useState(true);
+  // const [startIndex, setStartIndex] = useState(0);
   const [attachmentIds, setAttachmentIds] = useState<string[]>([]);
 
   const [text, setText] = useState("");
@@ -106,11 +108,11 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
   const [error, setError] = useState("");
   const [processingAction, setProcessingAction] = useState(false);
 
-  const [uploadProgress, setUploadProgress] = useState<
-    Record<string, number | UploadStatus>
-  >({});
+  // const [uploadProgress, setUploadProgress] = useState<
+  //   Record<string, number | UploadStatus>
+  // >({});
 
-  const xhrsRef = useRef<Record<string, XMLHttpRequest>>({});
+  // const xhrsRef = useRef<Record<string, XMLHttpRequest>>({});
 
   // const { toast } = useToast();
 
@@ -200,7 +202,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({}),
-        },
+        }
       );
       if (response.ok) {
         const json = await response.json();
@@ -222,7 +224,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
       }
       return null;
     },
-    [rtviClient, setConversationId],
+    [rtviClient, setConversationId]
   );
 
   const handleTextSubmit = async (ev: FormEvent<HTMLFormElement>) => {
@@ -286,7 +288,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
         handleSwitchToTextMode();
       }
     },
-    [conversationId, createConversation, handleSwitchToTextMode, rtviClient],
+    [conversationId, createConversation, handleSwitchToTextMode, rtviClient]
   );
 
   useRTVIClientEvent(
@@ -297,8 +299,8 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
         setError("An error occurred during the voice session.");
         handleSwitchToTextMode();
       },
-      [handleSwitchToTextMode],
-    ),
+      [handleSwitchToTextMode]
+    )
   );
 
   // Toggle between cam mute and unmute in voice mode
@@ -359,31 +361,31 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
   // };
 
   // Remove the selected image
-  const handleRemoveImage = (idx: number) => {
-    setAttachmentIds((attachmentIds) => {
-      const newIds = [...attachmentIds];
-      newIds.splice(idx, 1);
-      return newIds;
-    });
-    setSelectedImages((images) => {
-      const newImages = [...images];
-      newImages.splice(idx, 1);
-      return newImages;
-    });
-    setPreviewUrls((urls) => {
-      const newUrls = [...urls];
-      const base64 = urls[idx];
-      const xhr = xhrsRef.current[base64];
-      if (xhr) xhr.abort();
-      setUploadProgress((p) => {
-        const newP = { ...p };
-        delete newP[base64];
-        return newP;
-      });
-      newUrls.splice(idx, 1);
-      return newUrls;
-    });
-  };
+  // const handleRemoveImage = (idx: number) => {
+  //   setAttachmentIds((attachmentIds) => {
+  //     const newIds = [...attachmentIds];
+  //     newIds.splice(idx, 1);
+  //     return newIds;
+  //   });
+  //   setSelectedImages((images) => {
+  //     const newImages = [...images];
+  //     newImages.splice(idx, 1);
+  //     return newImages;
+  //   });
+  //   setPreviewUrls((urls) => {
+  //     const newUrls = [...urls];
+  //     const base64 = urls[idx];
+  //     const xhr = xhrsRef.current[base64];
+  //     if (xhr) xhr.abort();
+  //     setUploadProgress((p) => {
+  //       const newP = { ...p };
+  //       delete newP[base64];
+  //       return newP;
+  //     });
+  //     newUrls.splice(idx, 1);
+  //     return newUrls;
+  //   });
+  // };
 
   // const handleUploadFile = async (file: File, base64: string) => {
   //   const formData = new FormData();
@@ -447,11 +449,11 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
   //   }
   // };
 
-  useEffect(() => {
-    if (previewUrls.length) return;
-    setImageZoom(false);
-    setStartIndex(0);
-  }, [previewUrls.length]);
+  // useEffect(() => {
+  //   if (previewUrls.length) return;
+  //   setImageZoom(false);
+  //   setStartIndex(0);
+  // }, [previewUrls.length]);
 
   const feedbackClassName =
     "bg-gradient-to-t from-background absolute w-full bottom-full pt-4 pb-2 flex gap-2 items-center justify-center z-10";
@@ -465,14 +467,68 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
     transportState === "connecting" ||
     transportState === "connected";
 
-  const isUploadingFile = Object.values(uploadProgress).some(
-    (s) => typeof s === "number",
-  );
+  // const isUploadingFile = Object.values(uploadProgress).some(
+  //   (s) => typeof s === "number"
+  // );
 
   return (
-    <div className="relative w-full px-4">
-      <BotReadyAudio active={isVoiceMode} />
-      <Dialog open={imageZoom} onOpenChange={setImageZoom}>
+    <div className=" flex flex-col gap-4">
+      <div className=" basis-[60%] h-full">
+        {/* <BotReadyAudio active={isVoiceMode} /> */}
+
+        <div
+          className={cn(
+            " relative h-[495px] overflow-hidden  bg-black rounded-2xl "
+          )}
+        >
+          <RTVIClientVideo
+            participant="local"
+            
+            className=" "
+          />
+          {!camTrack && (
+            <div className="absolute top-0 left-0 z-10 w-full h-full flex items-center justify-center">
+              <LoaderCircleIcon className="animate-spin" size={16} />
+            </div>
+          )}
+          {/* <Button
+          className="absolute top-1 right-1 rounded-full !text-background bg-foreground/10 hover:bg-foreground/50 focus-visible:bg-foreground/50"
+          size="icon"
+          variant="ghost"
+          onClick={() =>
+            setVideoSize((vs) => (vs === "small" ? "large" : "small"))
+          }
+        >
+          {videoSize === "small" ? (
+            <Maximize2Icon size={16} />
+          ) : (
+            <Minimize2Icon size={16} />
+          )}
+        </Button>
+        <Button
+          className={cn(
+            "absolute bottom-1 rounded-full !text-background bg-foreground/10 hover:bg-foreground/50 focus-visible:bg-foreground/50",
+            {
+              "right-1": videoPlacement === "left",
+              "left-1": videoPlacement === "right",
+            }
+          )}
+          size="icon"
+          variant="ghost"
+          onClick={() =>
+            setVideoPlacement((vp) => (vp === "left" ? "right" : "left"))
+          }
+        >
+          {videoPlacement === "left" ? (
+            <ArrowRightToLineIcon size={16} />
+          ) : (
+            <ArrowLeftToLineIcon size={16} />
+          )}
+        </Button> */}
+        </div>
+      </div>
+
+      {/* <Dialog open={imageZoom} onOpenChange={setImageZoom}>
         <DialogContent
           noCloseButton
           className="border-none bg-transparent shadow-none p-12 max-w-none w-[100dvw] max-h-[100dvh]"
@@ -512,7 +568,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
             )}
           </Carousel>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
 
       {!webrtcEnabled ? (
         <div className={cn(feedbackClassName, "text-destructive")}>
@@ -553,10 +609,11 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
           <LoaderCircle className="animate-spin" />
         </div>
       ) : null}
+      {/* Video preview */}
 
-      <div className="bg-secondary rounded-3xl flex flex-col gap-1 p-2">
+      <div className=" basis-[40%] bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl flex flex-col gap-1 p-2">
         {/* Image Preview (if an image is selected) */}
-        {previewUrls.length > 0 && (
+        {/* {previewUrls.length > 0 && (
           <div className="relative w-full flex justify-start gap-2 mt-2 px-2">
             {previewUrls.map((url, idx) => (
               <div key={idx + url} className="relative inline-block">
@@ -571,7 +628,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
                   height={80}
                   width={80}
                 />
-                {/* Remove button */}
+                Remove button
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -610,7 +667,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
               </div>
             ))}
           </div>
-        )}
+        )} */}
 
         <form
           ref={formRef}
@@ -634,7 +691,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
               "flex-none bg-background rounded-full scale-0 opacity-0 transition-all",
               {
                 "scale-100 opacity-100": text,
-              },
+              }
             )}
             disabled={!webrtcEnabled || isUploadingFile}
             size="icon"
@@ -644,65 +701,6 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
             <ArrowUpIcon size={24} />
           </Button>
         </form>
-
-        {/* Video preview */}
-        {vision && isVoiceMode && !isCamMuted && (
-          <div
-            className={cn(
-              "absolute shadow-lg z-20 bottom-full -translate-y-2 max-w-40 bg-secondary rounded-2xl aspect-video overflow-hidden transition-all",
-              {
-                "max-w-80": videoSize === "large",
-                "left-0": videoPlacement === "left",
-                "right-0": videoPlacement === "right",
-              },
-            )}
-          >
-            <RTVIClientVideo
-              participant="local"
-              fit="cover"
-              className="w-full h-full"
-            />
-            {!camTrack && (
-              <div className="absolute top-0 left-0 z-10 w-full h-full flex items-center justify-center">
-                <LoaderCircleIcon className="animate-spin" size={16} />
-              </div>
-            )}
-            <Button
-              className="absolute top-1 right-1 rounded-full !text-background bg-foreground/10 hover:bg-foreground/50 focus-visible:bg-foreground/50"
-              size="icon"
-              variant="ghost"
-              onClick={() =>
-                setVideoSize((vs) => (vs === "small" ? "large" : "small"))
-              }
-            >
-              {videoSize === "small" ? (
-                <Maximize2Icon size={16} />
-              ) : (
-                <Minimize2Icon size={16} />
-              )}
-            </Button>
-            <Button
-              className={cn(
-                "absolute bottom-1 rounded-full !text-background bg-foreground/10 hover:bg-foreground/50 focus-visible:bg-foreground/50",
-                {
-                  "right-1": videoPlacement === "left",
-                  "left-1": videoPlacement === "right",
-                },
-              )}
-              size="icon"
-              variant="ghost"
-              onClick={() =>
-                setVideoPlacement((vp) => (vp === "left" ? "right" : "left"))
-              }
-            >
-              {videoPlacement === "left" ? (
-                <ArrowRightToLineIcon size={16} />
-              ) : (
-                <ArrowLeftToLineIcon size={16} />
-              )}
-            </Button>
-          </div>
-        )}
 
         {/* Chat Controls */}
         <div className="flex gap-2 justify-between sm:grid sm:grid-cols-3">
@@ -734,71 +732,69 @@ const ChatControls: React.FC<Props> = ({ onChangeMode, vision = false }) => {
             </TooltipProvider> */}
 
             {/* Cam button for mute/unmute */}
-            {vision && isVoiceMode && (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      type="button"
-                      size="icon"
-                      variant="secondary-outline"
-                      onClick={handleCamToggle}
-                      className={cn("rounded-full", {
-                        "bg-primary hover:bg-primary text-primary-foreground":
-                          !isCamMuted,
-                      })}
-                    >
-                      <WebcamIcon size={24} />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-background text-foreground shadow-sm">
-                    {isCamMuted ? "Turn on camera" : "Turn off camera"}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            )}
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="secondary-outline"
+                    onClick={handleCamToggle}
+                    className={cn("rounded-full", {
+                      "bg-primary hover:bg-primary text-primary-foreground":
+                        !isCamMuted,
+                    })}
+                  >
+                    <WebcamIcon size={24} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-background text-foreground shadow-sm">
+                  {isCamMuted ? "Turn on camera" : "Turn off camera"}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
 
           <div className="mr-auto sm:mr-0 sm:justify-self-center">
             {/* Mic button for mute/unmute */}
-            {isVoiceMode && (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      type="button"
-                      size="icon"
-                      variant="secondary-outline"
-                      onClick={handleMicToggle}
-                      className={cn(
-                        "py-1 px-2 rounded-full focus:outline-none hover:bg-secondary flex justify-between gap-1 items-center w-24",
-                        {
-                          "bg-destructive hover:bg-destructive text-destructive-foreground":
-                            isMicMuted,
-                        },
-                      )}
-                    >
-                      <ToggledMicIcon className="flex-none" size={24} />
-                      {isMicMuted ? (
-                        <span className="font-semibold uppercase">Muted</span>
-                      ) : (
-                        <VoiceVisualizer
-                          backgroundColor="transparent"
-                          barColor={isMicMuted ? "gray" : "black"}
-                          barGap={3}
-                          barWidth={8}
-                          barMaxHeight={20}
-                          participantType="local"
-                        />
-                      )}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-background text-foreground shadow-sm">
-                    {isMicMuted ? "Unmute microphone" : "Mute microphone"}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            )}
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="secondary-outline"
+                    onClick={handleMicToggle}
+                    className={cn(
+                      "py-1 px-2 rounded-full focus:outline-none hover:bg-secondary flex justify-between gap-1 items-center w-24",
+                      {
+                        "bg-destructive hover:bg-destructive text-destructive-foreground":
+                          isMicMuted,
+                      }
+                    )}
+                  >
+                    <ToggledMicIcon className="flex-none" size={24} />
+                    {isMicMuted ? (
+                      <span className="font-semibold uppercase">Muted</span>
+                    ) : (
+                      <VoiceVisualizer
+                        backgroundColor="transparent"
+                        barColor={isMicMuted ? "gray" : "black"}
+                        barGap={3}
+                        barWidth={8}
+                        barMaxHeight={20}
+                        participantType="local"
+                      />
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-background text-foreground shadow-sm">
+                  {isMicMuted ? "Unmute microphone" : "Mute microphone"}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
 
           <div className="justify-self-end flex items-end gap-3 relative">
