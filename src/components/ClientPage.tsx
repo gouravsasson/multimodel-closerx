@@ -35,6 +35,7 @@ export function ClientPage() {
     webrtcEnabled,
     
   } = useAppState();
+  console.log(conversationType)
 
   const { conversation, isFetching } = useConversation(conversationId);
   const messages = conversation?.messages ?? [];
@@ -217,6 +218,12 @@ export function ClientPage() {
                 </h2>
               </div>
             ) : (
+
+
+
+
+
+              // button
               <div className="flex flex-col gap-12 items-center justify-center h-full my-auto">
                 <h2 className="font-light text-2xl text-center text-neutral-700">
                   Select conversation type:
@@ -225,7 +232,7 @@ export function ClientPage() {
                   <Button
                     // disabled={!webrtcEnabled}
                     variant="secondary-outline"
-                    className="relative h-full flex flex-col items-center border border-transparent bg-origin-border borderClip bg-cardBorder justify-between gap-2 max-w-72 lg:max-w-80 text-wrap rounded-3xl p-4 lg:p-6 shadow-mid hover:shadow-long hover:bg-cardBorderHover transition-all text-base outline outline-neutral-400/10 outline-0 hover:outline-[7px]"
+                    className=" h-full flex flex-col items-center border border-transparent bg-origin-border borderClip bg-cardBorder justify-between gap-2 max-w-72 lg:max-w-80 text-wrap rounded-3xl p-4 lg:p-6 shadow-mid hover:shadow-long hover:bg-cardBorderHover transition-all text-base outline outline-neutral-400/10 outline-0 hover:outline-[7px]"
                     onClick={() => setConversationType("text-voice")}
                   >
                     {!webrtcEnabled && (
@@ -253,8 +260,11 @@ export function ClientPage() {
                     </span>
                   </Button>
                 </div>
+                
               </div>
             )}
+
+
             {showScrollToBottom && (
               <TooltipProvider>
                 <Tooltip>

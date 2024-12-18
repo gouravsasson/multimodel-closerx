@@ -6,8 +6,18 @@ import { Toaster } from "@/components/ui/toaster";
 import { AppStateProvider } from "@/contexts/AppStateProvider";
 
 import { useEffect, useState } from "react";
+import { useAppState } from "@/hooks/useAppState";
 
 function ConsultationRoom() {
+
+  const {
+    conversationType,
+    setConversationType,
+    
+  } = useAppState();
+
+console.log(conversationType)
+
   const [websocketEnabled, setWebsocketEnabled] = useState<boolean>();
   const [webrtcEnabled, setWebrtcEnabled] = useState<boolean>();
   const [geminiApiKey, setGeminiApiKey] = useState<string>("");
@@ -21,6 +31,7 @@ function ConsultationRoom() {
         setWebsocketEnabled(json?.["websocket-enabled"] ?? false);
         setWebrtcEnabled(json?.["webrtc-enabled"] ?? false);
         setGeminiApiKey(json?.["gemini-api-key"] ?? "");
+        setConversationType("text-voice")
       })
       .catch(() => {
         setWebsocketEnabled(false);
