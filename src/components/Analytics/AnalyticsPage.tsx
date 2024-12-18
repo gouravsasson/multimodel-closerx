@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { SessionMetrics } from "./Metrics/SessionMetrics";
-import { SessionTimeline } from "./Timeline/SessionTimeline";
+// import { SessionTimeline } from "./Timeline/SessionTimeline";
 import { SessionNotes } from "./Notes/SessionNotes";
 import { SessionTags } from "./Tags/SessionTags";
 import { useAnalytics } from "./hooks/useAnalytics";
@@ -28,7 +28,7 @@ export const AnalyticsPage: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <SessionTimeline sessions={sessions} isLoading={isLoading} />
+          {/* <SessionTimeline sessions={sessions} isLoading={isLoading} /> */}
         </div>
         <div className="space-y-6">
           <SessionTags />
