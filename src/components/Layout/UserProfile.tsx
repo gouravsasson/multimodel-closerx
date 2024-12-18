@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { User, Settings } from "lucide-react";
+import { User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const UserProfile: React.FC = () => {

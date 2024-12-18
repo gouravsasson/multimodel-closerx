@@ -7,20 +7,32 @@ import { ParticleBackground } from "../components/Particles/ParticleBackground";
 import axios from "axios";
 
 interface Metrics {
-  sessionsCount: number;
-  avgSessionTime: number;
-  performance: number;
   totalClients: number;
+  weeklySessionCount: number;
+  activeSessionCount: number;
+  averageSessionDuration: number;
 }
 
-interface Session {
+interface RawSession {
   id: string;
-  title: string;
-  timestamp: string;
   clientName: string;
   type: string;
   status: string;
   startTime: string;
+  duration?: number;
+  tags?: string[];
+  notes?: string;
+}
+
+interface Session {
+  id: string;
+  clientName: string;
+  type: "video" | "audio";
+  status: "completed" | "scheduled" | "in-progress";
+  startTime: string;
+  duration: number;
+  tags: string[];
+  notes?: string;
 }
 
 export const Analytics: React.FC = () => {
@@ -43,7 +55,18 @@ export const Analytics: React.FC = () => {
         );
 
         setMetrics(metricsResponse.data);
-        setSessions(sessionsResponse.data);
+        setSessions(
+          sessionsResponse.data.map((rawSession: RawSession) => ({
+            ...rawSession,
+            type: rawSession.type as "video" | "audio",
+            status: rawSession.status as
+              | "completed"
+              | "scheduled"
+              | "in-progress",
+            duration: rawSession.duration || 0,
+            tags: rawSession.tags || [],
+          })),
+        );
       } catch (err) {
         console.error("Error fetching analytics data:", err);
         setError("Failed to load analytics data. Please try again later.");
@@ -74,7 +97,17 @@ export const Analytics: React.FC = () => {
           <div className="text-center text-red-400 font-semibold">{error}</div>
         ) : (
           <div className="max-w-7xl mx-auto space-y-8">
-            <SessionMetrics metrics={metrics} isLoading={isLoading} />
+            <SessionMetrics
+              metrics={
+                metrics || {
+                  totalClients: 0,
+                  weeklySessionCount: 0,
+                  activeSessionCount: 0,
+                  averageSessionDuration: 0,
+                }
+              }
+              isLoading={isLoading}
+            />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
