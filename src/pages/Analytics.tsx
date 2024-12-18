@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
-import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeline";
+// import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeline";
 import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
 import { SessionTags } from "../components/Analytics/Tags/SessionTags";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
@@ -111,7 +111,7 @@ export const Analytics: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                <SessionTimeline sessions={sessions} isLoading={isLoading} />
+                {/* <SessionTimeline sessions={sessions} isLoading={isLoading} /> */}
               </div>
               <div className="space-y-6">
                 <SessionTags />
