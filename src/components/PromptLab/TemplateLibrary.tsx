@@ -66,8 +66,9 @@ export const TemplateLibrary: React.FC = () => {
         {templates.map((template, index) => (
           <TemplateCard
             key={index}
-            template={template} 
-            onSelect={() => handleSelect(template)}           />
+            template={template} // Pass the template object
+            onSelect={() => handleSelect(template)} // Pass a handler for selection
+          />
         ))}
       </motion.div>
     </div>
