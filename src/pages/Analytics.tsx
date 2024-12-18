@@ -3,7 +3,7 @@ import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
 import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeLine";
 import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
 import { SessionTags } from "../components/Analytics/Tags/SessionTags";
-import { ParticleBackground } from "../components/Particles/ParticleBackground";
+// import { ParticleBackground } from "../components/Particles/ParticleBackground";
 import axios from "axios";
 
 interface Metrics {
@@ -80,7 +80,7 @@ export const Analytics: React.FC = () => {
 
   return (
     <div className="relative">
-      <ParticleBackground />
+      {/* <ParticleBackground /> */}
 
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-12">

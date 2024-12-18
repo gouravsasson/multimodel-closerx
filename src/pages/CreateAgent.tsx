@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Sparkles, Wand2, Plus } from "lucide-react";
-import { ParticleBackground } from "../components/Particles/ParticleBackground";
+// import { ParticleBackground } from "../components/Particles/ParticleBackground";
 import { AgentList } from "../components/Agent/AgentList";
 import { CreateAgentForm } from "../components/Agent/CreateAgentForm";
 import type { Agent, AgentType } from "../components/Agent/types";
@@ -64,34 +64,13 @@ export const CreateAgent: React.FC = () => {
     navigate(`/agent/${agentId}`);
   };
 
-  // const handleCreateAgent = async () => {
-  //   if (!agentName || !selectedType) return;
-
-  //   try {
-  //     const response = await axios.post(
-  //       "https://api.example.com/create-agent",
-  //       {
-  //         name: agentName,
-  //         type: selectedType,
-  //       }
-  //     );
-
-  //     // On success, navigate to the new agent's configuration page
-  //     const agentId = response.data.id; // Assuming the response contains the new agent ID
-  //     navigate(`/agent/${agentId}`);
-  //   } catch (error) {
-  //     console.error("Error creating agent:", error);
-  //     alert("Failed to create agent. Please try again.");
-  //   }
-  // };
-
   const getAgentTypeInfo = (typeId: string) => {
     return agentTypes.find((type) => type.id === typeId);
   };
 
   return (
     <div className="relative">
-      <ParticleBackground />
+      {/* <ParticleBackground /> */}
 
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-12">
@@ -120,8 +99,7 @@ export const CreateAgent: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowCreateForm(true)}
-                className="px-4 py-2 bg-primary/20 hover:bg-primary/30 rounded-xl text-white
-                         flex items-center space-x-2 transition-all mx-auto"
+                className="px-4 py-2 bg-primary/20 hover:bg-primary/30 rounded-xl text-white flex items-center space-x-2 transition-all mx-auto"
               >
                 <Plus className="w-4 h-4" />
                 <span>New Agent</span>

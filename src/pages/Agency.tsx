@@ -3,14 +3,14 @@ import { DomainConfig } from "../components/Agency/DomainConfig";
 import { EmailTemplates } from "../components/Agency/EmailTemplates";
 import { BillingConfig } from "../components/Agency/BillingConfig";
 import { JavaScriptSnippet } from "../components/Agency/JavaScriptSnippet";
-import { ParticleBackground } from "../components/Particles/ParticleBackground";
+// import { ParticleBackground } from "../components/Particles/ParticleBackground";
 
 export const Agency: React.FC = () => {
   const [stripeConnected, setStripeConnected] = useState(false);
 
   return (
     <div className="relative">
-      <ParticleBackground />
+      {/* <ParticleBackground /> */}
 
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-12">
