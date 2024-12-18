@@ -259,7 +259,7 @@ import {
   Star,
   CheckCircle2,
 } from "lucide-react";
-import { ParticleBackground } from "../components/Particles/ParticleBackground";
+// import { ParticleBackground } from "../components/Particles/ParticleBackground";
 
 export const Profile: React.FC = () => {
   const [profile, setProfile] = useState({
@@ -341,7 +341,7 @@ export const Profile: React.FC = () => {
 
   return (
     <div className="relative">
-      <ParticleBackground />
+      {/* <ParticleBackground /> */}
 
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-12">

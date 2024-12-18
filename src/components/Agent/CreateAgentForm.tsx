@@ -10,14 +10,14 @@ import {
   BarChart,
   Zap,
 } from "lucide-react";
-// import type { AgentType } from "./types";
+import type { AgentType } from "./types";
 
 interface CreateAgentFormProps {
   agentName: string;
   setAgentName: (name: string) => void;
   selectedType: string | null;
   setSelectedType: (type: string) => void;
-  // agentTypes: AgentType[];
+  agentTypes: AgentType[]; // Added the agentTypes prop here
   onCancel: () => void;
   onSubmit: () => void;
 }

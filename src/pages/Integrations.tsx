@@ -2,12 +2,12 @@ import React from "react";
 import { LeadConnector } from "../components/Integrations/LeadConnector";
 import { WebhookConfig } from "../components/Integrations/WebhookConfig";
 import { TwilioConfig } from "../components/Integrations/TwilioConfig";
-import { ParticleBackground } from "../components/Particles/ParticleBackground";
+// import { ParticleBackground } from "../components/Particles/ParticleBackground";
 
 export const Integrations: React.FC = () => {
   return (
     <div className="relative">
-      <ParticleBackground />
+      {/* <ParticleBackground /> */}
 
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-12">
