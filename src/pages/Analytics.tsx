@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
-import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeLine";
+import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeline";
 import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
 import { SessionTags } from "../components/Analytics/Tags/SessionTags";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
