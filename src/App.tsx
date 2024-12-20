@@ -9,6 +9,9 @@ import { Integrations } from "./pages/Integrations";
 import { Profile } from "./pages/Profile";
 import { Login } from "./pages/auth/Login";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
+import Home from "./stripe/Home";
+import Return from "./stripe/Return";
+import Refresh from "./stripe/Refresh";
 
 function App() {
   return (
@@ -37,7 +40,20 @@ function App() {
                       path="/consultation"
                       element={<ConsultationRoom />}
                     />
+                    <Route
+                      path="/stripe"
+                      element={<Home />}
+                    />
+                    <Route
+                      path="/refresh/:connectedAccountId"
+                      element={<Refresh />}
+                    />
+                    <Route
+                      path="/return/:connectedAccountId"
+                      element={<Return />}
+                    />
                   </Routes>
+                  
                 </div>
               </>
             }
