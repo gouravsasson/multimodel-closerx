@@ -1,20 +1,14 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Outlet,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ConsultationRoom from "./pages/ConsultationRoom";
 import { AgentConfig } from "./pages/AgentConfig";
 import { CreateAgent } from "./pages/CreateAgent";
 import { Analytics } from "./pages/Analytics";
 import { Agency } from "./pages/Agency";
-import { Navigation } from "./components/Layout/Navigation";
 import { Integrations } from "./pages/Integrations";
 import { Profile } from "./pages/Profile";
 import { Login } from "./pages/auth/Login";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
-import { Root } from "./root/root";
+import { Root } from "./root/Root";
 
 function App() {
   return (
