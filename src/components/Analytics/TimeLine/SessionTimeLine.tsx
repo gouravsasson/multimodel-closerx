@@ -6,10 +6,12 @@ import type { Session } from "../types";
 interface SessionTimelineProps {
   sessions: Session[];
   isLoading: boolean;
+  onOpen: boolean;
 }
 
 export const SessionTimeline: React.FC<SessionTimelineProps> = ({
   sessions,
+  onOpen,
 }) => {
   return (
     <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
@@ -22,7 +24,7 @@ export const SessionTimeline: React.FC<SessionTimelineProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <SessionCard session={session} />
+            <SessionCard openmodal={onOpen} session={session} />
           </motion.div>
         ))}
       </div>

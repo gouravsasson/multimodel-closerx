@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
-// import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeline";
+import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeLine";
 import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
 import { SessionTags } from "../components/Analytics/Tags/SessionTags";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
 import axios from "axios";
+import { SessionAgents } from "@/components/Analytics/Agents/SessionAgents";
+import { useAnalytics } from '../components/Analytics/hooks/useAnalytics';
+import { SessionTranscription } from "@/components/Analytics/SessionTranscriptio";
+
 
 interface Metrics {
   totalClients: number;
@@ -37,12 +41,18 @@ interface Session {
 
 export const Analytics: React.FC = () => {
   const [metrics, setMetrics] = useState<Metrics | null>(null);
-  const [sessions, setSessions] = useState<Session[]>([]);
+  // const [sessions, setSessions] = useState<Session[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const {  sessions,  } = useAnalytics();
+  const [showCreatePlan, setShowCreatePlan] = useState(false);
+
 
   useEffect(() => {
     const fetchAnalyticsData = async () => {
+
+      
+
       try {
         setIsLoading(true);
         setError(null);
@@ -78,9 +88,22 @@ export const Analytics: React.FC = () => {
     fetchAnalyticsData();
   }, []);
 
+  const handleOpen= ()=> {
+    setShowCreatePlan(true);
+  }
+
+  
+
   return (
+    
+
     <div className="relative">
       {/* <ParticleBackground /> */}
+            <SessionTranscription
+              isOpen={showCreatePlan}
+              onClose={() => setShowCreatePlan(false)}
+
+            />
 
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-12">
@@ -93,9 +116,10 @@ export const Analytics: React.FC = () => {
           </p>
         </header>
 
-        {error ? (
+        {/* {error ? (
           <div className="text-center text-red-400 font-semibold">{error}</div>
-        ) : (
+        ) : */}
+         (
           <div className="max-w-7xl mx-auto space-y-8">
             <SessionMetrics
               metrics={
@@ -111,11 +135,12 @@ export const Analytics: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                {/* <SessionTimeline sessions={sessions} isLoading={isLoading} /> */}
+                <SessionTimeline onOpen={handleOpen}  sessions={sessions} isLoading={isLoading} />
               </div>
               <div className="space-y-6">
+              <SessionAgents />
                 <SessionTags />
-                <SessionNotes />
+                {/* <SessionNotes /> */}
               </div>
             </div>
           </div>
