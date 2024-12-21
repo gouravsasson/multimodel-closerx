@@ -12,13 +12,14 @@ import {
 } from "lucide-react";
 import type { AgentType } from "./types";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface CreateAgentFormProps {
   agentName: string;
   setAgentName: (name: string) => void;
   selectedType: string | null;
   setSelectedType: (type: string) => void;
-  agentTypes: AgentType[]; // Added the agentTypes prop here
+  agentTypes: AgentType[];
   onCancel: () => void;
   onSubmit: () => void;
 }
@@ -29,8 +30,9 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
   selectedType,
   setSelectedType,
   onCancel,
-  onSubmit,
+  // onSubmit,
 }) => {
+  const navigate = useNavigate()
   const handleFormSubmit = async () => {
     try {
       const payload = {
@@ -38,40 +40,33 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
         type: selectedType,
       };
 
-      import axios from "axios";
-
-      const createAgent = async (agentName, selectedType, onSubmit) => {
-        try {
-          const payload = {
-            name: agentName,
-            type: selectedType,
-          };
-      
-          const config = {
-            headers: {
-              "schema-name": "fc05ef60-e81a-4afe-88c2-a40f66b7b6e9",
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0ODgyMzM5LCJpYXQiOjE3MzQ2NjYzMzksImp0aSI6IjgzN2EyNWM4NWM1MDQ4YzZhMzYwZDk3NWRiNzE2Zjc4IiwidXNlcl9pZCI6M30.p99aDBaiad9PaPwRLjGd4GJGPgBWybBPA9J8eNZ6tjg",
-            },
-          };
-      
-          const response = await axios.post(
-            "http://localhost:8000/api/agents", // Replace with your API endpoint
-            payload,
-            config
-          );
-      
-          if (response.status === 201) {
-            console.log("Agent created successfully:", response.data);
-            onSubmit(); // Notify parent about success
-          } else {
-            console.error("Failed to create agent. Status:", response.status);
-          }
-        } catch (error) {
-          console.error("Error creating agent:", error);
-        }
+      const config = {
+        headers: {
+          "schema-name": "fe47b368-c563-4aaf-868d-e165d7ff2807",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0OTg2NzgwLCJpYXQiOjE3MzQ3NzA3ODAsImp0aSI6IjJiZjM4ZDJkMmYxMjQ1MThiMmI4YmY4YWIwZTJiOGE5IiwidXNlcl9pZCI6NX0.D2UkUqToZjH7igwW9ucbCQrfJa4v4v58rav0yNDlA94",
+        },
       };
-      
+
+      const response = await axios.post(
+        "http://192.168.1.46:8000/api/agents/",
+        payload,
+        config,
+      );
+
+      if (response.status === 201) {
+        console.log("Agent created successfully:", response.data);
+        const agentId = response.data.response.id; // Ensure this is the correct field
+        // console.log(agentId);
+        navigate(`/agent/${agentId}/`);
+        onSubmit(); // Notify parent about success
+      } else {
+        console.error("Failed to create agent. Status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error creating agent:", error);
+    }
+  };
 
   return (
     <motion.div
@@ -106,9 +101,9 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setSelectedType("sales")}
+              onClick={() => setSelectedType("Sales")}
               className={`relative overflow-hidden p-6 rounded-xl border transition-all duration-300 ${
-                selectedType === "sales"
+                selectedType === "Sales"
                   ? "bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-amber-500/50"
                   : "bg-black/20 border-white/10 hover:border-white/20"
               }`}
@@ -164,9 +159,9 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setSelectedType("support")}
+              onClick={() => setSelectedType("Support")}
               className={`relative overflow-hidden p-6 rounded-xl border transition-all duration-300 ${
-                selectedType === "support"
+                selectedType === "Support"
                   ? "bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border-emerald-500/50"
                   : "bg-black/20 border-white/10 hover:border-white/20"
               }`}
