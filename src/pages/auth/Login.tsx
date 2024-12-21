@@ -21,9 +21,8 @@ export const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // TODO: Implement actual login logic
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       setError("Invalid email or password");
     } finally {
