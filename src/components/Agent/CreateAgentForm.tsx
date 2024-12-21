@@ -11,6 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 import type { AgentType } from "./types";
+import axios from "axios";
 
 interface CreateAgentFormProps {
   agentName: string;
@@ -30,6 +31,48 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
   onCancel,
   onSubmit,
 }) => {
+  const handleFormSubmit = async () => {
+    try {
+      const payload = {
+        name: agentName,
+        type: selectedType,
+      };
+
+      import axios from "axios";
+
+      const createAgent = async (agentName, selectedType, onSubmit) => {
+        try {
+          const payload = {
+            name: agentName,
+            type: selectedType,
+          };
+      
+          const config = {
+            headers: {
+              "schema-name": "fc05ef60-e81a-4afe-88c2-a40f66b7b6e9",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0ODgyMzM5LCJpYXQiOjE3MzQ2NjYzMzksImp0aSI6IjgzN2EyNWM4NWM1MDQ4YzZhMzYwZDk3NWRiNzE2Zjc4IiwidXNlcl9pZCI6M30.p99aDBaiad9PaPwRLjGd4GJGPgBWybBPA9J8eNZ6tjg",
+            },
+          };
+      
+          const response = await axios.post(
+            "http://localhost:8000/api/agents", // Replace with your API endpoint
+            payload,
+            config
+          );
+      
+          if (response.status === 201) {
+            console.log("Agent created successfully:", response.data);
+            onSubmit(); // Notify parent about success
+          } else {
+            console.error("Failed to create agent. Status:", response.status);
+          }
+        } catch (error) {
+          console.error("Error creating agent:", error);
+        }
+      };
+      
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -190,7 +233,7 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={onSubmit}
+            onClick={handleFormSubmit}
             disabled={!agentName || !selectedType}
             className="flex-1 px-6 py-4 bg-gradient-to-r from-primary/80 to-accent/80 rounded-xl
                      text-white font-medium flex items-center justify-center space-x-2

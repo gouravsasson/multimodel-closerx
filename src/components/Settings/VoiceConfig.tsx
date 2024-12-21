@@ -3,39 +3,39 @@ import { Volume2, Mic } from "lucide-react";
 import { motion } from "framer-motion";
 import { VoiceSlider } from "./VoiceSlider";
 import { voices } from "./voices";
-import axios from "axios";
+// import axios from "axios";
 
 export const VoiceConfig: React.FC = () => {
   const [selectedVoice, setSelectedVoice] = useState(voices[0].id);
   const [speed, setSpeed] = useState(50);
   const [pitch, setPitch] = useState(50);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
-  const handleTestVoice = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        "https://api.example.com/voice-config",
-        {
-          voiceId: selectedVoice,
-          speed,
-          pitch,
-        }
-      );
+  // const handleTestVoice = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.post(
+  //       "https://api.example.com/voice-config",
+  //       {
+  //         voiceId: selectedVoice,
+  //         speed,
+  //         pitch,
+  //       }
+  //     );
 
-      if (response.status === 200) {
-        console.log("Voice tested successfully:", response.data);
-        alert("Voice test successful!");
-      } else {
-        throw new Error("Voice test failed.");
-      }
-    } catch (error) {
-      console.error("Error testing voice:", error);
-      alert("Failed to test voice. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (response.status === 200) {
+  //       console.log("Voice tested successfully:", response.data);
+  //       alert("Voice test successful!");
+  //     } else {
+  //       throw new Error("Voice test failed.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error testing voice:", error);
+  //     alert("Failed to test voice. Please try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className="space-y-6">
@@ -45,7 +45,7 @@ export const VoiceConfig: React.FC = () => {
             <Volume2 className="w-6 h-6 text-primary-light" />
             <h3 className="text-xl font-semibold text-white">Voice Settings</h3>
           </div>
-          <motion.button
+          {/* <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleTestVoice}
@@ -56,9 +56,9 @@ export const VoiceConfig: React.FC = () => {
                 : "bg-accent/20 hover:bg-accent/30 text-white"
             }`}
           >
-            <Mic className="w-4 h-4 text-accent-light" />
-            <span>{loading ? "Testing..." : "Test Voice"}</span>
-          </motion.button>
+            {/* <Mic className="w-4 h-4 text-accent-light" /> 
+            <span>{loading ? "Testing..." : "Next"}</span>
+          </motion.button> */}
         </div>
 
         <div className="space-y-6">

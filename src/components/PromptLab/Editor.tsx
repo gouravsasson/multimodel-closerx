@@ -3,6 +3,7 @@ import { ArrowRight, BookTemplate } from "lucide-react";
 import { motion } from "framer-motion";
 import { TemplateModal } from "./TemplateModal";
 import type { Template } from "./templates";
+import { templates } from "./templates";
 import axios from "axios";
 
 interface EditorProps {
@@ -12,23 +13,23 @@ interface EditorProps {
 export const Editor: React.FC<EditorProps> = ({ onNext }) => {
   const [prompt, setPrompt] = useState("");
   const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
-  const [templates, setTemplates] = useState<Template[]>([]);
+  // const [templates, setTemplates] = useState<Template[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchTemplates = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get("https://api.example.com/templates");
-      setTemplates(response.data);
-    } catch (error) {
-      console.error("Error fetching templates:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchTemplates = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await axios.get("https://api.example.com/templates");
+  //     setTemplates(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching templates:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleOpenTemplateModal = () => {
-    fetchTemplates();
+    // fetchTemplates();
     setIsTemplateModalOpen(true);
   };
 
