@@ -9,6 +9,7 @@ import { Profile } from "./pages/Profile";
 import { Login } from "./pages/auth/Login";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { Root } from "./root/Root";
+import ConsultationRoot from "./root/ConsultationRoot";
 
 function App() {
   return (
@@ -23,8 +24,13 @@ function App() {
           <Route path="/agency" element={<Agency />} />
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/consultation" element={<ConsultationRoom />} />
+          
+          
         </Route>
+        <Route element={<ConsultationRoot/>}>
+           <Route path="/consultation" element={<ConsultationRoom />} />
+        </Route>
+        
       </Routes>
     </Router>
   );

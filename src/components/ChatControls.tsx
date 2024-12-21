@@ -474,13 +474,13 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
   // );
 
   return (
-    <div className=" flex flex-col gap-4">
-      <div className=" basis-[60%] h-full">
+    <div className=" flex flex-col gap-4 h-full">
+      <div className="h-full">
         {/* <BotReadyAudio active={isVoiceMode} /> */}
 
         <div
           className={cn(
-            " relative h-[495px] overflow-hidden  bg-black rounded-2xl "
+            " relative h-full overflow-hidden  bg-black rounded-2xl "
           )}
         >
           <RTVIClientVideo
@@ -613,7 +613,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
       ) : null}
       {/* Video preview */}
 
-      <div className=" basis-[40%] bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl flex flex-col gap-1 p-2">
+      <div className="  bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl flex flex-col gap-1 p-2">
         {/* Image Preview (if an image is selected) */}
         {/* {previewUrls.length > 0 && (
           <div className="relative w-full flex justify-start gap-2 mt-2 px-2">

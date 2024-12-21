@@ -14,15 +14,16 @@ export function Layout({ children }: React.PropsWithChildren) {
       
         <div
            style={{
-            minHeight: "100vh",
+          
             minWidth: "100vh",
-            // background: "linear-gradient(to bottom right, #111827, #6b21a8, #1e40af)",
+            background: "linear-gradient(to bottom right, #111827, #6b21a8, #1e40af)",
             position: "relative",
           }}
+          className=" h-full"
         >
           
 
-          <main className="px-4 py-8">
+          <main className="px-4 p-4 h-full">
             {children}
           </main>
         </div>

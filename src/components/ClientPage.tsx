@@ -184,10 +184,10 @@ export function   ClientPage() {
 
   return (
     <RTVIClientProvider client={client!}>
-      <div className=" flex h-[calc(100vh-8rem)] gap-4 justify-between">
+      <div className=" flex h-full gap-4 justify-between">
         {/* Chat controls */}
         {conversationType === "text-voice" && (
-          <div className=" w-full h-fit ">
+          <div className=" w-full h-full ">
             <ChatControls vision />
             {/* Prevents scroll content from showing up below chat controls */}
             {/* <div className="h-4 bg-background w-full" /> */}

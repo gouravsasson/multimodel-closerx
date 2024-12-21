@@ -5,7 +5,7 @@ import QueryClientProvider from "@/components/QueryClientProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { AppStateProvider } from "@/contexts/AppStateProvider";
 
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 function ConsultationRoom() {
   // const [websocketEnabled, setWebsocketEnabled] = useState<boolean>();
@@ -58,10 +58,10 @@ function ConsultationRoom() {
         websocketEnabled={true}
       >
         <Layout>
-          <div className=" ">
+          
           <ClientPage  />
           <Toaster />
-          </div>
+          
         </Layout>
       </AppStateProvider>
     </QueryClientProvider>

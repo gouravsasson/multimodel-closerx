@@ -13,7 +13,7 @@ export const Navigation: React.FC = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 border-b border-white/10 backdrop-blur-xl bg-white/5 z-50">
+    <nav className="sticky top-0 left-0 right-0 border-b border-white/10 backdrop-blur-xl bg-white/5 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
