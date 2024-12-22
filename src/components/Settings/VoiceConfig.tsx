@@ -5,7 +5,11 @@ import { VoiceSlider } from "./VoiceSlider";
 import { voices } from "./voices";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { CreateTagsModal, TagsAgent } from "./tagsAgent";
+import TagsAgent from "./tagsAgent";
+import LeadConnectorSelect from "./leadConnecterSelect";
+import UpdateFunction from "./updateFunction";
+import PopupForm from "./updatefieldform";
+
 // import axios from "axios";
 interface VoiceConfigProps {
   onNext: () => void;
@@ -17,12 +21,31 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
   const [pitch, setPitch] = useState(50);
   const [loading, setLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showTagsModal, setShowTagsModal] = useState(false); // State for modal visibility
+  const [showTagsModal, setShowTagsModal] = useState(false);
+  const [showFormModal, setShowFormModal] = useState(false);
+  const [popUpModal, setPopUpModal] = useState(false); // State for modal visibility
+  // State for modal visibility
   // const handleTagsPopUp = () => {
   //   setShowTags(true);
   // };
 
   const { id } = useParams<{ id: string }>();
+
+  const options = [
+    { id: "1", label: "Option 1" },
+    { id: "2", label: "Option 2" },
+    { id: "3", label: "Option 3" },
+    { id: "4", label: "Option 4" },
+    { id: "5", label: "Option 5" },
+    { id: "6", label: "Option 6" },
+    { id: "9", label: "Option 7" },
+    { id: "7", label: "Option 8" },
+    { id: "8", label: "Option 9" },
+  ];
+
+  const handleChange = (selectedIds: string[]) => {
+    console.log("Selected IDs:", selectedIds);
+  };
 
   const handleSelectVoice = async () => {
     // setIsSubmitting(true);
@@ -57,8 +80,8 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
 
   return (
     <>
-      <div className="space-y-6">
-        <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+      <div className="space-y-6 overflow-auto">
+        <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 overflow-auto">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-3">
               <Volume2 className="w-6 h-6 text-primary-light" />
@@ -66,34 +89,62 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
                 Voice Settings
               </h3>
             </div>
-            {/* Button for showing the modal */}
-            <motion.button
-              onClick={() => setShowTagsModal(true)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-2 px-4 py-2 rounded-lg transition-all group bg-primary/20 hover:bg-primary/30"
-            >
-              <Plus className="w-4 h-4 text-primary-light" />
-              <span className="text-white">Add Tag</span>
-            </motion.button>
-
-            <motion.button
-              onClick={handleSelectVoice}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              disabled={loading}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all group ${
-                isSubmitting
-                  ? "bg-primary/30 cursor-not-allowed"
-                  : "bg-primary/20 hover:bg-primary/30"
-              }`}
-            >
-              <span className="text-white">
-                {isSubmitting ? "Submitting..." : "Create"}
-              </span>
-              <ArrowRight className="w-4 h-4 text-primary-light group-hover:translate-x-0.5 transition-transform" />
-            </motion.button>
-
+            <div className="flex items-center justify-between">
+              <div className="pr-2">
+                {/* Button for showing the modal */}
+                <motion.button
+                  onClick={() => setPopUpModal(true)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center space-x-2 px-4 py-2 rounded-lg transition-all group bg-primary/20 hover:bg-primary/30"
+                >
+                  <Plus className="w-4 h-4 text-primary-light" />
+                  <span className="text-white">Update Customer Fields</span>
+                </motion.button>
+              </div>
+              <div className="pr-2">
+                {/* Button for showing the modal */}
+                <motion.button
+                  onClick={() => setShowFormModal(true)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center space-x-2 px-4 py-2 rounded-lg transition-all group bg-primary/20 hover:bg-primary/30"
+                >
+                  <Plus className="w-4 h-4 text-primary-light" />
+                  <span className="text-white">Custom Function</span>
+                </motion.button>
+              </div>
+              <div className="pr-2">
+                {/* Button for showing the modal */}
+                <motion.button
+                  onClick={() => setShowTagsModal(true)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center space-x-2 px-4 py-2 rounded-lg transition-all group bg-primary/20 hover:bg-primary/30"
+                >
+                  <Plus className="w-4 h-4 text-primary-light" />
+                  <span className="text-white">Add Tag</span>
+                </motion.button>
+              </div>
+              <div>
+                <motion.button
+                  onClick={handleSelectVoice}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  disabled={loading}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all group ${
+                    isSubmitting
+                      ? "bg-primary/30 cursor-not-allowed"
+                      : "bg-primary/20 hover:bg-primary/30"
+                  }`}
+                >
+                  <span className="text-white">
+                    {isSubmitting ? "Submitting..." : "Create"}
+                  </span>
+                  <ArrowRight className="w-4 h-4 text-primary-light group-hover:translate-x-0.5 transition-transform" />
+                </motion.button>
+              </div>
+            </div>
             {/* <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -155,10 +206,23 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
               <VoiceSlider label="Pitch" value={pitch} onChange={setPitch} />
             </div>
           </div>
+          <div className="w-full bg-white rounded-lg ">
+            <LeadConnectorSelect
+              options={options}
+              onChange={handleChange}
+              placeholder="Select Leadconnecter"
+            />
+          </div>
         </div>
       </div>
       {/* Modal for creating tags */}
       {showTagsModal && <TagsAgent onClose={() => setShowTagsModal(false)} />}
+      {popUpModal && (
+        <PopupForm isOpen={popUpModal} onClose={() => setPopUpModal(false)} />
+      )}
+      {showFormModal && (
+        <UpdateFunction onClose={() => setShowFormModal(false)} />
+      )}
     </>
   );
 };
