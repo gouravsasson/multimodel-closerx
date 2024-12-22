@@ -1,4 +1,4 @@
-// import BotReadyAudio from "@/components/BotReadyAudio";
+import BotReadyAudio from "@/components/BotReadyAudio";
 import ExpiryCountdown from "@/components/ExpiryCountdown";
 import { Button } from "@/components/ui/button";
 // import {
@@ -83,10 +83,11 @@ interface Props {
 
 // type UploadStatus = "done" | "error";
 
-const ChatControls: React.FC<Props> = ({ onChangeMode, 
-  // vision = false 
+const ChatControls: React.FC<Props> = ({
+  onChangeMode,
+  // vision = false
 }) => {
-  const { conversationId, setConversationId, webrtcEnabled } = useAppState();
+  const { conversationId, setConversationId } = useAppState();
 
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [isCamMuted, setIsCamMuted] = useState(true);
@@ -107,6 +108,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [error, setError] = useState("");
   const [processingAction, setProcessingAction] = useState(false);
+  const [webrtcEnabled, setWebrtcEnabled] = useState(false);
 
   // const [uploadProgress, setUploadProgress] = useState<
   //   Record<string, number | UploadStatus>
@@ -230,9 +232,12 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
   const handleTextSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
 
-    if (processingAction ||
-      //  isUploadingFile || 
-       !rtviClient) return;
+    if (
+      processingAction ||
+      //  isUploadingFile ||
+      !rtviClient
+    )
+      return;
 
     setProcessingAction(true);
 
@@ -275,7 +280,9 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
   const handleSwitchToVoiceMode = useCallback(
     async (createIfNew = true) => {
       setIsVoiceMode(true);
+      setWebrtcEnabled(true);
       setError("");
+
       if (!conversationId && createIfNew) {
         await createConversation(true);
         // Allow requestData to be updated before connecting
@@ -458,7 +465,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
   // }, [previewUrls.length]);
 
   const feedbackClassName =
-    "bg-gradient-to-t from-background absolute w-full bottom-full pt-4 pb-2 flex gap-2 items-center justify-center z-10";
+    " w-full bottom-full flex gap-2 items-center justify-center ";
 
   const ToggledMicIcon = isMicMuted ? MicOffIcon : MicIcon;
 
@@ -473,60 +480,35 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
   //   (s) => typeof s === "number"
   // );
 
+  console.log({
+    webrtcEnabled,
+    error,
+    isConnecting,
+    transportState,
+    isMicMuted,
+    processingAction,
+  });
+
   return (
     <div className=" flex flex-col gap-4 h-full">
+      <BotReadyAudio active={isVoiceMode} />
       <div className="h-full">
-        {/* <BotReadyAudio active={isVoiceMode} /> */}
-
+        {/* Video preview */}
         <div
           className={cn(
-            " relative h-full overflow-hidden  bg-black rounded-2xl "
+            " relative h-full  overflow-hidden  bg-black rounded-2xl "
           )}
         >
           <RTVIClientVideo
+            fit="cover"
             participant="local"
-            
-            className=" "
+            className=" w-full h-full absolute inset-0"
           />
           {!camTrack && (
             <div className="absolute top-0 left-0 z-10 w-full h-full flex items-center justify-center">
               <LoaderCircleIcon className="animate-spin" size={16} />
             </div>
           )}
-          {/* <Button
-          className="absolute top-1 right-1 rounded-full !text-background bg-foreground/10 hover:bg-foreground/50 focus-visible:bg-foreground/50"
-          size="icon"
-          variant="ghost"
-          onClick={() =>
-            setVideoSize((vs) => (vs === "small" ? "large" : "small"))
-          }
-        >
-          {videoSize === "small" ? (
-            <Maximize2Icon size={16} />
-          ) : (
-            <Minimize2Icon size={16} />
-          )}
-        </Button>
-        <Button
-          className={cn(
-            "absolute bottom-1 rounded-full !text-background bg-foreground/10 hover:bg-foreground/50 focus-visible:bg-foreground/50",
-            {
-              "right-1": videoPlacement === "left",
-              "left-1": videoPlacement === "right",
-            }
-          )}
-          size="icon"
-          variant="ghost"
-          onClick={() =>
-            setVideoPlacement((vp) => (vp === "left" ? "right" : "left"))
-          }
-        >
-          {videoPlacement === "left" ? (
-            <ArrowRightToLineIcon size={16} />
-          ) : (
-            <ArrowLeftToLineIcon size={16} />
-          )}
-        </Button> */}
         </div>
       </div>
 
@@ -572,48 +554,49 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
         </DialogContent>
       </Dialog> */}
 
-      {!webrtcEnabled ? (
-        <div className={cn(feedbackClassName, "text-destructive")}>
-          <TriangleAlertIcon />
-          <span>
-            Missing <code>DAILY_API_KEY</code>
-          </span>
-        </div>
-      ) : error ? (
-        <div className={feedbackClassName}>
-          <TriangleAlertIcon />
-          <span>{error}</span>
-        </div>
-      ) : isConnecting ? (
-        <div className={feedbackClassName}>
-          <LoaderCircle className="animate-spin" />
-          <span>Connecting…</span>
-        </div>
-      ) : transportState === "ready" ? (
-        <div className={feedbackClassName}>
-          <span>
-            {isMicMuted
-              ? "Tap to unmute"
-              : processingAction
-                ? "Thinking…"
-                : "Listening"}
-          </span>
-          {endDate && (
-            <div>
-              <span className="select-none tabular-nums font-mono">
-                <ExpiryCountdown endDate={endDate} />
-              </span>
-            </div>
-          )}
-        </div>
-      ) : processingAction ? (
-        <div className={feedbackClassName}>
-          <LoaderCircle className="animate-spin" />
-        </div>
-      ) : null}
-      {/* Video preview */}
+      <div>
+        {!webrtcEnabled ? (
+          <div className={cn(feedbackClassName, "text-destructive")}>
+            <TriangleAlertIcon />
+            <span>
+              Missing <code>DAILY_API_KEY</code>
+            </span>
+          </div>
+        ) : error ? (
+          <div className={feedbackClassName}>
+            <TriangleAlertIcon />
+            <span>{error}</span>
+          </div>
+        ) : isConnecting ? (
+          <div className={feedbackClassName}>
+            <LoaderCircle className="animate-spin" />
+            <span>Connecting…</span>
+          </div>
+        ) : transportState === "ready" ? (
+          <div className={feedbackClassName}>
+            <span>
+              {isMicMuted
+                ? "Tap to unmute"
+                : processingAction
+                  ? "Thinking…"
+                  : "Listening"}
+            </span>
+            {endDate && (
+              <div>
+                <span className="select-none tabular-nums font-mono">
+                  <ExpiryCountdown endDate={endDate} />
+                </span>
+              </div>
+            )}
+          </div>
+        ) : processingAction ? (
+          <div className={feedbackClassName}>
+            <LoaderCircle className="animate-spin" />
+          </div>
+        ) : null}
+      </div>
 
-      <div className="  bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl flex flex-col gap-1 p-2">
+      <div className="  bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl flex flex-col gap-1 p-2 z-50">
         {/* Image Preview (if an image is selected) */}
         {/* {previewUrls.length > 0 && (
           <div className="relative w-full flex justify-start gap-2 mt-2 px-2">
@@ -705,7 +688,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
         </form>
 
         {/* Chat Controls */}
-        <div className="flex gap-2 justify-between sm:grid sm:grid-cols-3">
+        <div className="flex gap-2 justify-between sm:grid sm:grid-cols-3 ">
           <div className="flex items-end gap-2">
             {/* Image Button (File picker with camera support on mobile) */}
             {/* <TooltipProvider>
@@ -809,7 +792,7 @@ const ChatControls: React.FC<Props> = ({ onChangeMode,
                         ? handleSwitchToTextMode
                         : () => handleSwitchToVoiceMode()
                     }
-                    disabled={!webrtcEnabled || isConnecting}
+                    // disabled={!webrtcEnabled || isConnecting}
                     size="icon"
                     variant={isVoiceMode ? "destructive" : "secondary-outline"}
                     type="button"

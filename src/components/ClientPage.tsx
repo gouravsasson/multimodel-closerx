@@ -193,7 +193,7 @@ export function   ClientPage() {
             {/* <div className="h-4 bg-background w-full" /> */}
           </div>
         )}
-        <div className="  w-96 overflow-auto   bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10  flex flex-col ">
+        <div className="  w-96 overflow-auto z-0 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10  flex flex-col ">
           <div className="p-4 border-b  border-white/10 flex items-center justify-between">
             <h3 className="text-white font-medium">Chat</h3>
           </div>
