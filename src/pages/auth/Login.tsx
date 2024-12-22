@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Lock, LogIn, AlertCircle } from "lucide-react";
+import axios from "axios";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { FormInput } from "@/components/auth/FormInput";
 
@@ -21,10 +22,25 @@ export const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      navigate("/");
-    } catch (err) {
-      setError("Invalid email or password");
+      // Replace with your actual API endpoint
+      const response = await axios.post(
+        "http://192.168.1.46:8000/api/auth/user-login/",
+        {
+          email: formData.email,
+          password: formData.password,
+        }
+      );
+
+      // Example: Handle API response
+      if (response.data.success) {
+        // Save token or other user details in localStorage or state management
+        localStorage.setItem("token", response.data.token);
+        navigate("/");
+      } else {
+        throw new Error(response.data.message || "Login failed");
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Invalid email or password");
     } finally {
       setIsLoading(false);
     }

@@ -4,9 +4,13 @@ import type { Session } from "../types";
 
 interface SessionCardProps {
   session: Session;
+  openmodal: boolean;
 }
 
-export const SessionCard: React.FC<SessionCardProps> = ({ session }) => {
+export const SessionCard: React.FC<SessionCardProps> = ({
+  session,
+  openmodal,
+}) => {
   const getStatusColor = () => {
     switch (session.status) {
       case "completed":
@@ -21,7 +25,10 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session }) => {
   };
 
   return (
-    <div className="bg-black/20 rounded-xl p-4 border border-white/10 hover:border-primary/30 transition-all duration-300 group">
+    <div
+      onClick={openmodal}
+      className="bg-black/20 rounded-xl p-4 border border-white/10 hover:border-primary/30 transition-all duration-300 group cursor-pointer"
+    >
       <div className="flex items-start justify-between">
         <div className="flex items-start space-x-3">
           <div className="p-2 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
