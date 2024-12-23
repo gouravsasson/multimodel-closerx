@@ -8,8 +8,9 @@ import { CodePreview } from "../components/Embed/CodePreview";
 
 export const AgentConfig: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  // console.log(id)
   const [activeTab, setActiveTab] = useState("prompt");
-
+  console.log(activeTab);
   const handleNext = () => {
     if (activeTab === "prompt") {
       setActiveTab("settings");
@@ -35,7 +36,7 @@ export const AgentConfig: React.FC = () => {
 
         <main className="max-w-6xl mx-auto">
           {activeTab === "prompt" && <Editor onNext={handleNext} />}
-          {activeTab === "settings" && <VoiceConfig />}
+          {activeTab === "settings" && <VoiceConfig onNext={handleNext} />}
           {activeTab === "embed" && <CodePreview />}
         </main>
       </div>

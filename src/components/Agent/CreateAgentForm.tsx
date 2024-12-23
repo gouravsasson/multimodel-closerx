@@ -11,13 +11,16 @@ import {
   Zap,
 } from "lucide-react";
 import type { AgentType } from "./types";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { axiosConfig } from "./utils/axiosConfig";
 
 interface CreateAgentFormProps {
   agentName: string;
   setAgentName: (name: string) => void;
   selectedType: string | null;
   setSelectedType: (type: string) => void;
-  agentTypes: AgentType[]; // Added the agentTypes prop here
+  agentTypes: AgentType[];
   onCancel: () => void;
   onSubmit: () => void;
 }
@@ -28,8 +31,31 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
   selectedType,
   setSelectedType,
   onCancel,
-  onSubmit,
+  // onSubmit,
 }) => {
+  const navigate = useNavigate();
+  const handleFormSubmit = async () => {
+    try {
+      const payload = {
+        name: agentName,
+        type: selectedType,
+      };
+      const response = await axios.post("agents/", payload, axiosConfig);
+
+      if (response.status === 200) {
+        console.log("Agent created successfully:", response.data);
+        const agentId = response.data.response.id; // Ensure this is the correct field
+        // console.log(agentId);
+        navigate(`/agent/${agentId}/`);
+        onSubmit(); // Notify parent about success
+      } else {
+        console.error("Failed to create agent. Status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error creating agent:", error);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -63,9 +89,9 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setSelectedType("sales")}
+              onClick={() => setSelectedType("Sales")}
               className={`relative overflow-hidden p-6 rounded-xl border transition-all duration-300 ${
-                selectedType === "sales"
+                selectedType === "Sales"
                   ? "bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-amber-500/50"
                   : "bg-black/20 border-white/10 hover:border-white/20"
               }`}
@@ -121,9 +147,9 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setSelectedType("support")}
+              onClick={() => setSelectedType("Support")}
               className={`relative overflow-hidden p-6 rounded-xl border transition-all duration-300 ${
-                selectedType === "support"
+                selectedType === "Support"
                   ? "bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border-emerald-500/50"
                   : "bg-black/20 border-white/10 hover:border-white/20"
               }`}
@@ -190,7 +216,7 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={onSubmit}
+            onClick={handleFormSubmit}
             disabled={!agentName || !selectedType}
             className="flex-1 px-6 py-4 bg-gradient-to-r from-primary/80 to-accent/80 rounded-xl
                      text-white font-medium flex items-center justify-center space-x-2

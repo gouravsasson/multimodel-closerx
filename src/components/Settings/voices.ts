@@ -9,7 +9,7 @@ interface Voice {
 
 export const voices: Voice[] = [
   {
-    id: "emma",
+    id: "Emma",
     name: "Emma",
     description: "Warm and friendly professional voice",
     gender: "Female",
@@ -17,7 +17,7 @@ export const voices: Voice[] = [
     accent: "American",
   },
   {
-    id: "james",
+    id: "James",
     name: "James",
     description: "Deep and authoritative business voice",
     gender: "Male",
@@ -25,7 +25,7 @@ export const voices: Voice[] = [
     accent: "British",
   },
   {
-    id: "sophia",
+    id: "Sophia",
     name: "Sophia",
     description: "Clear and articulate presenter voice",
     gender: "Female",
@@ -33,7 +33,7 @@ export const voices: Voice[] = [
     accent: "Australian",
   },
   {
-    id: "michael",
+    id: "Michael",
     name: "Michael",
     description: "Engaging and dynamic narrator voice",
     gender: "Male",
