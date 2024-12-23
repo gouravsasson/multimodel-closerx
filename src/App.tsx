@@ -22,7 +22,7 @@ function App() {
         <Route element={<Root />}>
           <Route path="/" element={<CreateAgent />} />
           <Route path="/agent/:id" element={<AgentConfig />} />
-          <Route path="/analytics" element={<Analytics />} />
+          {/* <Route path="/analytics" element={<Analytics />} /> */}
           <Route path="/agency" element={<Agency />} />
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/profile" element={<Profile />} />
