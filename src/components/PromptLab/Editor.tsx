@@ -145,8 +145,8 @@ export const Editor: React.FC<EditorProps> = ({ onNext }) => {
     try {
       const response = await axios.get(`/agents/${id}/`, axiosConfig);
       if (response.data && response.data.prompt) {
-        setPrompt(response.data.prompt); 
-        console.log(response.data.prompt)// Set the prompt if it exists
+        setPrompt(response.data.prompt);
+        console.log(response.data.prompt); // Set the prompt if it exists
       }
     } catch (error) {
       console.error("Error fetching prompt:", error);
@@ -217,7 +217,7 @@ export const Editor: React.FC<EditorProps> = ({ onNext }) => {
       const response = await axios.patch(
         `/agents/${id}/`,
         payload,
-        axiosConfig,
+        axiosConfig
       );
 
       if (response.status === 200) {
