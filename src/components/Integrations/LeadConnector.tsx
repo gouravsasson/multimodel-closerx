@@ -4,7 +4,8 @@ import { Link2 } from "lucide-react";
 
 export const LeadConnector: React.FC = () => {
   const handleConnect = () => {
-    window.open("https://app.leadconnector.com/auth", "_blank");
+    window.location.href =
+    window.location.href = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=https://app.closerx.ai/g-h-l/success&state=${companyID}&client_id=669fa047e5605344754496bc-lyyex339&scope=contacts.write contacts.readonly calendars.readonly calendars.write calendars/events.readonly calendars/events.write locations/customValues.readonly locations/customValues.write locations/tags.write locations.readonly`;
   };
 
   return (

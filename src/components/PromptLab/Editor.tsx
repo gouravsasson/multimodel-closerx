@@ -108,7 +108,7 @@ import { TemplateModal } from "./TemplateModal";
 import { templates } from "./templates";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { axiosConfig } from "../Agent/utils/axiosConfig";
+import { axiosConfig } from "../../pages/auth/axiosConfig";
 
 interface EditorProps {
   onNext: () => void;

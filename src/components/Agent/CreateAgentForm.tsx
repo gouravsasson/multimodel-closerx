@@ -13,7 +13,7 @@ import {
 import type { AgentType } from "./types";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { axiosConfig } from "./utils/axiosConfig";
+import { axiosConfig } from "../../pages/auth/axiosConfig";
 
 interface CreateAgentFormProps {
   agentName: string;

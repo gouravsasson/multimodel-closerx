@@ -14,30 +14,59 @@ import {
   Star,
   CheckCircle2,
 } from "lucide-react";
+import { axiosConfig } from "./auth/axiosConfig";
+import { ChangePasswordDialog } from "@/components/Profile/ChangePasswordDialog";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
 
 export const Profile: React.FC = () => {
+  const [changepassword, setChangePassword] = useState(false);
   const [profile, setProfile] = useState({
-    name: "John Doe",
-    company: "Acme Corp",
-    email: "john@example.com",
-    phone: "+1 (555) 0123",
+    name: "",
+    company: "",
+    email: "",
+    phone: "",
     avatar: "",
   });
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Axios GET request to fetch profile data
     axios
-      .get("http://192.168.1.46:8000/api/auth/user-detail/") // Replace with your API endpoint
+      .get("auth/user-detail/", axiosConfig) // Replace with your API endpoint
       .then((response) => {
-        setProfile(response.data);
+        if (response.data.success) {
+          const {
+            first_name,
+            last_name,
+            email,
+            contact_number,
+            profile_picture,
+          } = response.data.response;
+
+          setProfile({
+            name: `${first_name} ${last_name}`,
+            company: "", // Add default or fetched value if available
+            email: email,
+            phone: contact_number,
+            avatar: profile_picture,
+          });
+        } else {
+          console.error("API returned an error:", response.data.errors);
+        }
       })
       .catch((error) => {
         console.error("Error fetching profile data", error);
       });
   }, []);
+
+  useEffect(() => {
+    formik.setValues({
+      name: profile.name,
+      company: profile.company,
+      email: profile.email,
+      phone: profile.phone,
+    });
+  }, [profile]);
 
   const subscription = {
     plan: "Professional",
@@ -92,6 +121,30 @@ export const Profile: React.FC = () => {
       </div>
     );
   }
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post("api/auth/logout", axiosConfig, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        console.log("Logged out successfully");
+
+        window.location.href = "/login";
+      }
+    } catch (error) {
+      console.error("Error logging out", error);
+      alert("Logout failed. Please try again.");
+    }
+  };
+
+  const handleOpen = () => {
+    setChangePassword(true);
+  };
+
+  const handleClose = () => {
+    setChangePassword(false);
+  };
 
   return (
     <div className="relative">
@@ -314,6 +367,40 @@ export const Profile: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="max-w-2xl mx-auto space-y-8 pb-4">
+        {/* Change Password Button */}
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          type="button"
+          onClick={handleOpen}
+          className="w-full px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl
+                       text-white font-medium flex items-center justify-center space-x-2
+                       hover:from-blue-600 hover:to-blue-700 transition-all duration-300
+                       shadow-lg shadow-red-500/25"
+        >
+          <Save className="w-5 h-5" />
+          <span>Change Password</span>
+        </motion.button>
+
+        {/* Modal */}
+        <ChangePasswordDialog isOpen={changepassword} onClose={handleClose} />
+      </div>
+      <div className="max-w-2xl mx-auto space-y-8 pb-4">
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          type="button"
+          onClick={handleLogout}
+          className="w-full px-6 py-4 bg-gradient-to-r from-red-500 to-red-600 rounded-xl
+                       text-white font-medium flex items-center justify-center space-x-2
+                       hover:from-red-600 hover:to-red-700 transition-all duration-300
+                       shadow-lg shadow-red-500/25"
+        >
+          <Save className="w-5 h-5" />
+          <span>Log Out</span>
+        </motion.button>
       </div>
     </div>
   );

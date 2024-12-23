@@ -76,7 +76,7 @@ import { motion } from "framer-motion";
 import { Edit2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { Agent, AgentType } from "./types";
-import { axiosConfig } from "./utils/axiosConfig";
+import { axiosConfig } from "../../pages/auth/axiosConfig";
 
 interface AgentListProps {
   getAgentTypeInfo: (typeId: string) => AgentType | undefined;
