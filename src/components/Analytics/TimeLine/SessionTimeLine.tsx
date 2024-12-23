@@ -6,7 +6,7 @@ import type { Session } from "../types";
 interface SessionTimelineProps {
   sessions: Session[];
   isLoading: boolean;
-  onOpen: boolean;
+  onOpen: () => void;
 }
 
 export const SessionTimeline: React.FC<SessionTimelineProps> = ({

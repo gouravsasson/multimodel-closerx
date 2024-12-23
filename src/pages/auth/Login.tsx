@@ -22,19 +22,19 @@ export const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Replace with your actual API endpoint
       const response = await axios.post(
-        "http://192.168.1.46:8000/api/auth/user-login/",
+        "http://192.168.1.46:8000/api/auth/login/",
         {
           email: formData.email,
           password: formData.password,
-        }
+        },
       );
 
-      // Example: Handle API response
       if (response.data.success) {
-        // Save token or other user details in localStorage or state management
-        localStorage.setItem("token", response.data.token);
+        // Save tokens in cookies
+        document.cookie = `access_token=${response.data.access_token}; path=/; max-age=${60 * 15}; secure; samesite=strict`;
+        document.cookie = `refresh_token=${response.data.refresh_token}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
+
         navigate("/");
       } else {
         throw new Error(response.data.message || "Login failed");
@@ -96,8 +96,7 @@ export const Login: React.FC = () => {
               onChange={(e) =>
                 setFormData({ ...formData, rememberMe: e.target.checked })
               }
-              className="w-4 h-4 rounded border-white/10 bg-black/20 text-primary
-                       focus:ring-white/25 focus:ring-offset-0"
+              className="w-4 h-4 rounded border-white/10 bg-black/20 text-primary focus:ring-white/25 focus:ring-offset-0"
             />
             <span className="text-white/70 text-sm">Remember me</span>
           </label>
@@ -115,9 +114,9 @@ export const Login: React.FC = () => {
           type="submit"
           disabled={isLoading}
           className="w-full px-6 py-4 bg-white/10 hover:bg-white/20 rounded-xl
-                   text-white font-medium flex items-center justify-center space-x-2
-                   transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
-                   backdrop-blur-sm border border-white/10"
+                     text-white font-medium flex items-center justify-center space-x-2
+                     transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
+                     backdrop-blur-sm border border-white/10"
         >
           {isLoading ? (
             <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
