@@ -48,45 +48,45 @@ export const Analytics: React.FC = () => {
   const [showCreatePlan, setShowCreatePlan] = useState(false);
 
 
-  useEffect(() => {
-    const fetchAnalyticsData = async () => {
+  // useEffect(() => {
+  //   const fetchAnalyticsData = async () => {
 
       
 
-      try {
-        setIsLoading(true);
-        // setError(null);
+  //     try {
+  //       setIsLoading(true);
+  //       // setError(null);
 
-        const metricsResponse = await axios.get(
-          "https://api.example.com/metrics",
-        // );
-        // const sessionsResponse = await axios.get(
-        //   "https://api.example.com/sessions",
-        // );
+  //       const metricsResponse = await axios.get(
+  //         "https://api.example.com/metrics",
+  //       // );
+  //       // const sessionsResponse = await axios.get(
+  //       //   "https://api.example.com/sessions",
+  //       // );
 
-        setMetrics(metricsResponse.data);
-        // setSessions(
-        //   sessionsResponse.data.map((rawSession: RawSession) => ({
-        //     ...rawSession,
-        //     type: rawSession.type as "video" | "audio",
-        //     status: rawSession.status as
-        //       | "completed"
-        //       | "scheduled"
-        //       | "in-progress",
-        //     duration: rawSession.duration || 0,
-        //     tags: rawSession.tags || [],
-        //   })),
-        // );
-      } catch (err) {
-        console.error("Error fetching analytics data:", err);
-        // setError("Failed to load analytics data. Please try again later.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  //       setMetrics(metricsResponse.data);
+  //       // setSessions(
+  //       //   sessionsResponse.data.map((rawSession: RawSession) => ({
+  //       //     ...rawSession,
+  //       //     type: rawSession.type as "video" | "audio",
+  //       //     status: rawSession.status as
+  //       //       | "completed"
+  //       //       | "scheduled"
+  //       //       | "in-progress",
+  //       //     duration: rawSession.duration || 0,
+  //       //     tags: rawSession.tags || [],
+  //       //   })),
+  //       // );
+  //     } catch (err) {
+  //       console.error("Error fetching analytics data:", err);
+  //       // setError("Failed to load analytics data. Please try again later.");
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    fetchAnalyticsData();
-  }, []);
+  //   fetchAnalyticsData();
+  // }, []);
 
   const handleOpen= ()=> {
     setShowCreatePlan(true);
