@@ -9,7 +9,7 @@ interface SessionTimelineProps {
   onOpen: () => void;
 }
 
-export const SessionTimeLine: React.FC<SessionTimelineProps> = ({
+export const Timeline: React.FC<SessionTimelineProps> = ({
   sessions,
   onOpen,
 }) => {
@@ -28,6 +28,6 @@ export const SessionTimeLine: React.FC<SessionTimelineProps> = ({
           </motion.div>
         ))}
       </div>
-    </div>
-  );
+    </div>
+  );
 };
