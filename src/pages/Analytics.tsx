@@ -8,7 +8,7 @@ import { SessionAgents } from "@/components/Analytics/Agents/SessionAgents";
 // import { useAnalytics } from '../components/Analytics/hooks/useAnalytics';
 import { SessionTranscription } from "@/components/Analytics/SessionTranscriptio";
 
-import { Timeline } from './../components/Analytics/Timeline/Timeline';
+// import { Timeline } from './../components/Analytics/Timeline/Timeline';
 
 interface Metrics {
   totalClients: number;
@@ -125,11 +125,11 @@ export const Analytics: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                <Timeline
+                {/* <Timeline
                   onOpen={handleOpen}
                   sessions={sessions}
                   isLoading={isLoading}
-                />
+                /> */}
               </div>
               <div className="space-y-6">
                 <SessionAgents />
