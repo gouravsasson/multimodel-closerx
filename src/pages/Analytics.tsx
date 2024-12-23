@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
-import { SessionTimeLine } from "../components/Analytics/Timeline/SessionTimeLine";
 // import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
 // import { SessionTags } from "../components/Analytics/Tags/SessionTags";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
@@ -8,6 +7,7 @@ import axios from "axios";
 import { SessionAgents } from "@/components/Analytics/Agents/SessionAgents";
 // import { useAnalytics } from '../components/Analytics/hooks/useAnalytics';
 import { SessionTranscription } from "@/components/Analytics/SessionTranscriptio";
+import { SessionTimeLine } from "@/components/Analytics/Timeline/Timeline";
 
 interface Metrics {
   totalClients: number;
