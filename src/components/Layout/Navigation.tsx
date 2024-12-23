@@ -45,7 +45,7 @@ export const Navigation: React.FC = () => {
                 <Video className="w-4 h-4" />
                 <span>Consultation</span>
               </Link>
-              <Link
+              {/* <Link
                 to="/analytics"
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all
                   ${
@@ -56,7 +56,7 @@ export const Navigation: React.FC = () => {
               >
                 <BarChart className="w-4 h-4" />
                 <span>Analytics</span>
-              </Link>
+              </Link> */}
               <Link
                 to="/agency"
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all
