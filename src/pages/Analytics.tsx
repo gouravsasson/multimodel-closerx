@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
-import { SessionTimeline } from "../components/Analytics/Timeline/SessionTimeLine";
+import { SessionTimeLine } from "../components/Analytics/Timeline/SessionTimeLine";
 // import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
 // import { SessionTags } from "../components/Analytics/Tags/SessionTags";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
@@ -124,7 +124,7 @@ export const Analytics: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                <SessionTimeline
+                <SessionTimeLine
                   onOpen={handleOpen}
                   sessions={sessions}
                   isLoading={isLoading}
