@@ -6,7 +6,7 @@ import type { Session } from "../types";
 interface SessionTimelineProps {
   sessions: Session[];
   isLoading: boolean;
-  onOpen: boolean | (() => void);
+  onOpen: () => void;
 }
 
 export const SessionTimeline: React.FC<SessionTimelineProps> = ({
@@ -28,6 +28,6 @@ export const SessionTimeline: React.FC<SessionTimelineProps> = ({
           </motion.div>
         ))}
       </div>
-    </div>
-  );
+    </div>
+  );
 };
