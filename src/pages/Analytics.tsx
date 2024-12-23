@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
 import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeLine";
-import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
+// import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
 import { SessionTags } from "../components/Analytics/Tags/SessionTags";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
 import axios from "axios";
@@ -140,7 +140,7 @@ export const Analytics: React.FC = () => {
               <div className="space-y-6">
               <SessionAgents />
                 <SessionTags />
-                <SessionNotes />
+                {/* <SessionNotes /> */}
               </div>
             </div>
           </div>
