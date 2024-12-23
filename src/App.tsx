@@ -27,9 +27,9 @@ function App() {
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
-        <Route element={<ConsultationRoot />}>
+        {/* <Route element={<ConsultationRoot />}>
           <Route path="/consultation" element={<ConsultationRoom />} />
-        </Route>
+        </Route> */}
       </Routes>
     </Router>
   );
