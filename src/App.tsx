@@ -16,11 +16,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        {/* <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/resetpassword" element={<ResetPassword />} /> */}
         <Route element={<Root />}>
-          <Route path="/" element={<CreateAgent />} />
+          {/* <Route path="/" element={<CreateAgent />} /> */}
           <Route path="/agent/:id" element={<AgentConfig />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/agency" element={<Agency />} />
