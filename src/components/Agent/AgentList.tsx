@@ -48,7 +48,9 @@ export const AgentList: React.FC<AgentListProps> = ({ getAgentTypeInfo }) => {
         prevAgents.map((agent) =>
           agent.agent_code === agentId ? { ...agent, status: newStatus } : agent
         )
+        
       );
+      
     } catch (error) {
       console.error("Error updating status:", error);
       setError("Failed to update status. Please try again.");
@@ -62,11 +64,12 @@ export const AgentList: React.FC<AgentListProps> = ({ getAgentTypeInfo }) => {
   if (error) {
     return <div className="text-center text-red-500">{error}</div>;
   }
-
+ 
   return (
     <div className="grid gap-4">
       {agents.length > 0 ? (
         agents.map((agent) => {
+          console.log(agent);
           const typeInfo = getAgentTypeInfo(agent.type);
           return (
             <motion.div
