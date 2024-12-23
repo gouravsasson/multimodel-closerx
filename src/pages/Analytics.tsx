@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
 import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeLine";
-import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
+// import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
 import { SessionTags } from "../components/Analytics/Tags/SessionTags";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
 import axios from "axios";
@@ -119,7 +119,7 @@ export const Analytics: React.FC = () => {
         {/* {error ? (
           <div className="text-center text-red-400 font-semibold">{error}</div>
         ) : */}
-         (
+         
           <div className="max-w-7xl mx-auto space-y-8">
             <SessionMetrics
               metrics={
@@ -144,7 +144,7 @@ export const Analytics: React.FC = () => {
               </div>
             </div>
           </div>
-        )
+        
       </div>
     </div>
   );
