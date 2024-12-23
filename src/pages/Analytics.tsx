@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
 // import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeLine";
-import { SessionTimeline } from "@/components/Analytics/Timeline/SessionTimeLine";
 // import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
 import { SessionTags } from "../components/Analytics/Tags/SessionTags";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
@@ -29,20 +28,20 @@ interface RawSession {
   notes?: string;
 }
 
-interface Session {
-  id: string;
-  clientName: string;
-  type: "video" | "audio";
-  status: "completed" | "scheduled" | "in-progress";
-  startTime: string;
-  duration: number;
-  tags: string[];
-  notes?: string;
-}
+// interface Session {
+//   id: string;
+//   clientName: string;
+//   type: "video" | "audio";
+//   status: "completed" | "scheduled" | "in-progress";
+//   startTime: string;
+//   duration: number;
+//   tags: string[];
+//   notes?: string;
+// }
 
 export const Analytics: React.FC = () => {
   const [metrics, setMetrics] = useState<Metrics | null>(null);
-  // const [sessions, setSessions] = useState<Session[]>([]);
+  const [ setSessions] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const {  sessions,  } = useAnalytics();
@@ -136,7 +135,7 @@ export const Analytics: React.FC = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                <SessionTimeline onOpen={handleOpen}  sessions={sessions} isLoading={isLoading} />
+                {/* <SessionTimeline onOpen={handleOpen}  sessions={sessions} isLoading={isLoading} /> */}
               </div>
               <div className="space-y-6">
               <SessionAgents />
