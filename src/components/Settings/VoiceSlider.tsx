@@ -17,7 +17,7 @@ export const VoiceSlider: React.FC<VoiceSliderProps> = ({
         <input
           type="range"
           min="0"
-          max="100"
+          max="2"
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
           className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer
@@ -32,9 +32,9 @@ export const VoiceSlider: React.FC<VoiceSliderProps> = ({
         />
         <motion.div
           className="absolute left-0 top-1/2 h-2 bg-primary/30 rounded-l-lg -translate-y-1/2"
-          style={{ width: `${value}%` }}
+          style={{ width: `${value}` }}
           initial={false}
-          animate={{ width: `${value}%` }}
+          animate={{ width: `${value}` }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         />
       </div>

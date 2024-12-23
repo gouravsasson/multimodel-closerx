@@ -13,6 +13,7 @@ import {
 import type { AgentType } from "./types";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { axiosConfig } from "./utils/axiosConfig";
 
 interface CreateAgentFormProps {
   agentName: string;
@@ -32,29 +33,16 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
   onCancel,
   // onSubmit,
 }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleFormSubmit = async () => {
     try {
       const payload = {
         name: agentName,
         type: selectedType,
       };
+      const response = await axios.post("agents/", payload, axiosConfig);
 
-      const config = {
-        headers: {
-          "schema-name": "fe47b368-c563-4aaf-868d-e165d7ff2807",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0OTg2NzgwLCJpYXQiOjE3MzQ3NzA3ODAsImp0aSI6IjJiZjM4ZDJkMmYxMjQ1MThiMmI4YmY4YWIwZTJiOGE5IiwidXNlcl9pZCI6NX0.D2UkUqToZjH7igwW9ucbCQrfJa4v4v58rav0yNDlA94",
-        },
-      };
-
-      const response = await axios.post(
-        "http://192.168.1.46:8000/api/agents/",
-        payload,
-        config,
-      );
-
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log("Agent created successfully:", response.data);
         const agentId = response.data.response.id; // Ensure this is the correct field
         // console.log(agentId);

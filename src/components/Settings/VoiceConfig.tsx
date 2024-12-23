@@ -9,6 +9,7 @@ import TagsAgent from "./tagsAgent";
 import LeadConnectorSelect from "./leadConnecterSelect";
 import UpdateFunction from "./updateFunction";
 import PopupForm from "./updatefieldform";
+import { axiosConfig } from "../Agent/utils/axiosConfig";
 
 // import axios from "axios";
 interface VoiceConfigProps {
@@ -51,18 +52,11 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
     // setIsSubmitting(true);
     try {
       const payload = { agentvoice: selectedVoice, speed, pitch };
-      const config = {
-        headers: {
-          "schema-name": "fe47b368-c563-4aaf-868d-e165d7ff2807",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0OTg2NzgwLCJpYXQiOjE3MzQ3NzA3ODAsImp0aSI6IjJiZjM4ZDJkMmYxMjQ1MThiMmI4YmY4YWIwZTJiOGE5IiwidXNlcl9pZCI6NX0.D2UkUqToZjH7igwW9ucbCQrfJa4v4v58rav0yNDlA94",
-        },
-      };
 
       const response = await axios.patch(
-        `http://192.168.1.46:8000/api/agents/${id}/update/`,
+        `/agents/${id}/update/`,
         payload,
-        config
+        axiosConfig
       );
 
       if (response.status === 200) {
@@ -202,8 +196,12 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
             </div>
 
             <div className="space-y-4">
-              <VoiceSlider label="Speed" value={speed} onChange={setSpeed} />
-              <VoiceSlider label="Pitch" value={pitch} onChange={setPitch} />
+              <VoiceSlider
+                label="Temprature"
+                value={speed}
+                onChange={setSpeed}
+              />
+              {/* <VoiceSlider label="Pitch" value={pitch} onChange={setPitch} /> */}
             </div>
           </div>
           <div className="w-full bg-white rounded-lg ">

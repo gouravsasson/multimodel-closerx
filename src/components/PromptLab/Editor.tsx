@@ -108,6 +108,7 @@ import { TemplateModal } from "./TemplateModal";
 import { templates } from "./templates";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { axiosConfig } from "../Agent/utils/axiosConfig";
 
 interface EditorProps {
   onNext: () => void;
@@ -134,18 +135,11 @@ export const Editor: React.FC<EditorProps> = ({ onNext }) => {
     setIsSubmitting(true);
     try {
       const payload = { prompt };
-      const config = {
-        headers: {
-          "schema-name": "fe47b368-c563-4aaf-868d-e165d7ff2807",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0OTg2NzgwLCJpYXQiOjE3MzQ3NzA3ODAsImp0aSI6IjJiZjM4ZDJkMmYxMjQ1MThiMmI4YmY4YWIwZTJiOGE5IiwidXNlcl9pZCI6NX0.D2UkUqToZjH7igwW9ucbCQrfJa4v4v58rav0yNDlA94",
-        },
-      };
 
       const response = await axios.patch(
-        `http://192.168.1.46:8000/api/agents/${id}/update/`,
+        `/agents/${id}/update/`,
         payload,
-        config,
+        axiosConfig,
       );
 
       if (response.status === 200) {
