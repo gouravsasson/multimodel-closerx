@@ -4,7 +4,7 @@ import type { Session } from "../types";
 
 interface SessionCardProps {
   session: Session;
-  openmodal: boolean;
+  openmodal: boolean | (() => void);
 }
 
 export const SessionCard: React.FC<SessionCardProps> = ({

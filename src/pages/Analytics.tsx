@@ -17,16 +17,16 @@ interface Metrics {
   averageSessionDuration: number;
 }
 
-interface RawSession {
-  id: string;
-  clientName: string;
-  type: string;
-  status: string;
-  startTime: string;
-  duration?: number;
-  tags?: string[];
-  notes?: string;
-}
+// interface RawSession {
+//   id: string;
+//   clientName: string;
+//   type: string;
+//   status: string;
+//   startTime: string;
+//   duration?: number;
+//   tags?: string[];
+//   notes?: string;
+// }
 
 // interface Session {
 //   id: string;
@@ -41,9 +41,9 @@ interface RawSession {
 
 export const Analytics: React.FC = () => {
   const [metrics, setMetrics] = useState<Metrics | null>(null);
-  const [ setSessions] = useState([]);
+  // const [ setSessions] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  // const [ setError] = useState<string | null>(null);
   const {  sessions,  } = useAnalytics();
   const [showCreatePlan, setShowCreatePlan] = useState(false);
 
@@ -55,31 +55,31 @@ export const Analytics: React.FC = () => {
 
       try {
         setIsLoading(true);
-        setError(null);
+        // setError(null);
 
         const metricsResponse = await axios.get(
           "https://api.example.com/metrics",
-        );
-        const sessionsResponse = await axios.get(
-          "https://api.example.com/sessions",
-        );
+        // );
+        // const sessionsResponse = await axios.get(
+        //   "https://api.example.com/sessions",
+        // );
 
         setMetrics(metricsResponse.data);
-        setSessions(
-          sessionsResponse.data.map((rawSession: RawSession) => ({
-            ...rawSession,
-            type: rawSession.type as "video" | "audio",
-            status: rawSession.status as
-              | "completed"
-              | "scheduled"
-              | "in-progress",
-            duration: rawSession.duration || 0,
-            tags: rawSession.tags || [],
-          })),
-        );
+        // setSessions(
+        //   sessionsResponse.data.map((rawSession: RawSession) => ({
+        //     ...rawSession,
+        //     type: rawSession.type as "video" | "audio",
+        //     status: rawSession.status as
+        //       | "completed"
+        //       | "scheduled"
+        //       | "in-progress",
+        //     duration: rawSession.duration || 0,
+        //     tags: rawSession.tags || [],
+        //   })),
+        // );
       } catch (err) {
         console.error("Error fetching analytics data:", err);
-        setError("Failed to load analytics data. Please try again later.");
+        // setError("Failed to load analytics data. Please try again later.");
       } finally {
         setIsLoading(false);
       }
