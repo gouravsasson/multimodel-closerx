@@ -10,7 +10,7 @@ export const AgentConfig: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   // console.log(id)
   const [activeTab, setActiveTab] = useState("prompt");
-  console.log(activeTab);
+  // console.log(activeTab);
   const handleNext = () => {
     if (activeTab === "prompt") {
       setActiveTab("settings");

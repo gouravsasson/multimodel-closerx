@@ -42,10 +42,10 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
       };
       const response = await axios.post("agents/", payload, axiosConfig);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         console.log("Agent created successfully:", response.data);
-        const agentId = response.data.response.id; // Ensure this is the correct field
-        // console.log(agentId);
+        const agentId = response.data.agent_code; // Ensure this is the correct field
+        console.log(agentId);
         navigate(`/agent/${agentId}/`);
         onSubmit(); // Notify parent about success
       } else {

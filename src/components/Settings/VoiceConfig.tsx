@@ -18,8 +18,8 @@ interface VoiceConfigProps {
 
 export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
   const [selectedVoice, setSelectedVoice] = useState(voices[0].id);
-  const [speed, setSpeed] = useState(50);
-  const [pitch, setPitch] = useState(50);
+  const [temperature, setTemperature] = useState(1);
+  // const [pitch, setPitch] = useState(50);
   const [loading, setLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showTagsModal, setShowTagsModal] = useState(false);
@@ -51,10 +51,10 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
   const handleSelectVoice = async () => {
     // setIsSubmitting(true);
     try {
-      const payload = { agentvoice: selectedVoice, speed, pitch };
+      const payload = { agent_voice: selectedVoice, temperature: temperature };
 
       const response = await axios.patch(
-        `/agents/${id}/update/`,
+        `/agents/${id}/`,
         payload,
         axiosConfig
       );
@@ -198,8 +198,8 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
             <div className="space-y-4">
               <VoiceSlider
                 label="Temprature"
-                value={speed}
-                onChange={setSpeed}
+                value={temperature}
+                onChange={setTemperature}
               />
               {/* <VoiceSlider label="Pitch" value={pitch} onChange={setPitch} /> */}
             </div>

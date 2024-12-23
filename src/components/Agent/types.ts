@@ -1,11 +1,16 @@
 import { ReactNode } from "react";
 
 export interface Agent {
-  id: string;
+  agent_code: string;
   name: string;
   type: string;
-  createdAt: string;
-  status: "active" | "inactive";
+  prompt: string | null;
+  status: string;
+  agent_voice: string | null;
+  speed: number;
+  pitch: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface AgentType {
