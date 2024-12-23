@@ -144,7 +144,7 @@ export const Analytics: React.FC = () => {
               </div>
             </div>
           </div>
-        )}
+        )
       </div>
     </div>
   );
