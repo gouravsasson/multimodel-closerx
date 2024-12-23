@@ -9,7 +9,7 @@ interface SessionTimelineProps {
   onOpen: () => void;
 }
 
-export const SessionTimeline: React.FC<SessionTimelineProps> = ({
+export const SessionTimeLine: React.FC<SessionTimelineProps> = ({
   sessions,
   onOpen,
 }) => {
