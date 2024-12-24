@@ -6,8 +6,9 @@ import { SessionTimeline } from "../components/Analytics/Timeline/SessionTimeLin
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
 import axios from "axios";
 import { SessionAgents } from "@/components/Analytics/Agents/SessionAgents";
-// import { useAnalytics } from '../components/Analytics/hooks/useAnalytics';
+// import { useAnalytics } from "../components/Analytics/hooks/useAnalytics";
 import { SessionTranscription } from "@/components/Analytics/SessionTranscriptio";
+import { axiosConfig } from "./auth/axiosConfig";
 
 interface Metrics {
   totalClients: number;
@@ -43,7 +44,7 @@ export const Analytics: React.FC = () => {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  // const {  sessions  } = useAnalytics();
+  // const { sessions } = useAnalytics();
   const [showCreatePlan, setShowCreatePlan] = useState(false);
 
   useEffect(() => {
@@ -53,11 +54,10 @@ export const Analytics: React.FC = () => {
         setError(null);
 
         const metricsResponse = await axios.get(
-          "https://api.example.com/metrics",
+          "call-session-statistics/",
+          axiosConfig
         );
-        const sessionsResponse = await axios.get(
-          "https://api.example.com/sessions",
-        );
+        const sessionsResponse = await axios.get("list-call-sessions/");
 
         setMetrics(metricsResponse.data);
         setSessions(
@@ -70,7 +70,7 @@ export const Analytics: React.FC = () => {
               | "in-progress",
             duration: rawSession.duration || 0,
             tags: rawSession.tags || [],
-          })),
+          }))
         );
       } catch (err) {
         console.error("Error fetching analytics data:", err);

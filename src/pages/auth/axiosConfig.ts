@@ -1,7 +1,11 @@
+// import { getCookie } from "./cookieUtils";
+
 const BASE_URL = "https://xjs6k34l-8000.inc1.devtunnels.ms/api/";
-const SCHEMA_NAME = "280e8563-7e9c-4b8d-9b1a-71e5e0974de8";
+const SCHEMA_NAME = "6d935a02-e301-4481-8f54-a794539dd884";
 const AUTH_TOKEN =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1MTc0OTMxLCJpYXQiOjE3MzQ5NTg5MzEsImp0aSI6IjJhMDlkMGM5MzNkZDQ3YmY5OGM3YTlkOWY3MjYyZGExIiwidXNlcl9pZCI6MX0.mxRmbWpckSeqiGo08hNPhKybB-rBy14-DTFrlLlXZ40";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1MjYyMzIyLCJpYXQiOjE3MzUwNDYzMjIsImp0aSI6ImY4ZjM2M2FiMDQ1MTRiMjJhN2JiMTM5NjJhYWI4ZTYwIiwidXNlcl9pZCI6NH0.fsqXyZ6QUyJriA7ibWzVF-dT3MCps5lqm_T3w68LEVk";
+// const schemaName = getCookie("schema_name");
+// const Auth_Token = getCookie("access_token");
 
 export const axiosConfig = {
   baseURL: BASE_URL,

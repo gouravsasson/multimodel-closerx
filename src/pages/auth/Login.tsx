@@ -34,8 +34,11 @@ export const Login: React.FC = () => {
 
       if (response.data.success) {
         // Save tokens in cookies
-        document.cookie = `access_token=${response.data.access_token}; path=/; max-age=${60 * 15}; secure; samesite=strict`;
+        document.cookie = `access_token=${response.data.data.token}; path=/; max-age=${60 * 60 * 24}; secure; samesite=strict`;
         document.cookie = `refresh_token=${response.data.refresh_token}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
+        if (response.data.schema_name) {
+          document.cookie = `schema_name=${response.data.schema_name}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
+        }
 
         login(); // Update authentication state
         navigate("/"); // Redirect to the home page

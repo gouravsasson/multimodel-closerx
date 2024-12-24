@@ -14,9 +14,10 @@ import {
   Star,
   CheckCircle2,
 } from "lucide-react";
-import { axiosConfig } from "./auth/axiosConfig";
+import { axiosConfig, axiosConfig2 } from "./auth/axiosConfig";
 import { ChangePasswordDialog } from "@/components/Profile/ChangePasswordDialog";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
+import { getCookie } from "../pages/auth/cookieUtils";
 
 export const Profile: React.FC = () => {
   const [changepassword, setChangePassword] = useState(false);
@@ -32,7 +33,7 @@ export const Profile: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get("auth/user-detail/", axiosConfig) // Replace with your API endpoint
+      .get("auth/user-detail/", axiosConfig2) // Replace with your API endpoint
       .then((response) => {
         if (response.data.success) {
           const {
@@ -41,14 +42,15 @@ export const Profile: React.FC = () => {
             email,
             contact_number,
             profile_picture,
+            company_name,
           } = response.data.response;
 
           setProfile({
             name: `${first_name} ${last_name}`,
-            company: "", // Add default or fetched value if available
             email: email,
             phone: contact_number,
             avatar: profile_picture,
+            company: company_name,
           });
         } else {
           console.error("API returned an error:", response.data.errors);
@@ -83,7 +85,7 @@ export const Profile: React.FC = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: profile.name,
+      name: `${profile.firstName} ${profile.lastName}`, // Combine fields for form
       company: profile.company,
       email: profile.email,
       phone: profile.phone,
@@ -96,17 +98,47 @@ export const Profile: React.FC = () => {
         .required("Email is required"),
       phone: Yup.string().required("Phone number is required"),
     }),
+
     onSubmit: (values) => {
       setLoading(true);
-      // Axios POST request to update profile
+
+      // Split name into first_name and last_name
+      const [first_name, ...lastNameParts] = values.name.split(" ");
+      const last_name = lastNameParts.join(" ");
+
+      const payload = {
+        first_name: first_name || "", // Handle missing first name
+        last_name: last_name || "", // Handle missing last name
+        email: values.email,
+        contact_number: values.phone,
+        company_name: values.company,
+      };
+
       axios
-        .put("https://api.example.com/user/profile", values) // Replace with your API endpoint
+        .patch("auth/update/user-detail/", payload, axiosConfig2) // Send corrected payload
         .then((response) => {
-          setProfile(response.data);
-          console.log("Profile updated", response.data);
+          const {
+            first_name,
+            last_name,
+            email,
+            contact_number,
+            profile_picture,
+            company_name,
+          } = response.data.response;
+
+          // Update profile state
+          setProfile({
+            name: `${first_name} ${last_name}`,
+            email,
+            phone: contact_number,
+            avatar: profile_picture,
+            company: company_name,
+          });
+
+          console.log("Profile updated successfully:", response.data.response);
         })
         .catch((error) => {
-          console.error("Error updating profile", error);
+          console.error("Error updating profile:", error);
         })
         .finally(() => {
           setLoading(false);
@@ -123,14 +155,27 @@ export const Profile: React.FC = () => {
   }
 
   const handleLogout = async () => {
+    const refreshToken = getCookie("refresh_token"); // Retrieve the refresh token from cookies
+
+    if (!refreshToken) {
+      alert("No refresh token found. Unable to log out.");
+      return;
+    }
+
     try {
-      const response = await axios.post("api/auth/logout", axiosConfig, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        "auth/user/logout/",
+        { refresh_token: refreshToken },
+        axiosConfig2
+      );
+
       if (response.status === 200) {
         console.log("Logged out successfully");
 
-        window.location.href = "/login";
+        document.cookie = "refresh_token=; path=/; max-age=0;";
+        document.cookie = "access_token=; path=/; max-age=0;";
+
+        window.location.href = "/login"; // Redirect to login
       }
     } catch (error) {
       console.error("Error logging out", error);

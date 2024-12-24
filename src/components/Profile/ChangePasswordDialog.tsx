@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Lock, AlertCircle } from "lucide-react";
 import axios from "axios";
 import { FormInput } from "@/components/auth/FormInput";
-import { axiosConfig } from "@/pages/auth/axiosConfig";
+import { axiosConfig, axiosConfig2 } from "@/pages/auth/axiosConfig";
 
 interface ChangePasswordDialogProps {
   isOpen: boolean;
@@ -40,17 +40,16 @@ export const ChangePasswordDialog: React.FC<ChangePasswordDialogProps> = ({
     }
 
     try {
-      // Replace with your actual API endpoint
       const response = await axios.patch(
         "auth/change_password/",
         {
           old_password: formData.oldPassword,
-          new_password: formData.newPassword,
+          new_password1: formData.newPassword,
+          new_password2: formData.confirmPassword,
         },
-        axiosConfig,
+        axiosConfig2,
       );
 
-      // Handle API response
       if (response.data.success) {
         setSuccess("Password successfully updated!");
         setTimeout(() => navigate("/login"), 2000); // Redirect after success
