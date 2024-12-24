@@ -57,7 +57,7 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
         setIsConnected(true);
         setSelectedVoice(response.data.agent_voice);
         setTemperature(response.data.temperature);
-        console.log(response.data.voice); // Set the prompt if it exists
+        console.log(response.data.agent_voice); // Set the prompt if it exists
       }
     } catch (error) {
       console.error("Error fetching prompt:", error);

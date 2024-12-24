@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { TabNavigation } from "../components/Layout/TabNavigation";
 import { Editor } from "../components/PromptLab/Editor";
 import { VoiceConfig } from "../components/Settings/VoiceConfig";
 import { CodePreview } from "../components/Embed/CodePreview";
 import ConsultationRoom from "./ConsultationRoom";
+import { TabNavigationAgency } from "@/components/Agency/components/TabNavigationAgency";
 // import { ParticleBackground } from '../components/Particles/ParticleBackground';
 
 export const AgentConfig: React.FC = () => {
@@ -35,7 +35,7 @@ export const AgentConfig: React.FC = () => {
           <p className="text-white/70">Agent ID: {id}</p>
         </header>
 
-        <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+        <TabNavigationAgency activeTab={activeTab} onTabChange={setActiveTab} />
 
         <main className="max-w-6xl mx-auto">
           {activeTab === "prompt" && <Editor onNext={handleNext} />}

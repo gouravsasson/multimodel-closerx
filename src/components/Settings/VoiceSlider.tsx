@@ -41,7 +41,6 @@
 //     </div>
 //   );
 // };
-
 import React from "react";
 import type { VoiceSliderProps } from "./types";
 import { motion } from "framer-motion";
@@ -53,14 +52,16 @@ export const VoiceSlider: React.FC<VoiceSliderProps> = ({
 }) => {
   const maxValue = 2.0; // Maximum slider value
 
+  // Ensure value is a number, default to 0 if undefined or invalid
+  const numericValue = typeof value === "number" ? value : 0;
+
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-center">
         <label className="text-white/80 text-sm">{label}</label>
         <span className="text-white/60 text-sm">
-          {value.toFixed(1)}/{maxValue}
-        </span>{" "}
-        {/* Format value */}
+          {numericValue.toFixed(1)}/{maxValue}
+        </span>
       </div>
       <div className="relative">
         <input
@@ -68,7 +69,7 @@ export const VoiceSlider: React.FC<VoiceSliderProps> = ({
           min="0"
           max={maxValue}
           step="0.1" // Smaller steps for smoother movement
-          value={value}
+          value={numericValue}
           onChange={(e) => onChange(parseFloat(e.target.value))} // Ensure value is a float
           className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer
                    [&::-webkit-slider-thumb]:appearance-none
@@ -82,9 +83,9 @@ export const VoiceSlider: React.FC<VoiceSliderProps> = ({
         />
         <motion.div
           className="absolute left-0 top-1/2 h-2 bg-primary/30 rounded-l-lg -translate-y-1/2"
-          style={{ width: `${(value / maxValue) * 100}%` }} // Map value to percentage width
+          style={{ width: `${(numericValue / maxValue) * 100}%` }} // Map value to percentage width
           initial={false}
-          animate={{ width: `${(value / maxValue) * 100}%` }}
+          animate={{ width: `${(numericValue / maxValue) * 100}%` }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         />
       </div>
