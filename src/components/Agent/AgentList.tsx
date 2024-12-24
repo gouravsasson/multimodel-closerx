@@ -100,7 +100,7 @@ export const AgentList: React.FC<AgentListProps> = ({ getAgentTypeInfo }) => {
                   <span
                     className={`px-3 py-1 rounded-full text-xs cursor-pointer ${
                       agent.status.toLowerCase() === "active"
-                        ? "bg-emerald-500/20 text-emerald-400"
+                        ? "bg-emerald-500/20 text-emerald-400 hover:bg-green-300"
                         : "bg-red-500/20 text-red-400"
                     }`}
                     onClick={() => toggleStatus(agent.agent_code, agent.status)}

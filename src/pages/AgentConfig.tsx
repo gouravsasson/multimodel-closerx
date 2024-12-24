@@ -4,6 +4,7 @@ import { TabNavigation } from "../components/Layout/TabNavigation";
 import { Editor } from "../components/PromptLab/Editor";
 import { VoiceConfig } from "../components/Settings/VoiceConfig";
 import { CodePreview } from "../components/Embed/CodePreview";
+import ConsultationRoom from "./ConsultationRoom";
 // import { ParticleBackground } from '../components/Particles/ParticleBackground';
 
 export const AgentConfig: React.FC = () => {
@@ -15,6 +16,8 @@ export const AgentConfig: React.FC = () => {
     if (activeTab === "prompt") {
       setActiveTab("settings");
     } else if (activeTab === "settings") {
+      setActiveTab("testagent");
+    } else if (activeTab === "testagent") {
       setActiveTab("embed");
     }
   };
@@ -37,6 +40,7 @@ export const AgentConfig: React.FC = () => {
         <main className="max-w-6xl mx-auto">
           {activeTab === "prompt" && <Editor onNext={handleNext} />}
           {activeTab === "settings" && <VoiceConfig onNext={handleNext} />}
+          {activeTab === "testagent" && <ConsultationRoom />}
           {activeTab === "embed" && <CodePreview />}
         </main>
       </div>

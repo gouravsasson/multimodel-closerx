@@ -10,7 +10,9 @@ const ImportContentDialog: React.FC<ImportContentProps> = ({ onClose }) => {
   const [activity, setActivity] = useState("");
   const [customFieldValue, setCustomFieldValue] = useState("");
   const [evaluateOn, setEvaluateOn] = useState("");
-  const [promptContent, setPromptContent] = useState("");
+  const [promptContent, setPromptContent] = useState(
+    "Create a sleek and modern landing page design for a tech startup, featuring a hero section with a call-to-action button, client testimonials, and a pricing table. Use a minimalistic style with a blue and white color palette."
+  );
 
   const handleImportContent = () => {
     console.log({
@@ -44,12 +46,12 @@ const ImportContentDialog: React.FC<ImportContentProps> = ({ onClose }) => {
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="bg-gradient-to-br from-gray-900/95 to-purple-900/95 backdrop-blur-xl p-8 rounded-2xl 
-                   border border-white/20 w-full max-w-xl shadow-2xl"
+        className="bg-gradient-to-br from-gray-900/95 w-[80%]  to-purple-900/95 backdrop-blur-xl p-8 rounded-2xl 
+                   border border-white/20   shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
+       <div className="space-y-6">
+        {/*    <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="text-white/90 text-sm font-medium block mb-2">
                 Provider
@@ -82,7 +84,7 @@ const ImportContentDialog: React.FC<ImportContentProps> = ({ onClose }) => {
                 <option value="Activity2">Activity2</option>
               </select>
             </div>
-          </div>
+          </div> */}
 
           <div>
             <label className="text-white/90 text-sm font-medium block mb-2">
@@ -111,11 +113,17 @@ const ImportContentDialog: React.FC<ImportContentProps> = ({ onClose }) => {
                          focus:ring-primary/50"
             >
               <option value="">Select Evaluation</option>
-              <option value="Option1">Option1</option>
-              <option value="Option2">Option2</option>
+              <option value="Option1">Contact First Name</option>
+              <option value="Option2">Contact Last Name</option>
+              <option value="Option2">Contact Email</option>
+              <option value="Option3">Contact Phone</option>
+
             </select>
           </div>
-
+          {/* {{contact.first_name}}
+              {{contact.last_name}}
+              {{contact.email}}
+              {{contact.phone}} */}
           <div>
             <label className="text-white/90 text-sm font-medium block mb-2">
               Prompt Content

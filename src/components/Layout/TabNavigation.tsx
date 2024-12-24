@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Command, Settings, Code } from "lucide-react";
+import { Command, Settings, Code, Banana, Speech } from "lucide-react";
+import ConsultationRoom from "@/pages/ConsultationRoom";
 
 interface Tab {
   id: string;
@@ -16,6 +17,11 @@ interface TabNavigationProps {
 const tabs: Tab[] = [
   { id: "prompt", label: "Prompt Lab", icon: <Command className="w-5 h-5" /> },
   { id: "settings", label: "Settings", icon: <Settings className="w-5 h-5" /> },
+  {
+    id: "testagent",
+    label: "Test Agent",
+    icon: <Speech className="w-5 h-5" />,
+  },
   { id: "embed", label: "Embed Code", icon: <Code className="w-5 h-5" /> },
 ];
 
@@ -24,7 +30,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
   onTabChange,
 }) => {
   return (
-    <nav className="relative flex justify-center mb-8">
+    <nav className="relative flex justify-center mb-8 h-full'">
       <motion.div
         className="flex space-x-2 p-1 bg-white/10 backdrop-blur-lg rounded-xl"
         initial={{ y: -20, opacity: 0 }}

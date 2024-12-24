@@ -1,7 +1,8 @@
-const BASE_URL = "https://xjs6k34l-8000.inc1.devtunnels.ms/api";
-const SCHEMA_NAME = "280e8563-7e9c-4b8d-9b1a-71e5e0974de8";
+const BASE_URL =
+  "https://xjs6k34l-8000.inc1.devtunnels.ms/api";
+const SCHEMA_NAME = "be713620-d65b-47bd-b296-c246ceaa8fe8";
 const AUTH_TOKEN =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1MTY3NTYwLCJpYXQiOjE3MzQ5NTE1NjAsImp0aSI6IjQ3ZjAzZWYyYjcyMDQ1ZWY5M2I4MjBkMzNmYTc0NWE2IiwidXNlcl9pZCI6MX0.UcZF3eyTqaOQI_4Y6nHn09p5aKpwOtBLX45QVChY1GA";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1MjUxNDIyLCJpYXQiOjE3MzUwMzU0MjIsImp0aSI6IjRhOWMyNTZmNmQ5MjRmMDQ4MTViYjljYTFhNDVjNjA3IiwidXNlcl9pZCI6Mn0.9sJURcUCEnueRem6ZRvasXyHofBcq3ERo9mzTWy1kPc";
 
 export const axiosConfig = {
   baseURL: BASE_URL,
