@@ -44,7 +44,7 @@ export const WebhookConfig: React.FC = () => {
             Webhook Configuration
           </h2>
         </div>
-        <motion.button
+        {/* <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setShowAddForm(true)}
@@ -53,10 +53,10 @@ export const WebhookConfig: React.FC = () => {
         >
           <Plus className="w-4 h-4" />
           <span>Add Webhook</span>
-        </motion.button>
+        </motion.button> */}
       </div>
 
-      {showAddForm && (
+      {/* {showAddForm && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -99,9 +99,9 @@ export const WebhookConfig: React.FC = () => {
             </div>
           </div>
         </motion.div>
-      )}
+      )} */}
 
-      <div className="space-y-4">
+      {/* <div className="space-y-4">
         {webhooks.map((webhook) => (
           <motion.div
             key={webhook.id}
@@ -150,6 +150,10 @@ export const WebhookConfig: React.FC = () => {
             No webhooks configured. Click "Add Webhook" to get started.
           </div>
         )}
+      </div> */}
+
+      <div className="flex justify-center w-full font-semibold text-3xl text-white ">
+        <h1>Coming Soon...</h1>
       </div>
     </div>
   );

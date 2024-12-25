@@ -1,10 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link2 } from "lucide-react";
+import { getCookie } from "../../pages/auth/cookieUtils";
 
 export const LeadConnector: React.FC = () => {
+  const schemaName = getCookie("schema_name");
+
   const handleConnect = () => {
-    window.open("https://app.leadconnector.com/auth", "_blank");
+    window.location.href =
+      window.location.href = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=https://app.closerx.ai/g-h-l/success&state=${schemaName}&client_id=676906277d17de2a8a222a9d-m52bcifq&scope=contacts.write%20contacts.readonly%20calendars.readonly%20calendars.write%20calendars/events.readonly%20calendars/events.write%20locations/customValues.readonly%20locations/customValues.write%20locations/tags.write%20locations.readonly `;
   };
 
   return (

@@ -24,7 +24,7 @@ export const SessionMetrics: React.FC<SessionMetricsProps> = ({
   const metricCards: MetricCardProps[] = [
     {
       icon: <Users className="w-5 h-5" />,
-      label: "Total Clients",
+      label: "Total Sessions",
       value: metrics.totalClients,
       change: "+12%",
       trend: "up",
@@ -33,7 +33,7 @@ export const SessionMetrics: React.FC<SessionMetricsProps> = ({
     {
       icon: <Clock className="w-5 h-5" />,
       label: "Avg. Session Duration",
-      value: "28 mins",
+      value: metrics.averageSessionDuration,
       change: "-5%",
       trend: "down",
       isLoading,
@@ -48,7 +48,7 @@ export const SessionMetrics: React.FC<SessionMetricsProps> = ({
     },
     {
       icon: <Video className="w-5 h-5" />,
-      label: "Active Sessions",
+      label: "Active Agent",
       value: metrics.activeSessionCount,
       change: "0%",
       trend: "neutral",

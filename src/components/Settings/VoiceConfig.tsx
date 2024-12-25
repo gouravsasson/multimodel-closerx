@@ -9,7 +9,7 @@ import TagsAgent from "./tagsAgent";
 import LeadConnectorSelect from "./leadConnecterSelect";
 import UpdateFunction from "./updateFunction";
 import PopupForm from "./updatefieldform";
-import { axiosConfig } from "../Agent/utils/axiosConfig";
+import { axiosConfig } from "../../pages/auth/axiosConfig";
 
 // import axios from "axios";
 interface VoiceConfigProps {

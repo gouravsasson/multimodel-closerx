@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Lock, LogIn, AlertCircle } from "lucide-react";
+import axios from "axios";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { FormInput } from "@/components/auth/FormInput";
+import { useAuth } from "./AuthContext";
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Get the login function from AuthContext
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,10 +24,32 @@ export const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      navigate("/");
-    } catch (err) {
-      setError("Invalid email or password");
+      const response = await axios.post(
+        "https://2xjx88w4-8000.inc1.devtunnels.ms/api/auth/user-login/",
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+      );
+
+      if (response.data.success) {
+        // Save tokens in cookies
+        document.cookie = `access_token=${response.data.data.token}; path=/; max-age=${60 * 60 * 24}; secure; samesite=strict`;
+        document.cookie = `refresh_token=${response.data.refresh_token}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
+        if (response.data.schema_name) {
+          document.cookie = `schema_name=${response.data.schema_name}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
+        }
+        if (response.data.ghl_registered) {
+          document.cookie = `ghl_registered=${response.data.ghl_registered}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
+        }
+
+        login(); // Update authentication state
+        navigate("/"); // Redirect to the home page
+      } else {
+        throw new Error(response.data.message || "Login failed");
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Invalid email or password");
     } finally {
       setIsLoading(false);
     }
@@ -72,36 +97,12 @@ export const Login: React.FC = () => {
           placeholder="Enter your password"
         />
 
-        <div className="flex items-center justify-between">
-          <label className="flex items-center space-x-2 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={formData.rememberMe}
-              onChange={(e) =>
-                setFormData({ ...formData, rememberMe: e.target.checked })
-              }
-              className="w-4 h-4 rounded border-white/10 bg-black/20 text-primary
-                       focus:ring-white/25 focus:ring-offset-0"
-            />
-            <span className="text-white/70 text-sm">Remember me</span>
-          </label>
-          <Link
-            to="/forgot-password"
-            className="text-sm text-white hover:text-white/80 transition-colors"
-          >
-            Forgot Password?
-          </Link>
-        </div>
-
         <motion.button
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
           type="submit"
           disabled={isLoading}
-          className="w-full px-6 py-4 bg-white/10 hover:bg-white/20 rounded-xl
-                   text-white font-medium flex items-center justify-center space-x-2
-                   transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
-                   backdrop-blur-sm border border-white/10"
+          className="w-full px-6 py-4 bg-white/10 hover:bg-white/20 rounded-xl text-white font-medium flex items-center justify-center space-x-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm border border-white/10"
         >
           {isLoading ? (
             <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
@@ -113,18 +114,6 @@ export const Login: React.FC = () => {
           )}
         </motion.button>
       </form>
-
-      <div className="mt-6 text-center">
-        <p className="text-white/80">
-          Don't have an account?{" "}
-          <Link
-            to="/register"
-            className="text-white hover:text-white/80 transition-colors font-medium"
-          >
-            Sign up
-          </Link>
-        </p>
-      </div>
     </AuthLayout>
   );
 };

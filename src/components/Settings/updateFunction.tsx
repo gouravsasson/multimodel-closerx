@@ -269,7 +269,7 @@ import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { axiosConfig } from "../Agent/utils/axiosConfig";
+import { axiosConfig } from "@/pages/auth/axiosConfig";
 import { useParams } from "react-router-dom";
 
 interface TagsAgentProps {

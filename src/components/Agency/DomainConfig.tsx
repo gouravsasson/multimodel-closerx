@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Globe, Plus, Check, Copy, ExternalLink, Loader2 } from "lucide-react";
 import axios from "axios";
-import { axiosConfig } from "../Agent/utils/axiosConfig";
+import { axiosConfig } from "@/pages/auth/axiosConfig";
+
 
 export const DomainConfig: React.FC = () => {
   const [domain, setDomain] = useState("");
