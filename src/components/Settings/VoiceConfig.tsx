@@ -26,6 +26,7 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
   const [showFormModal, setShowFormModal] = useState(false);
   const [popUpModal, setPopUpModal] = useState(false);
   const [isConnected, setIsConnected] = useState<boolean | null>(null);
+  const [updateFnArr, setUpdateFnArr] = useState<Any[]>([]);
   // State for modal visibility
   // State for modal visibility
   // const handleTagsPopUp = () => {
@@ -57,7 +58,8 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
         setIsConnected(true);
         setSelectedVoice(response.data.agent_voice);
         setTemperature(response.data.temperature);
-        console.log(response.data.agent_voice); // Set the prompt if it exists
+        setUpdateFnArr(response.data.update_function);
+        // console.log(response.data.agent_voice); // Set the prompt if it exists
       }
     } catch (error) {
       console.error("Error fetching prompt:", error);
@@ -81,7 +83,7 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
   ];
 
   const handleChange = (selectedIds: string[]) => {
-    console.log("Selected IDs:", selectedIds);
+    // console.log("Selected IDs:", selectedIds);
   };
 
   const handleSelectVoice = async () => {
@@ -263,7 +265,10 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
         <PopupForm isOpen={popUpModal} onClose={() => setPopUpModal(false)} />
       )}
       {showFormModal && (
-        <UpdateFunction onClose={() => setShowFormModal(false)} />
+        <UpdateFunction
+          onClose={() => setShowFormModal(false)}
+          updateFnArr={updateFnArr}
+        />
       )}
     </>
   );

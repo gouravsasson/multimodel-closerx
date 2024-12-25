@@ -42,6 +42,10 @@ const ImportContentDialog: React.FC<ImportContentProps> = ({ onClose }) => {
       className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       onClick={onClose}
     >
+      <div className="text-white text-center font-extrabold">
+        <h2>This Feature is coming soon</h2>
+      </div>
+      {/* 
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -84,7 +88,7 @@ const ImportContentDialog: React.FC<ImportContentProps> = ({ onClose }) => {
                 <option value="Activity2">Activity2</option>
               </select>
             </div>
-          </div> */}
+          </div> 
 
           <div>
             <label className="text-white/90 text-sm font-medium block mb-2">
@@ -123,7 +127,7 @@ const ImportContentDialog: React.FC<ImportContentProps> = ({ onClose }) => {
           {/* {{contact.first_name}}
               {{contact.last_name}}
               {{contact.email}}
-              {{contact.phone}} */}
+              {{contact.phone}} 
           <div>
             <label className="text-white/90 text-sm font-medium block mb-2">
               Prompt Content
@@ -152,6 +156,7 @@ const ImportContentDialog: React.FC<ImportContentProps> = ({ onClose }) => {
           </motion.button>
         </div>
       </motion.div>
+       */}
     </motion.div>
   );
 };
