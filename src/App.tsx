@@ -12,28 +12,46 @@ import { Root } from "./root/Root";
 import ConsultationRoot from "./root/ConsultationRoot";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import Home from "./stripe/Home";
+import { AuthProvider } from "./pages/auth/AuthContext";
+import ProtectedRoute from "./pages/auth/ProtectedRoute";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route element={<Root />}>
-          <Route path="/" element={<CreateAgent />} />
-          <Route path="/agent/:id" element={<AgentConfig />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/agency" element={<Agency />} />
-          <Route path="/integrations" element={<Integrations />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/stripe" element={<Home />} />
-        </Route>
-        <Route element={<ConsultationRoot />}>
-          <Route path="/consultation" element={<ConsultationRoom />} />
-        </Route>
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
+
+          {/* Protected Routes */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <Root />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/" element={<CreateAgent />} />
+            <Route path="/agent/:id" element={<AgentConfig />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/agency" element={<Agency />} />
+            <Route path="/integrations" element={<Integrations />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute>
+                <ConsultationRoot />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/consultation" element={<ConsultationRoom />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

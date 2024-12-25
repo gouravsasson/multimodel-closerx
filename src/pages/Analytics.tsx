@@ -1,31 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
-// import { SessionNotes } from "../components/Analytics/Notes/SessionNotes";
-// import { SessionTags } from "../components/Analytics/Tags/SessionTags";
-// import { ParticleBackground } from "../components/Particles/ParticleBackground";
 import axios from "axios";
+import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
+import { SessionTimeline } from "../components/Analytics/Timeline/SessionTimeLine";
 import { SessionAgents } from "@/components/Analytics/Agents/SessionAgents";
-// import { useAnalytics } from '../components/Analytics/hooks/useAnalytics';
 import { SessionTranscription } from "@/components/Analytics/SessionTranscriptio";
-
-// import { Timeline } from './../components/Analytics/Timeline/Timeline';
+import { axiosConfig } from "./auth/axiosConfig";
 
 interface Metrics {
   totalClients: number;
   weeklySessionCount: number;
   activeSessionCount: number;
   averageSessionDuration: number;
-}
-
-interface RawSession {
-  id: string;
-  clientName: string;
-  type: string;
-  status: string;
-  startTime: string;
-  duration?: number;
-  tags?: string[];
-  notes?: string;
 }
 
 interface Session {
@@ -44,44 +29,38 @@ export const Analytics: React.FC = () => {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  // const {  sessions  } = useAnalytics();
   const [showCreatePlan, setShowCreatePlan] = useState(false);
 
   useEffect(() => {
-    const fetchAnalyticsData = async () => {
+    const fetchMetrics = async () => {
       try {
         setIsLoading(true);
-        setError(null);
+        const response = await axios.get(
+          "/call-session-statistics/",
+          axiosConfig,
+        );
+        if (response.data.success) {
+          const apiMetrics = response.data.response;
 
-        const metricsResponse = await axios.get(
-          "https://api.example.com/metrics",
-        );
-        const sessionsResponse = await axios.get(
-          "https://api.example.com/sessions",
-        );
-
-        setMetrics(metricsResponse.data);
-        setSessions(
-          sessionsResponse.data.map((rawSession: RawSession) => ({
-            ...rawSession,
-            type: rawSession.type as "video" | "audio",
-            status: rawSession.status as
-              | "completed"
-              | "scheduled"
-              | "in-progress",
-            duration: rawSession.duration || 0,
-            tags: rawSession.tags || [],
-          })),
-        );
-      } catch (err) {
-        console.error("Error fetching analytics data:", err);
-        setError("Failed to load analytics data. Please try again later.");
+          // Map API response to Metrics structure
+          setMetrics({
+            totalClients: apiMetrics.total_sessions || 0,
+            weeklySessionCount: apiMetrics.sessions_this_week || 0,
+            activeSessionCount: apiMetrics.active_agents || 0,
+            averageSessionDuration: apiMetrics.average_duration || 0,
+          });
+        } else {
+          setError("Failed to fetch metrics data.");
+        }
+      } catch (error) {
+        setError("An error occurred while fetching data.");
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchAnalyticsData();
+    fetchMetrics();
   }, []);
 
   // const handleOpen = () => {
@@ -90,7 +69,6 @@ export const Analytics: React.FC = () => {
 
   return (
     <div className="relative">
-      {/* <ParticleBackground /> */}
       <SessionTranscription
         isOpen={showCreatePlan}
         onClose={() => setShowCreatePlan(false)}
@@ -133,8 +111,6 @@ export const Analytics: React.FC = () => {
               </div>
               <div className="space-y-6">
                 <SessionAgents />
-                {/* <SessionTags /> */}
-                {/* <SessionNotes /> */}
               </div>
             </div>
           </div>
