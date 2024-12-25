@@ -190,8 +190,11 @@ export const TwilioConfig: React.FC = () => {
           Twilio Configuration
         </h2>
       </div>
+      <div className="flex justify-center w-full font-semibold text-3xl text-white ">
+        <h1>Coming Soon...</h1>
+      </div>
 
-      {!isConnected ? (
+      {/* {!isConnected ? (
         <div className="space-y-4">
           <div className="space-y-4">
             <div>
@@ -340,9 +343,9 @@ export const TwilioConfig: React.FC = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
-      <NumberSelectionModal />
+      {/* <NumberSelectionModal /> */}
     </div>
   );
 };
