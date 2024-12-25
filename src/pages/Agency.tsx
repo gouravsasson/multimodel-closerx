@@ -56,6 +56,7 @@ import { BillingConfig } from "../components/Agency/BillingConfig";
 import { JavaScriptSnippet } from "../components/Agency/JavaScriptSnippet";
 import { TabNavigationAgency } from "@/components/Agency/components/TabNavigationAgency";
 import ClientPortal from "@/components/Agency/clientPortal/ClientPortal";
+import CnameUrl from "@/components/Agency/CnameUrl";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
 
 export const Agency: React.FC = () => {
@@ -74,7 +75,10 @@ export const Agency: React.FC = () => {
 
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-4">
-          <TabNavigationAgency activeTab={activeTab} onTabChange={setActiveTab} />
+          <TabNavigationAgency
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
           <h1 className="text-4xl font-bold text-white mb-2 relative inline-block">
             <span className="relative z-10">Agency Dashboard</span>
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 blur-xl -z-10" />
@@ -87,6 +91,7 @@ export const Agency: React.FC = () => {
         {/* Conditionally render the content based on activeTab */}
         {activeTab === "agency" && (
           <div className="max-w-4xl mx-auto space-y-8">
+            <CnameUrl />
             <DomainConfig />
             <EmailTemplates />
             <BillingConfig
