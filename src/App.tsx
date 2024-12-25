@@ -11,25 +11,27 @@ import { ResetPassword } from "./pages/auth/ResetPassword";
 import { Root } from "./root/Root";
 import ConsultationRoot from "./root/ConsultationRoot";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
+import Home from "./stripe/Home";
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/resetpassword" element={<ResetPassword />} /> */}
+        <Route path="/resetpassword" element={<ResetPassword />} />
         <Route element={<Root />}>
-          {/* <Route path="/" element={<CreateAgent />} /> */}
+          <Route path="/" element={<CreateAgent />} />
           <Route path="/agent/:id" element={<AgentConfig />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/agency" element={<Agency />} />
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/stripe" element={<Home />} />
         </Route>
-        {/* <Route element={<ConsultationRoot />}>
+        <Route element={<ConsultationRoot />}>
           <Route path="/consultation" element={<ConsultationRoom />} />
-        </Route> */}
+        </Route>
       </Routes>
     </Router>
   );

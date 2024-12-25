@@ -84,9 +84,9 @@ export const Analytics: React.FC = () => {
     fetchAnalyticsData();
   }, []);
 
-  const handleOpen = () => {
-    setShowCreatePlan(true);
-  };
+  // const handleOpen = () => {
+  //   setShowCreatePlan(true);
+  // };
 
   return (
     <div className="relative">
