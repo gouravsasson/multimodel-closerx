@@ -37,6 +37,16 @@ export const Analytics: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
+  const [filteredSessions, setFilteredSessions] = useState<Session[]>([]);
+
+  const handleAgentClick = (agentCode: string) => {
+    console.log("Agent Code:", agentCode);
+    const filtered = sessions.filter((session) =>
+      session.tags.includes(agentCode)
+    );
+    console.log("Filtered Sessions:", filtered);
+    setFilteredSessions(filtered);
+  };
 
   // Fetch metrics data
   useEffect(() => {
@@ -45,7 +55,7 @@ export const Analytics: React.FC = () => {
         setIsLoading(true);
         const response = await axios.get(
           "call-session-statistics/",
-          axiosConfig,
+          axiosConfig
         );
         if (response.data.success) {
           const apiMetrics = response.data.response;
@@ -77,11 +87,11 @@ export const Analytics: React.FC = () => {
         setIsLoading(true);
         const response = await axios.get("agents/", axiosConfig);
 
-        // Directly use the response data as it's a list
         const apiAgents = response.data;
         if (Array.isArray(apiAgents)) {
           const mappedAgents = apiAgents.map((agent: any) => ({
             name: agent.name || "Unknown Agent",
+            agentCode: agent.agent_code, // Include agent_code
             color:
               agent.type === "Support"
                 ? "bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30"
@@ -109,17 +119,17 @@ export const Analytics: React.FC = () => {
         setIsLoading(true);
         const response = await axios.get(
           `list-call-sessions/?page=${page}`,
-          axiosConfig,
+          axiosConfig
         );
         if (response.data.status) {
           const apiSessions = response.data.data.map((item: any) => ({
             id: item.id.toString(),
             clientName: `${item.first_name} ${item.last_name}`,
-            type: "audio", // Assuming "audio" since it's not in the response
-            status: "completed", // Assuming "completed" since it's not in the response
+            type: "audio", // Assuming "audio" if type is not provided
+            status: "completed", // Assuming "completed" if status is not provided
             startTime: item.created_date,
             duration: Math.ceil(item.duration / 60), // Convert seconds to minutes
-            tags: item.agent ? [item.agent] : [],
+            tags: [item.agent_code], // Use agent_code for filtering
             transcription: item.transcription,
             summary: item.summary,
           }));
@@ -195,12 +205,26 @@ export const Analytics: React.FC = () => {
               <div className="lg:col-span-2">
                 <SessionTimeline
                   onOpen={(session) => handleOpen(session)}
-                  sessions={sessions}
+                  sessions={
+                    filteredSessions.length > 0 ? filteredSessions : sessions
+                  }
                   isLoading={isLoading}
                 />
               </div>
               <div className="space-y-6">
-                <SessionAgents agents={agents || []} />
+                <SessionAgents
+                  agents={agents || []}
+                  onAgentClick={(agentCode) => handleAgentClick(agentCode)}
+                />
+                {filteredSessions.length > 0 && (
+                  <button
+                    onClick={() => setFilteredSessions([])}
+                    className="px-4 py-2 bg-primary/20 hover:bg-primary/30 rounded-lg text-white
+                       flex items-center space-x-2 transition-all"
+                  >
+                    Clear Filter
+                  </button>
+                )}
               </div>
             </div>
 

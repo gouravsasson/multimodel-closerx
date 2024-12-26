@@ -6,6 +6,7 @@ import axios from "axios";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { FormInput } from "@/components/auth/FormInput";
 import { useAuth } from "./AuthContext";
+import { axiosConfig3 } from "./axiosConfig";
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -25,11 +26,12 @@ export const Login: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "https://2xjx88w4-8000.inc1.devtunnels.ms/api/auth/user-login/",
+        "auth/user-login/",
         {
           email: formData.email,
           password: formData.password,
         },
+        axiosConfig3
       );
 
       if (response.data.success) {
@@ -39,7 +41,7 @@ export const Login: React.FC = () => {
         if (response.data.schema_name) {
           document.cookie = `schema_name=${response.data.schema_name}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
         }
-        if (response.data.ghl_registered) {
+        if (response.data.ghl_registered !== undefined) {
           document.cookie = `ghl_registered=${response.data.ghl_registered}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
         }
 

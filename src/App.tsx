@@ -13,6 +13,8 @@ import ConsultationRoot from "./root/ConsultationRoot";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { AuthProvider } from "./pages/auth/AuthContext";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
+import Ghl from "./pages/ghl";
+// import PaymentFailurePage from "./pages/PaymentFailure";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
             <Route path="/agency" element={<Agency />} />
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/G-h-l" element={<Ghl />} />
+            {/* <Route path="/payment" element={<PaymentFailurePage />} /> */}
           </Route>
           <Route
             element={

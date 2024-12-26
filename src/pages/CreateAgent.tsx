@@ -6,6 +6,7 @@ import { Sparkles, Wand2, Plus } from "lucide-react";
 import { AgentList } from "../components/Agent/AgentList";
 import { CreateAgentForm } from "../components/Agent/CreateAgentForm";
 import type { Agent, AgentType } from "../components/Agent/types";
+import { getCookie } from "./auth/cookieUtils";
 
 // Sample existing agents
 const existingAgents: Agent[] = [
@@ -53,6 +54,8 @@ const agentTypes: AgentType[] = [
 ];
 
 export const CreateAgent: React.FC = () => {
+  const ghl = getCookie("ghl_registered");
+  console.log(`show ghl: ${ghl}`);
   const navigate = useNavigate();
   const [showCreateForm, setShowCreateForm] = useState(true);
   const [agentName, setAgentName] = useState("");

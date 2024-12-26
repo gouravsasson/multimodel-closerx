@@ -24,3 +24,7 @@ export const axiosConfig2 = {
     },
   },
 };
+
+export const axiosConfig3 = {
+  baseURL: BASE_URL,
+};

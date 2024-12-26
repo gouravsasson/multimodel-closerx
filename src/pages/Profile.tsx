@@ -42,7 +42,7 @@ export const Profile: React.FC = () => {
             email,
             contact_number,
             profile_picture,
-            company_name,
+            company_name_display,
           } = response.data.response;
 
           setProfile({
@@ -50,7 +50,7 @@ export const Profile: React.FC = () => {
             email: email,
             phone: contact_number,
             avatar: profile_picture,
-            company: company_name,
+            company: company_name_display,
           });
         } else {
           console.error("API returned an error:", response.data.errors);
@@ -237,7 +237,7 @@ export const Profile: React.FC = () => {
               <h2 className="text-xl font-semibold text-white">
                 {profile.name}
               </h2>
-              <p className="text-white/60">Administrator</p>
+              {/* <p className="text-white/60">Administrator</p> */}
             </div>
 
             <form onSubmit={formik.handleSubmit} className="space-y-6">
@@ -296,6 +296,7 @@ export const Profile: React.FC = () => {
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                   <input
+                    readOnly
                     type="email"
                     name="email"
                     value={formik.values.email}
