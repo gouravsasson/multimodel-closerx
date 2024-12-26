@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
-import { Timeline } from "../components/Analytics/Timeline/Timeline";
+import { Timeline } from "@/components/Analytics/Timeline/Timeline";
 import { SessionTranscription } from "../components/Analytics/SessionTranscription";
 import { axiosConfig } from "./auth/axiosConfig";
 import { SessionAgents } from "@/components/Analytics/Agents/SessionAgents";
