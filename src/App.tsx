@@ -23,9 +23,9 @@ function App() {
       <Router>
         <Routes>
           {/* Public Routes */}
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          {/* <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/resetpassword" element={<ResetPassword />} />
+          <Route path="/resetpassword" element={<ResetPassword />} /> */}
 
           {/* Protected Routes */}
           <Route
@@ -43,15 +43,15 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/redirect" element={<Redirect />} />
           </Route>
-          <Route
+          {/* <Route
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <ConsultationRoot />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           >
             <Route path="/consultation" element={<ConsultationRoom />} />
-          </Route>
+          </Route> */}
         </Routes>
       </Router>
     // </AuthProvider>
