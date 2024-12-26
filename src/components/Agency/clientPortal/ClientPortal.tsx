@@ -145,7 +145,7 @@ export default function ClientPortal() {
             <>
               <StatCard
                 icon={Users}
-                value={`${statCardData.total_sub_agency}`}
+                value={`${statCardData?.total_sub_agency}`}
                 // value="347"
                 label="Total Clients"
                 change={12.5}
@@ -160,7 +160,7 @@ export default function ClientPortal() {
               />
               <StatCard
                 icon={Activity}
-                value={`${statCardData.total_agents}`}
+                value={`${statCardData?.total_agents}`}
                 // value="8748"
                 label="Active Agents"
                 change={15.8}

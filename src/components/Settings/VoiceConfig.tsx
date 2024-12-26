@@ -9,7 +9,7 @@ import TagsAgent from "./tagsAgent";
 import LeadConnectorSelect from "./leadConnecterSelect";
 import UpdateFunction from "./updateFunction";
 import PopupForm from "./updatefieldform";
-import { axiosConfig } from "../../pages/auth/axiosConfig";
+import { axiosConfig, axiosConfig2 } from "../../pages/auth/axiosConfig";
 import { getCookie } from "@/pages/auth/cookieUtils";
 
 // import axios from "axios";
@@ -22,12 +22,20 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
   const [temperature, setTemperature] = useState(1);
   // const [pitch, setPitch] = useState(50);
   const [loading, setLoading] = useState(false);
+  const [selectedCalendarId, setSelectedCalendarId] = useState<string | null>(
+    null
+  );
+  const [selectedCalendarName, setSelectedCalendarName] = useState<
+    string | null
+  >(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showTagsModal, setShowTagsModal] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
   const [popUpModal, setPopUpModal] = useState(false);
   const [isConnected, setIsConnected] = useState<boolean | null>(null);
   const [updateFnArr, setUpdateFnArr] = useState<Any[]>([]);
+  const [options, setOptions] = useState<{ id: string; label: string }[]>([]); // State for options
+
   // State for modal visibility
   // State for modal visibility
   // const handleTagsPopUp = () => {
@@ -35,21 +43,6 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
   // };
 
   const { id } = useParams<{ id: string }>();
-  const fetchLeadConnectorStatus = async () => {
-    if (!id) return;
-
-    try {
-      const response = await axios.get(`/agents/${id}/lead-connector-status`);
-      setIsConnected(response.data.isConnected);
-    } catch (error) {
-      console.error("Error fetching LeadConnector status:", error);
-      setIsConnected(false); // Default to not connected in case of error
-    }
-  };
-
-  useEffect(() => {
-    fetchLeadConnectorStatus();
-  }, [id]);
 
   const fetchVoice = async () => {
     if (!id) return;
@@ -71,26 +64,69 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
     fetchVoice();
   }, [id]);
 
-  const options = [
-    { id: "1", label: "Option 1" },
-    { id: "2", label: "Option 2" },
-    { id: "3", label: "Option 3" },
-    { id: "4", label: "Option 4" },
-    { id: "5", label: "Option 5" },
-    { id: "6", label: "Option 6" },
-    { id: "9", label: "Option 7" },
-    { id: "7", label: "Option 8" },
-    { id: "8", label: "Option 9" },
-  ];
+  // const options = [
+  //   { id: "1", label: "Option 1" },
+  //   { id: "2", label: "Option 2" },
+  //   { id: "3", label: "Option 3" },
+  //   { id: "4", label: "Option 4" },
+  //   { id: "5", label: "Option 5" },
+  //   { id: "6", label: "Option 6" },
+  //   { id: "9", label: "Option 7" },
+  //   { id: "7", label: "Option 8" },
+  //   { id: "8", label: "Option 9" },
+  // ];
+
+  const getOptions = async () => {
+    try {
+      const response = await axios.get("/leadconnect/calender/", axiosConfig2);
+      if (Array.isArray(response.data)) {
+        setOptions(
+          response.data.map((calendar: any) => ({
+            id: calendar.id, // Calendar ID
+            label: calendar.name, // Calendar Name
+          }))
+        );
+      } else {
+        console.error("Unexpected response structure:", response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching options for LeadConnectorSelect:", error);
+    }
+  };
+
+  useEffect(() => {
+    getOptions();
+  }, []);
 
   const handleChange = (selectedIds: string[]) => {
     // console.log("Selected IDs:", selectedIds);
   };
 
+  // const fetchLeadConnectorStatus = async () => {
+  //   if (!id) return;
+
+  //   try {
+  //     const response = await axios.get(`/agents/${id}/lead-connector-status`);
+  //     setIsConnected(response.data.isConnected);
+  //   } catch (error) {
+  //     console.error("Error fetching LeadConnector status:", error);
+  //     setIsConnected(false); // Default to not connected in case of error
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchLeadConnectorStatus();
+  // }, [id]);
+
   const handleSelectVoice = async () => {
     // setIsSubmitting(true);
     try {
-      const payload = { agent_voice: selectedVoice, temperature: temperature };
+      const payload = {
+        agent_voice: selectedVoice,
+        temperature: temperature,
+        ghl_calendar_id: selectedCalendarId,
+        ghl_calendar_name: selectedCalendarName,
+      };
 
       const response = await axios.patch(
         `/agents/${id}/`,
@@ -113,6 +149,21 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
 
   const ghl = getCookie("ghl_registered");
   console.log(ghl);
+  const handleCalendarChange = (selectedIds: string[]) => {
+    if (selectedIds.length > 0) {
+      // Find the option with the selected ID
+      const selectedOption = options.find(
+        (option) => option.id === selectedIds[0]
+      );
+      if (selectedOption) {
+        setSelectedCalendarId(selectedOption.id); // Set the selected calendar ID
+        setSelectedCalendarName(selectedOption.label); // Set the selected calendar name
+      }
+    }
+  };
+
+  console.log(options);
+  console.log(selectedCalendarName);
 
   return (
     <>
@@ -260,12 +311,14 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
             ) : (
               <p>LeadConnector is not connected for this ID</p>
             )} */}
-            {ghl === "true" ? ( // Make sure to check as a string, since cookies are usually stored as strings
+            {ghl === "true" ? (
               <LeadConnectorSelect
-                options={options}
-                onChange={(selectedIds) =>
-                  console.log("Selected IDs:", selectedIds)
-                }
+                options={options.map((option) => ({
+                  id: option.id,
+                  value: option.id,
+                  label: option.label,
+                }))}
+                onChange={handleCalendarChange}
                 placeholder="Select Leadconnector"
               />
             ) : (
