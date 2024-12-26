@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Users,
   CreditCard,
@@ -14,41 +15,47 @@ import { AddClientModal } from "./AddClientModal";
 import { SearchBar } from "./SearchBar";
 import { useClientSearch } from "./useClientSearch";
 import Client from "./types/client";
-
-const initialClients: Client[] = [
-  {
-    id: "mlxZfM0VXQtAGJX8YN1q",
-    name: "Bigphilanthropy",
-    companyName: "Bigphilanthropy Inc",
-    email: "contact@bigphilanthropy.com",
-    phone: "+1234567890",
-    credits: 0,
-    balance: 5,
-    minutesUsed: 0,
-    agents: 2,
-    price: 0.5,
-    status: "Active",
-  },
-  {
-    id: "TE123456789",
-    name: "Tech Solutions Inc",
-    companyName: "Tech Solutions Inc",
-    email: "info@techsolutions.com",
-    phone: "+1987654321",
-    credits: 100,
-    balance: 75,
-    minutesUsed: 25,
-    agents: 5,
-    price: 0.75,
-    status: "Active",
-  },
-];
+import { axiosConfig } from "@/pages/auth/axiosConfig";
 
 export default function ClientPortal() {
   const [isAddClientOpen, setIsAddClientOpen] = useState(false);
-  const [clients, setClients] = useState<Client[]>(initialClients);
+  const [clients, setClients] = useState<Client[]>([]);
+   const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(1);
   const { searchTerm, filteredClients, handleSearch } =
     useClientSearch(clients);
+
+  // Fetch clients from API
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const response = await axios.get("/agency/list/", axiosConfig); // Replace with your API endpoint
+        if (response.data.success) {
+          const clientData = response.data.response.map((item: any) => ({
+            id: item.id.toString(),
+            first_name: item.ghl_name || item.company_name,
+            company_name: item.company_name,
+            email: "N/A", // Add email if available
+            phone: "N/A", // Add phone if available
+            credits: parseFloat(item.credit),
+            balance: 0, // Add balance if available
+            minutesUsed: 0, // Add minutes used if available
+            agents: 0, // Add agents count if available
+            price: parseFloat(item.credit_price),
+            status: item.is_suspended ? "Suspended" : "Active",
+          }));
+          setClients(clientData);
+        } else {
+          toast.error("Failed to load clients. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error fetching clients:", error);
+        toast.error("An error occurred while fetching client data.");
+      }
+    };
+
+    fetchClients();
+  }, []);
 
   const handleAddClient = (
     formData: Omit<
@@ -76,7 +83,7 @@ export default function ClientPortal() {
     setClients((prev) => [...prev, newClient]);
     setIsAddClientOpen(false);
 
-    toast.success(`${formData.companyName} has been added successfully!`, {
+    toast.success(`${formData.company_name} has been added successfully!`, {
       duration: 4000,
       style: {
         background: "#2D2B3F",
@@ -85,6 +92,12 @@ export default function ClientPortal() {
       },
       icon: "🎉",
     });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
   };
 
   return (
@@ -116,7 +129,9 @@ export default function ClientPortal() {
           />
           <StatCard
             icon={CreditCard}
-            value="157.3K"
+            value={`${clients
+              .reduce((sum, client) => sum + client.credits, 0)
+              .toFixed(2)}`}
             label="Total Credits"
             change={8.2}
           />
@@ -142,7 +157,7 @@ export default function ClientPortal() {
           {filteredClients.map((client) => (
             <ClientCard
               key={client.id}
-              name={client.companyName}
+              name={client.first_name}
               id={client.id}
               credits={client.credits}
               balance={client.balance}
@@ -167,6 +182,27 @@ export default function ClientPortal() {
         onClose={() => setIsAddClientOpen(false)}
         onSubmit={handleAddClient}
       />
+      <div className="flex justify-center items-center space-x-4 mt-8">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-primary/20 hover:bg-primary/30 rounded-lg text-white
+                       flex items-center space-x-2 transition-all disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <span className="text-white">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-primary/20 hover:bg-primary/30 rounded-lg text-white
+                       flex items-center space-x-2 transition-all disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

@@ -97,7 +97,7 @@ export function ClientCard({
         <div className="flex gap-4 items-center">
           <div className="w-12 h-12 bg-[#3D3B54] rounded-lg flex items-center justify-center">
             <span className="text-[#B4B3C5] font-semibold">
-              {name.substring(0, 2)}
+              {name.substring(0, 10)}
             </span>
           </div>
           <div>
@@ -144,7 +144,8 @@ export function ClientCard({
           icon={Video}
           label="Video Records"
           color="emerald"
-          onClick={() => {}}
+          // onClick={() => {}}
+          isComingSoon
         />
         <ActionButton
           icon={PlusCircle}

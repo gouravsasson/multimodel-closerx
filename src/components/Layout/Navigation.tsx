@@ -33,7 +33,7 @@ export const Navigation: React.FC = () => {
                 <LayoutDashboard className="w-4 h-4" />
                 <span>Agent</span>
               </Link>
-              <Link
+              {/* <Link
                 to="/consultation"
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all
                   ${
@@ -44,7 +44,7 @@ export const Navigation: React.FC = () => {
               >
                 <Video className="w-4 h-4" />
                 <span>Consultation</span>
-              </Link>
+              </Link> */}
               <Link
                 to="/analytics"
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all

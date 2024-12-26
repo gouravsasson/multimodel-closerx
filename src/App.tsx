@@ -40,7 +40,7 @@ function App() {
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
-          <Route
+          {/* <Route
             element={
               <ProtectedRoute>
                 <ConsultationRoot />
@@ -48,7 +48,7 @@ function App() {
             }
           >
             <Route path="/consultation" element={<ConsultationRoom />} />
-          </Route>
+          </Route> */}
         </Routes>
       </Router>
     </AuthProvider>
