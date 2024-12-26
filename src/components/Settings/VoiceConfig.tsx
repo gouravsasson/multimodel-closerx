@@ -10,6 +10,7 @@ import LeadConnectorSelect from "./leadConnecterSelect";
 import UpdateFunction from "./updateFunction";
 import PopupForm from "./updatefieldform";
 import { axiosConfig } from "../../pages/auth/axiosConfig";
+import { getCookie } from "@/pages/auth/cookieUtils";
 
 // import axios from "axios";
 interface VoiceConfigProps {
@@ -109,6 +110,9 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
       setIsSubmitting(false);
     }
   };
+
+  const ghl = getCookie("ghl_registered");
+  console.log(ghl);
 
   return (
     <>
@@ -243,7 +247,7 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
             </div>
           </div>
           <div className="w-full bg-transparent rounded-lg pt-4 ">
-            {isConnected === null ? (
+            {/* {ghl_registered === true ? (
               <p>Loading LeadConnector status...</p>
             ) : isConnected ? (
               <LeadConnectorSelect
@@ -252,6 +256,17 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
                   console.log("Selected IDs:", selectedIds)
                 }
                 placeholder="Select Leadconnecter"
+              />
+            ) : (
+              <p>LeadConnector is not connected for this ID</p>
+            )} */}
+            {ghl === "true" ? ( // Make sure to check as a string, since cookies are usually stored as strings
+              <LeadConnectorSelect
+                options={options}
+                onChange={(selectedIds) =>
+                  console.log("Selected IDs:", selectedIds)
+                }
+                placeholder="Select Leadconnector"
               />
             ) : (
               <p>LeadConnector is not connected for this ID</p>

@@ -21,6 +21,7 @@ export default function ClientPortal() {
   const [isAddClientOpen, setIsAddClientOpen] = useState(false);
   const [clients, setClients] = useState<Client[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [statCardData, setStatCardData] = useState<any>(null); // New state for statCard data
   const [totalPages, setTotalPages] = useState<number>(1);
   const { searchTerm, filteredClients, handleSearch } =
     useClientSearch(clients);
@@ -43,7 +44,7 @@ export default function ClientPortal() {
             agents: 0, // Add agents count if available
             price: parseFloat(item.credit_price),
             status: item.is_suspended ? "Suspended" : "Active",
-            schema_name: item.schema_name || '',
+            schema_name: item.schema_name || "",
           }));
           setClients(clientData);
         } else {
@@ -56,6 +57,24 @@ export default function ClientPortal() {
     };
 
     fetchClients();
+  }, []);
+
+  useEffect(() => {
+    const fetchStatCardData = async () => {
+      try {
+        const response = await axios.get("/agency/analytics/", axiosConfig); // Replace with your API endpoint for statcard data
+        if (response.data.success) {
+          setStatCardData(response.data.response);
+        } else {
+          toast.error("Failed to load statcard data. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error fetching statcard data:", error);
+        toast.error("An error occurred while fetching statcard data.");
+      }
+    };
+
+    fetchStatCardData();
   }, []);
 
   const handleAddClient = (
@@ -122,32 +141,38 @@ export default function ClientPortal() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <StatCard
-            icon={Users}
-            value={`${clients.length}`}
-            label="Total Clients"
-            change={12.5}
-          />
-          <StatCard
-            icon={CreditCard}
-            value={`${clients
-              .reduce((sum, client) => sum + client.credits, 0)
-              .toFixed(2)}`}
-            label="Total Credits"
-            change={8.2}
-          />
-          <StatCard
-            icon={Activity}
-            value="1,234"
-            label="Active Agents"
-            change={15.8}
-          />
-          <StatCard
-            icon={BarChart2}
-            value="99.9%"
-            label="System Health"
-            change={0.2}
-          />
+          {statCardData && (
+            <>
+              <StatCard
+                icon={Users}
+                value={`${statCardData.total_sub_agency}`}
+                // value="347"
+                label="Total Clients"
+                change={12.5}
+              />
+              <StatCard
+                icon={CreditCard}
+                value={`${clients
+                  .reduce((sum, client) => sum + client.credits, 0)
+                  .toFixed(2)}`}
+                label="Total Credits"
+                change={8.2}
+              />
+              <StatCard
+                icon={Activity}
+                value={`${statCardData.total_agents}`}
+                // value="8748"
+                label="Active Agents"
+                change={15.8}
+              />
+              <StatCard
+                icon={BarChart2}
+                value="99.9%"
+                label="System Health"
+                change={0.2}
+              />
+            </>
+          )}
         </div>
 
         <div className="mb-8">

@@ -12,7 +12,7 @@ interface TagsAgentProps {
 }
 
 const UpdateFunction: React.FC<TagsAgentProps> = ({ onClose, updateFnArr }) => {
-  const [updatArr, setUpdateArr] = useState<any[]>(updateFnArr);
+  const [updatArr, setUpdateArr] = useState<any[]>(updateFnArr || []);
   const { id } = useParams<{ id: string }>();
 
   // Formik setup
@@ -42,20 +42,14 @@ const UpdateFunction: React.FC<TagsAgentProps> = ({ onClose, updateFnArr }) => {
         }),
     }),
     onSubmit: (values) => {
-      // Remove any existing item with the same name
-      const updatedArray = updatArr.filter((item) => item.name !== values.name);
-
-      // Add the new value
-      const newUpdatArr = [...updatedArray, values];
-
-      // Update state with the new array
-      setUpdateArr(newUpdatArr);
-
-      // Pass the updated array to the update function
-      handleUpdateFn(newUpdatArr);
-
-      // Reset form after submitting
-      formik.resetForm();
+      if (Array.isArray(updatArr)) {
+        const newUpdatArr = [...updatArr, values];
+        setUpdateArr(newUpdatArr);
+        handleUpdateFn(newUpdatArr);
+        formik.resetForm();
+      } else {
+        console.error("updatArr is not an array", updatArr);
+      }
     },
   });
 
@@ -235,7 +229,7 @@ const UpdateFunction: React.FC<TagsAgentProps> = ({ onClose, updateFnArr }) => {
             Update Functions:
           </h3>
           <div className="space-x-4 flex flex-wrap justify-start pt-4 grid-rows-3">
-            {updatArr.map((item, index) => (
+            {(updatArr || []).map((item, index) => (
               <motion.div
                 key={index}
                 className="bg-black/30 text-white py-2 px-4 rounded-xl cursor-pointer transition-all duration-300 hover:bg-primary/70"

@@ -94,7 +94,7 @@ export function ClientCard({
   status,
   schema_name,
 }: ClientCardProps) {
-  console.log(schema_name);
+  // console.log(schema_name);
   const handleConnectGHL = (schema_name: string) => {
     if (!schema_name) {
       toast.error("Schema name is missing!");
