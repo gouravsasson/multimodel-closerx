@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Lock, LogIn, AlertCircle } from "lucide-react";
 import axios from "axios";
@@ -25,11 +25,11 @@ export const Login: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "https://xjs6k34l-8000.inc1.devtunnels.ms/api/auth/user-login/",
+        "https://2xjx88w4-8000.inc1.devtunnels.ms/api/auth/user-login/",
         {
           email: formData.email,
           password: formData.password,
-        }
+        },
       );
 
       if (response.data.success) {
@@ -38,6 +38,9 @@ export const Login: React.FC = () => {
         document.cookie = `refresh_token=${response.data.refresh_token}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
         if (response.data.schema_name) {
           document.cookie = `schema_name=${response.data.schema_name}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
+        }
+        if (response.data.ghl_registered) {
+          document.cookie = `ghl_registered=${response.data.ghl_registered}; path=/; max-age=${60 * 60 * 24 * 7}; secure; samesite=strict`;
         }
 
         login(); // Update authentication state

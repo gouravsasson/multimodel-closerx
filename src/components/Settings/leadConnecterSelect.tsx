@@ -57,8 +57,8 @@ const LeadConnectorSelect = ({
       {/* Main button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-2 text-left bg-purple-200 text-black border rounded-lg shadow-sm 
-                 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 
+        className="w-full px-4 py-2 text-left bg-transparent text-white border rounded-lg shadow-sm 
+                 hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-500 
                  focus:ring-opacity-50 flex items-center justify-between"
       >
         <span className="truncate">{getSelectedLabels()}</span>
@@ -71,13 +71,14 @@ const LeadConnectorSelect = ({
 
       {/* Dropdown menu */}
       {isOpen && (
-        <div className="absolute z-10 w-full mt-1 bg-purple-400  rounded-lg shadow-lg">
+        <div className="absolute z-10 w-full mt-1 bg-transparent  rounded-lg shadow-lg">
           <div className="max-h-60 overflow-auto py-1">
             {options.map((option) => (
               <button
                 key={option.id}
                 onClick={() => toggleOption(option.id)}
-                className="w-full px-4 py-2 text-left text-black hover:bg-gray-100 flex items-center justify-between"
+                className="w-full px-4 py-2 text-left text-white 
+                  hover:ring hover:ring-purple-80  flex items-center justify-between"
               >
                 <span>{option.label}</span>
                 {selectedIds.includes(option.id) && (

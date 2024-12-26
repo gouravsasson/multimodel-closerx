@@ -100,12 +100,11 @@
 //   );
 // };
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowRight, BookTemplate } from "lucide-react";
 import { motion } from "framer-motion";
 import { TemplateModal } from "./TemplateModal";
-// import type { Template } from "./templates";
-import { templates } from "./templates";
+// import { templates } from "./templates";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { axiosConfig } from "../../pages/auth/axiosConfig";
@@ -119,9 +118,46 @@ export const Editor: React.FC<EditorProps> = ({ onNext }) => {
   const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [abortController, setAbortController] =
+    useState<AbortController | null>(null);
+  const [templates, setTemplates] = useState<string[]>([]); // Store templates here
   const { id } = useParams<{ id: string }>();
-  console.log(id);
+  const fetchTemplates = async () => {
+    setLoading(true);
+    try {
+      // Pass axiosConfigTemplate as the configuration object
+      const response = await axios.get("/template/", axiosConfigTemplate);
+      setTemplates(response.data.response); // Set templates data to state
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching templates:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTemplates(); // Fetch templates on component mount
+  }, []);
+
+  const fetchPrompt = async () => {
+    if (!id) return;
+    try {
+      const response = await axios.get(`/agents/${id}/`, axiosConfig);
+      if (response.data && response.data.prompt) {
+        setPrompt(response.data.prompt);
+        // console.log(response.data.prompt); // Set the prompt if it exists
+      }
+    } catch (error) {
+      console.error("Error fetching prompt:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTemplates(); // Fetch templates on component mount
+    fetchPrompt(); // Fetch prompt based on id from URL
+  }, [id]);
+
   const handleOpenTemplateModal = () => {
     setIsTemplateModalOpen(true);
   };
@@ -129,17 +165,59 @@ export const Editor: React.FC<EditorProps> = ({ onNext }) => {
   const handleTemplateSelect = (templatePrompt: string) => {
     setPrompt(templatePrompt);
     setIsTemplateModalOpen(false);
+
+    updatePrompt(templatePrompt);
+  };
+
+  const updatePrompt = async (promptText: string) => {
+    setLoading(true);
+
+    const controller = new AbortController();
+    const signal = controller.signal;
+    setAbortController(controller);
+
+    try {
+      const payload = { prompt: promptText };
+      const response = await axios.patch(`/agents/${id}/`, payload, {
+        ...axiosConfig,
+        signal,
+      });
+
+      if (response.status === 200) {
+        // console.log("Prompt updated successfully:", response.data);
+      } else {
+        console.error("Failed to update prompt. Status:", response.status);
+      }
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        console.log("Previous request was canceled");
+      } else {
+        console.error("Error updating prompt:", error);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePromptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newPrompt = e.target.value;
+    setPrompt(newPrompt);
+
+    if (abortController) {
+      abortController.abort();
+    }
+
+    updatePrompt(newPrompt);
   };
 
   const handleNext = async () => {
     setIsSubmitting(true);
     try {
       const payload = { prompt };
-
       const response = await axios.patch(
-        `/agents/${id}/update/`,
+        `/agents/${id}/`,
         payload,
-        axiosConfig,
+        axiosConfig
       );
 
       if (response.status === 200) {
@@ -198,7 +276,7 @@ export const Editor: React.FC<EditorProps> = ({ onNext }) => {
         <div className="relative">
           <textarea
             value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
+            onChange={handlePromptChange}
             className="w-full h-[300px] bg-black/20 backdrop-blur-lg rounded-xl p-4 text-white/90 
                      focus:ring-2 focus:ring-primary/50 focus:outline-none
                      placeholder-white/30 resize-none"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Volume2, Mic, ArrowRight, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { VoiceSlider } from "./VoiceSlider";
@@ -18,19 +18,57 @@ interface VoiceConfigProps {
 
 export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
   const [selectedVoice, setSelectedVoice] = useState(voices[0].id);
-  const [speed, setSpeed] = useState(50);
-  const [pitch, setPitch] = useState(50);
+  const [temperature, setTemperature] = useState(1);
+  // const [pitch, setPitch] = useState(50);
   const [loading, setLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showTagsModal, setShowTagsModal] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
-  const [popUpModal, setPopUpModal] = useState(false); // State for modal visibility
+  const [popUpModal, setPopUpModal] = useState(false);
+  const [isConnected, setIsConnected] = useState<boolean | null>(null);
+  const [updateFnArr, setUpdateFnArr] = useState<Any[]>([]);
+  // State for modal visibility
   // State for modal visibility
   // const handleTagsPopUp = () => {
   //   setShowTags(true);
   // };
 
   const { id } = useParams<{ id: string }>();
+  const fetchLeadConnectorStatus = async () => {
+    if (!id) return;
+
+    try {
+      const response = await axios.get(`/agents/${id}/lead-connector-status`);
+      setIsConnected(response.data.isConnected);
+    } catch (error) {
+      console.error("Error fetching LeadConnector status:", error);
+      setIsConnected(false); // Default to not connected in case of error
+    }
+  };
+
+  useEffect(() => {
+    fetchLeadConnectorStatus();
+  }, [id]);
+
+  const fetchVoice = async () => {
+    if (!id) return;
+    try {
+      const response = await axios.get(`/agents/${id}/`, axiosConfig);
+      if (response.data && response.data) {
+        setIsConnected(true);
+        setSelectedVoice(response.data.agent_voice);
+        setTemperature(response.data.temperature);
+        setUpdateFnArr(response.data.update_function);
+        // console.log(response.data.agent_voice); // Set the prompt if it exists
+      }
+    } catch (error) {
+      console.error("Error fetching prompt:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchVoice();
+  }, [id]);
 
   const options = [
     { id: "1", label: "Option 1" },
@@ -45,16 +83,16 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
   ];
 
   const handleChange = (selectedIds: string[]) => {
-    console.log("Selected IDs:", selectedIds);
+    // console.log("Selected IDs:", selectedIds);
   };
 
   const handleSelectVoice = async () => {
     // setIsSubmitting(true);
     try {
-      const payload = { agentvoice: selectedVoice, speed, pitch };
+      const payload = { agent_voice: selectedVoice, temperature: temperature };
 
       const response = await axios.patch(
-        `/agents/${id}/update/`,
+        `/agents/${id}/`,
         payload,
         axiosConfig
       );
@@ -198,18 +236,26 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
             <div className="space-y-4">
               <VoiceSlider
                 label="Temprature"
-                value={speed}
-                onChange={setSpeed}
+                value={temperature}
+                onChange={setTemperature}
               />
               {/* <VoiceSlider label="Pitch" value={pitch} onChange={setPitch} /> */}
             </div>
           </div>
-          <div className="w-full bg-white rounded-lg ">
-            <LeadConnectorSelect
-              options={options}
-              onChange={handleChange}
-              placeholder="Select Leadconnecter"
-            />
+          <div className="w-full bg-transparent rounded-lg pt-4 ">
+            {isConnected === null ? (
+              <p>Loading LeadConnector status...</p>
+            ) : isConnected ? (
+              <LeadConnectorSelect
+                options={options}
+                onChange={(selectedIds) =>
+                  console.log("Selected IDs:", selectedIds)
+                }
+                placeholder="Select Leadconnecter"
+              />
+            ) : (
+              <p>LeadConnector is not connected for this ID</p>
+            )}
           </div>
         </div>
       </div>
@@ -219,7 +265,10 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
         <PopupForm isOpen={popUpModal} onClose={() => setPopUpModal(false)} />
       )}
       {showFormModal && (
-        <UpdateFunction onClose={() => setShowFormModal(false)} />
+        <UpdateFunction
+          onClose={() => setShowFormModal(false)}
+          updateFnArr={updateFnArr}
+        />
       )}
     </>
   );

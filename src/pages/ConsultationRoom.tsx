@@ -58,10 +58,10 @@ function ConsultationRoom() {
         websocketEnabled={true}
       >
         <Layout>
-          
+          <div className="space-y-6  max-h-[500px] h-[400px]">
           <ClientPage  />
           <Toaster />
-          
+          </div>
         </Layout>
       </AppStateProvider>
     </QueryClientProvider>

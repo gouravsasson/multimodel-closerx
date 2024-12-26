@@ -27,7 +27,7 @@ const existingAgents: Agent[] = [
 
 const agentTypes: AgentType[] = [
   {
-    id: "sales",
+    id: "Sales",
     name: "Sales Agent",
     description: "Specialized in converting leads and closing deals",
     icon: <Sparkles className="w-6 h-6 text-amber-400" />,
@@ -39,7 +39,7 @@ const agentTypes: AgentType[] = [
     ],
   },
   {
-    id: "support",
+    id: "Support",
     name: "Support Agent",
     description: "Expert in customer service and technical support",
     icon: <Wand2 className="w-6 h-6 text-emerald-400" />,

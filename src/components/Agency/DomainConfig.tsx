@@ -1,21 +1,38 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Globe, Plus, Check, Copy, ExternalLink, Loader2 } from "lucide-react";
+import axios from "axios";
+import { axiosConfig } from "@/pages/auth/axiosConfig";
+
 
 export const DomainConfig: React.FC = () => {
   const [domain, setDomain] = useState("");
   const [showDNS, setShowDNS] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const dnsRecords = [
     { type: "A", name: "@", value: "76.76.21.21" },
     { type: "CNAME", name: "www", value: "proxy.yourdomain.com" },
   ];
 
-  const handleSaveDomain = () => {
+  const handleSaveDomain = async () => {
     if (!domain) return;
-    setShowDNS(true);
+
+    try {
+      const response = await axios.post(
+        "/create-whitelabel/",
+        { domain },
+        axiosConfig,
+      );
+      console.log("Domain saved:", response.data);
+      setShowDNS(true);
+      setError(null);
+    } catch (err) {
+      console.error("Error saving domain:", err);
+      setError("Failed to save domain. Please try again.");
+    }
   };
 
   const handleVerifyDomain = () => {

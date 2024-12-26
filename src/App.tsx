@@ -4,6 +4,7 @@ import { AgentConfig } from "./pages/AgentConfig";
 import { CreateAgent } from "./pages/CreateAgent";
 import { Analytics } from "./pages/Analytics";
 import { Agency } from "./pages/Agency";
+// import Agency from "./pages/Agency";
 import { Integrations } from "./pages/Integrations";
 import { Profile } from "./pages/Profile";
 import { Login } from "./pages/auth/Login";

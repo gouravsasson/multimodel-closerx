@@ -35,7 +35,7 @@ const TagsAgent: React.FC<TagsAgentProps> = ({ onClose }) => {
                    border border-white/20 w-full max-w-lg shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="space-y-6">
+        {/* <div className="space-y-6"> 
           <div>
             <label className="text-white/90 text-sm font-medium block mb-2">
               Tag Name
@@ -77,6 +77,9 @@ const TagsAgent: React.FC<TagsAgentProps> = ({ onClose }) => {
           >
             <span>Add Tag</span>
           </motion.button>
+        </div> */}
+        <div className="justify-center align-middle">
+          <h2>This feature is coming soon </h2>
         </div>
       </motion.div>
     </motion.div>

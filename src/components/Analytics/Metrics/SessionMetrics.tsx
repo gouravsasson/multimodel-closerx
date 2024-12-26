@@ -33,7 +33,7 @@ export const SessionMetrics: React.FC<SessionMetricsProps> = ({
     {
       icon: <Clock className="w-5 h-5" />,
       label: "Avg. Session Duration",
-      value: "28 mins",
+      value: metrics.averageSessionDuration,
       change: "-5%",
       trend: "down",
       isLoading,
