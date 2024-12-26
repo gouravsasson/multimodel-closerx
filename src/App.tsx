@@ -19,20 +19,20 @@ import Redirect from "./stripe/Redirect";
 
 function App() {
   return (
-    // <AuthProvider>
+     <AuthProvider>
       <Router>
         <Routes>
           {/* Public Routes */}
-          {/* <Route path="/forgotpassword" element={<ForgotPassword />} />
+           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/resetpassword" element={<ResetPassword />} /> */}
+          <Route path="/resetpassword" element={<ResetPassword />} /> 
 
           {/* Protected Routes */}
           <Route
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <Root />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           >
             <Route path="/" element={<CreateAgent />} />
@@ -43,18 +43,18 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/redirect" element={<Redirect />} />
           </Route>
-          {/* <Route
+          <Route
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <ConsultationRoot />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           >
             <Route path="/consultation" element={<ConsultationRoom />} />
-          </Route> */}
+          </Route>
         </Routes>
       </Router>
-    // </AuthProvider>
+     </AuthProvider>
   );
 }
 
