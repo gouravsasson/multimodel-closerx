@@ -14,7 +14,7 @@ import {
   Star,
   CheckCircle2,
 } from "lucide-react";
-import { axiosConfig, axiosConfig2 } from "./auth/axiosConfig";
+import { axiosConfig2 } from "./auth/axiosConfig";
 import { ChangePasswordDialog } from "@/components/Profile/ChangePasswordDialog";
 // import { ParticleBackground } from "../components/Particles/ParticleBackground";
 import { getCookie } from "../pages/auth/cookieUtils";
@@ -68,7 +68,7 @@ export const Profile: React.FC = () => {
       email: profile.email,
       phone: profile.phone,
     });
-  }, [profile]);
+  }, [profile, formik]); // Added `formik` to the dependency array
 
   const subscription = {
     plan: "Professional",
@@ -85,7 +85,7 @@ export const Profile: React.FC = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: `${profile.firstName} ${profile.lastName}`, // Combine fields for form
+      name: profile.name, // Use the `name` property from `profile`
       company: profile.company,
       email: profile.email,
       phone: profile.phone,
@@ -107,15 +107,15 @@ export const Profile: React.FC = () => {
       const last_name = lastNameParts.join(" ");
 
       const payload = {
-        first_name: first_name || "", // Handle missing first name
-        last_name: last_name || "", // Handle missing last name
+        first_name: first_name || "",
+        last_name: last_name || "",
         email: values.email,
         contact_number: values.phone,
         company_name: values.company,
       };
 
       axios
-        .patch("auth/update/user-detail/", payload, axiosConfig2) // Send corrected payload
+        .patch("auth/update/user-detail/", payload, axiosConfig2)
         .then((response) => {
           const {
             first_name,
@@ -126,7 +126,6 @@ export const Profile: React.FC = () => {
             company_name,
           } = response.data.response;
 
-          // Update profile state
           setProfile({
             name: `${first_name} ${last_name}`,
             email,
@@ -166,7 +165,7 @@ export const Profile: React.FC = () => {
       const response = await axios.post(
         "auth/user/logout/",
         { refresh_token: refreshToken },
-        axiosConfig2
+        axiosConfig2,
       );
 
       if (response.status === 200) {
