@@ -14,6 +14,7 @@ import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import Home from "./stripe/Home";
 import { AuthProvider } from "./pages/auth/AuthContext";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
+import Redirect from "./stripe/Redirect";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/agency" element={<Agency />} />
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/redirect" element={<Redirect />} />
           </Route>
           <Route
             element={

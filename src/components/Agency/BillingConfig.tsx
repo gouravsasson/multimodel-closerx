@@ -9,6 +9,7 @@ import {
   Link,
 } from "lucide-react";
 import { CreatePlanModal } from "./CreatePlanModal";
+import { getCookie } from "@/pages/auth/cookieUtils";
 
 interface BillingConfigProps {
   onStripeConnect: () => void;
@@ -20,24 +21,26 @@ interface Plan {
   price: number;
   interval: "month" | "year";
   features: string[];
+
 }
+
 
 export const BillingConfig: React.FC<BillingConfigProps> = ({
   onStripeConnect,
   isConnected,
 }) => {
+  
+  const schemaName = getCookie("schema_name");
   const [isConnecting, setIsConnecting] = useState(false);
   const [stripeKey, setStripeKey] = useState("");
   const [showCreatePlan, setShowCreatePlan] = useState(false);
   const [plans, setPlans] = useState<Plan[]>([]);
+  const clientId = "ca_RS3LxAZgEemxwRU2d4gTDQQi60WK4AyR"; 
+          const redirectUri = "https://xjs6k34l-8000.inc1.devtunnels.ms/api/stripe/connect/callback/"; // 
 
   const handleConnect = () => {
-    if (!stripeKey) return;
-    setIsConnecting(true);
-    setTimeout(() => {
-      setIsConnecting(false);
-      onStripeConnect();
-    }, 2000);
+    
+    window.location.href=`https://connect.stripe.com/oauth/authorize?response_type=code&client_id=${clientId}&scope=read_write&redirect_uri=${encodeURIComponent(redirectUri)}&state=${schemaName}`
   };
 
   const handleCreatePlan = (plan: Plan) => {
@@ -71,7 +74,7 @@ export const BillingConfig: React.FC<BillingConfigProps> = ({
               Enter your Stripe secret key to start accepting payments
             </p>
             <div className="max-w-md mx-auto space-y-4">
-              <input
+              {/* <input
                 type="password"
                 value={stripeKey}
                 onChange={(e) => setStripeKey(e.target.value)}
@@ -79,12 +82,12 @@ export const BillingConfig: React.FC<BillingConfigProps> = ({
                 className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2
                        text-white placeholder-white/40 focus:outline-none focus:ring-2
                        focus:ring-primary/50"
-              />
+              /> */}
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleConnect}
-                disabled={isConnecting || !stripeKey}
+                // disabled={isConnecting || !stripeKey}
                 className="w-full px-6 py-3 bg-primary/20 hover:bg-primary/30 rounded-lg text-white
                        flex items-center justify-center space-x-2 transition-all
                        disabled:opacity-50 disabled:cursor-not-allowed"
