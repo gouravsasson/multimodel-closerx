@@ -1,6 +1,6 @@
 import { getCookie } from "./cookieUtils";
 
-const BASE_URL = "https://2xjx88w4-8000.inc1.devtunnels.ms/api/";
+const BASE_URL = "https://xjs6k34l-8000.inc1.devtunnels.ms/api/";
 
 export const axiosConfig = {
   baseURL: BASE_URL,
