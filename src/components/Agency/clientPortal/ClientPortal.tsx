@@ -20,8 +20,8 @@ import { axiosConfig } from "@/pages/auth/axiosConfig";
 export default function ClientPortal() {
   const [isAddClientOpen, setIsAddClientOpen] = useState(false);
   const [clients, setClients] = useState<Client[]>([]);
-   const [currentPage, setCurrentPage] = useState<number>(1);
-    const [totalPages, setTotalPages] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const { searchTerm, filteredClients, handleSearch } =
     useClientSearch(clients);
 
@@ -43,6 +43,7 @@ export default function ClientPortal() {
             agents: 0, // Add agents count if available
             price: parseFloat(item.credit_price),
             status: item.is_suspended ? "Suspended" : "Active",
+            schema_name: item.schema_name || '',
           }));
           setClients(clientData);
         } else {
@@ -165,6 +166,7 @@ export default function ClientPortal() {
               agents={client.agents}
               price={client.price}
               status={client.status}
+              schema_name={client.schema_name}
             />
           ))}
           {filteredClients.length === 0 && (
