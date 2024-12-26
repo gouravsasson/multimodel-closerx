@@ -7,7 +7,7 @@ import {
   ExternalLink,
   DollarSign,
 } from "lucide-react";
-import { ComingSoonPopup } from "./ComingSoonPopup";
+// import { ComingSoonPopup } from "./ComingSoonPopup";
 import type { LucideIcon } from "lucide-react";
 
 interface ClientCardProps {
@@ -72,11 +72,11 @@ function ActionButton({
         <Icon className="w-4 h-4" />
         <span className="text-sm">{label}</span>
       </button>
-      <ComingSoonPopup
+      {/* <ComingSoonPopup
         isVisible={showPopup}
         position={popupPosition}
         onClose={() => setShowPopup(false)}
-      />
+      /> */}
     </>
   );
 }
