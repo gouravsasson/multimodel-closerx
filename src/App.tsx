@@ -19,7 +19,7 @@ import Redirect from "./stripe/Redirect";
 
 function App() {
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <Router>
         <Routes>
           {/* Public Routes */}
@@ -30,9 +30,9 @@ function App() {
           {/* Protected Routes */}
           <Route
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <Root />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           >
             <Route path="/" element={<CreateAgent />} />
@@ -54,7 +54,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </AuthProvider>
+    // </AuthProvider>
   );
 }
 
