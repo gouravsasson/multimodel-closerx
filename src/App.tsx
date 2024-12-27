@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ConsultationRoom from "./pages/ConsultationRoom";
 import { AgentConfig } from "./pages/AgentConfig";
 import { CreateAgent } from "./pages/CreateAgent";
 import { Analytics } from "./pages/Analytics";
@@ -10,10 +9,10 @@ import { Profile } from "./pages/Profile";
 import { Login } from "./pages/auth/Login";
 import { ResetPassword } from "./pages/auth/ResetPassword";
 import { Root } from "./root/Root";
-import ConsultationRoot from "./root/ConsultationRoot";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { AuthProvider } from "./pages/auth/AuthContext";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
+import Redirect from "./stripe/Redirect";
 
 function App() {
   return (
@@ -39,6 +38,7 @@ function App() {
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/agency" element={<Agency />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/redirect" element={<Redirect />} />
           </Route>
           {/* <Route
             element={

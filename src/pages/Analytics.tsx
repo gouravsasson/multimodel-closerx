@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SessionMetrics } from "../components/Analytics/Metrics/SessionMetrics";
-import { SessionTimeline } from "../components/Analytics/Timeline/SessionTimeLine";
+// import { Timeline } from "@/components/Analytics/Timeline/Timeline";
 import { SessionTranscription } from "../components/Analytics/SessionTranscription";
 import { axiosConfig } from "./auth/axiosConfig";
 import { SessionAgents } from "@/components/Analytics/Agents/SessionAgents";
@@ -193,11 +193,11 @@ export const Analytics: React.FC = () => {
             {/* Timeline Section */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                <SessionTimeline
+                {/* <Timeline
                   onOpen={(session) => handleOpen(session)}
                   sessions={sessions}
                   isLoading={isLoading}
-                />
+                />  */}
               </div>
               <div className="space-y-6">
                 <SessionAgents agents={agents || []} />

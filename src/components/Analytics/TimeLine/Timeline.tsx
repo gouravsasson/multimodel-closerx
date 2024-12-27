@@ -9,7 +9,7 @@ interface SessionTimelineProps {
   onOpen: (session: Session) => void; // Update the type for onOpen to accept a session
 }
 
-export const SessionTimeline: React.FC<SessionTimelineProps> = ({
+export const Timeline: React.FC<SessionTimelineProps> = ({
   sessions,
   isLoading,
   onOpen,

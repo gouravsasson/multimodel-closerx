@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Mail, Lock, LogIn, AlertCircle, Cookie } from "lucide-react";
+import { Mail, Lock, LogIn, AlertCircle } from "lucide-react";
 import axios from "axios";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { FormInput } from "@/components/auth/FormInput";
 import { useAuth } from "./AuthContext";
-import { getCookie } from "./cookieUtils";
+// import { getCookie } from "./cookieUtils";
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export const Login: React.FC = () => {
         {
           email: formData.email,
           password: formData.password,
-        }
+        },
       );
 
       if (response.data.success) {
