@@ -176,7 +176,7 @@ function CnameUrl() {
   const [logoFile, setLogoFile] = useState(null);
   const [faviconFile, setFaviconFile] = useState(null);
   const [logoPreview, setLogoPreview] = useState(response?.logo || "");
-  const [faviconPreview, setFaviconPreview] = useState("");
+  const [faviconPreview, setFaviconPreview] = useState(response?.favicon || "");
   const [logoFilename, setLogoFilename] = useState("Upload Your Logo");
   const [faviconFilename, setFaviconFilename] = useState("Upload Your Favicon");
 
@@ -196,14 +196,22 @@ function CnameUrl() {
             ...axiosConfig.headers,
             "Content-Type": "multipart/form-data",
           },
-        },
+        }
       );
+      if (updateWhitelable.status === 200) {
+        // Update Zustand store with new data
+        setResponse({
+          legal_name: companyName,
+          logo: logoPreview,
+          favicon: faviconPreview,
+        });
+      }
 
       console.log("Update successful:", updateWhitelable.data);
     } catch (error) {
       console.error(
         "Error updating company details:",
-        error.response || error.message,
+        error.response || error.message
       );
     }
   };
