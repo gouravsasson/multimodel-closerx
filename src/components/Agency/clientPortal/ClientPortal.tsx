@@ -117,6 +117,7 @@ export default function ClientPortal() {
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
+      setTotalPages(totalPages);
     }
   };
 
@@ -152,9 +153,10 @@ export default function ClientPortal() {
               />
               <StatCard
                 icon={CreditCard}
-                value={`${clients
-                  .reduce((sum, client) => sum + client.credits, 0)
-                  .toFixed(2)}`}
+                // value={`${clients
+                //   .reduce((sum, client) => sum + client.credits, 0)
+                //   .toFixed(2)}`}
+                value="coming soon"
                 label="Total Credits"
                 change={8.2}
               />
@@ -167,7 +169,8 @@ export default function ClientPortal() {
               />
               <StatCard
                 icon={BarChart2}
-                value="99.9%"
+                // value="99.9%"
+                value="coming soon"
                 label="System Health"
                 change={0.2}
               />

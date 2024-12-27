@@ -70,7 +70,7 @@ const UpdateFunction: React.FC<TagsAgentProps> = ({ onClose, updateFnArr }) => {
       const response = await axios.patch(
         `/agents/${id}/update/`,
         payload,
-        axiosConfig
+        axiosConfig,
       );
 
       if (response.status === 200) {

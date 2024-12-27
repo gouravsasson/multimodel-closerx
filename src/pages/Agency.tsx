@@ -19,7 +19,7 @@ export const Agency: React.FC = () => {
   const [activeTab, setActiveTab] = useState("agency"); // Default to 'agency' tab
   const { response, setResponse, resetResponse } = useWhitelableStore();
   const { isLoading, startLoading, stopLoading } = useLoadingStore();
-  console.log(response);
+  // console.log(response);
 
   const handleNext = () => {
     if (activeTab === "agency") {
