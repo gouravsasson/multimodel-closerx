@@ -33,7 +33,7 @@ export const Profile: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get("auth/user-detail/", axiosConfig2) // Replace with your API endpoint
+      .get("auth/user-detail/", axiosConfig2)
       .then((response) => {
         if (response.data.success) {
           const {
@@ -87,14 +87,13 @@ export const Profile: React.FC = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: profile.name, // Use the `name` property from `profile`
+      name: profile.name,
       company: profile.company,
       email: profile.email,
       phone: profile.phone,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Full Name is required"),
-      company: Yup.string().required("Company Name is required"),
       email: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
@@ -104,7 +103,6 @@ export const Profile: React.FC = () => {
     onSubmit: (values) => {
       setLoading(true);
 
-      // Split name into first_name and last_name
       const [first_name, ...lastNameParts] = values.name.split(" ");
       const last_name = lastNameParts.join(" ");
 
@@ -136,7 +134,7 @@ export const Profile: React.FC = () => {
             company: company_name,
           });
 
-          console.log("Profile updated successfully:", response.data.response);
+          // return axios.get("auth/user-detail/", axiosConfig2);
         })
         .catch((error) => {
           console.error("Error updating profile:", error);

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Lock, AlertCircle, Eye, EyeOff } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FormInput } from "@/components/auth/FormInput";
 import { axiosConfig2 } from "@/pages/auth/axiosConfig";
@@ -15,7 +14,6 @@ export const ChangePasswordDialog: React.FC<ChangePasswordDialogProps> = ({
   isOpen,
   onClose,
 }) => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     oldPassword: "",
     newPassword: "",
@@ -60,15 +58,12 @@ export const ChangePasswordDialog: React.FC<ChangePasswordDialogProps> = ({
 
       if (response.data.success) {
         setSuccess("Password successfully updated!");
-        setTimeout(() => navigate("/login"), 2000);
       } else {
         throw new Error(response.data.message || "Failed to reset password.");
       }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || "An error occurred.");
-      } else {
-        setError("An unexpected error occurred.");
       }
     } finally {
       setIsLoading(false);
