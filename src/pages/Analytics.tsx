@@ -5,6 +5,7 @@ import { SessionTimeline } from "../components/Analytics/Timeline/SessionTimeLin
 import { SessionTranscription } from "../components/Analytics/SessionTranscription";
 import { axiosConfig } from "./auth/axiosConfig";
 import { SessionAgents } from "@/components/Analytics/Agents/SessionAgents";
+import { Session } from "../components/Analytics/types";
 
 interface Metrics {
   totalClients: number;
@@ -13,23 +14,15 @@ interface Metrics {
   averageSessionDuration: number;
 }
 
-interface Session {
-  id: string;
-  clientName: string;
-  type: "video" | "audio";
-  status: "completed" | "scheduled" | "in-progress";
-  startTime: string;
-  duration: number;
-  tags: string[];
-  transcription: string;
-  summary: string;
+interface Agent {
+  name: string;
+  agentCode: string;
+  color: string;
 }
 
 export const Analytics: React.FC = () => {
   const [metrics, setMetrics] = useState<Metrics | null>(null);
-  const [agents, setAgents] = useState<
-    { name: string; color: string }[] | null
-  >(null);
+  const [agents, setAgents] = useState<Agent[] | null>(null);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +35,7 @@ export const Analytics: React.FC = () => {
   const handleAgentClick = (agentCode: string) => {
     console.log("Agent Code:", agentCode);
     const filtered = sessions.filter((session) =>
-      session.tags.includes(agentCode)
+      session.tags.includes(agentCode),
     );
     console.log("Filtered Sessions:", filtered);
     setFilteredSessions(filtered);
@@ -55,12 +48,11 @@ export const Analytics: React.FC = () => {
         setIsLoading(true);
         const response = await axios.get(
           "call-session-statistics/",
-          axiosConfig
+          axiosConfig,
         );
         if (response.data.success) {
           const apiMetrics = response.data.response;
 
-          // Map API response to Metrics structure
           setMetrics({
             totalClients: apiMetrics.total_sessions || 0,
             weeklySessionCount: apiMetrics.sessions_this_week || 0,
@@ -70,9 +62,9 @@ export const Analytics: React.FC = () => {
         } else {
           setError("Failed to fetch metrics data.");
         }
-      } catch (error) {
+      } catch (err) {
         setError("An error occurred while fetching metrics data.");
-        console.error(error);
+        console.error(err);
       } finally {
         setIsLoading(false);
       }
@@ -89,21 +81,23 @@ export const Analytics: React.FC = () => {
 
         const apiAgents = response.data;
         if (Array.isArray(apiAgents)) {
-          const mappedAgents = apiAgents.map((agent: any) => ({
-            name: agent.name || "Unknown Agent",
-            agentCode: agent.agent_code, // Include agent_code
-            color:
-              agent.type === "Support"
-                ? "bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30"
-                : "bg-amber-500/20 text-amber-400 hover:bg-amber-500/30", // Example colors
-          }));
+          const mappedAgents: Agent[] = apiAgents.map(
+            (agent: { name: string; agent_code: string; type: string }) => ({
+              name: agent.name || "Unknown Agent",
+              agentCode: agent.agent_code,
+              color:
+                agent.type === "Support"
+                  ? "bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30"
+                  : "bg-amber-500/20 text-amber-400 hover:bg-amber-500/30",
+            }),
+          );
           setAgents(mappedAgents);
         } else {
           setError("Failed to fetch agent data: Invalid response format.");
         }
-      } catch (error) {
+      } catch (err) {
         setError("An error occurred while fetching agent data.");
-        console.error("Fetch Agents Error:", error);
+        console.error("Fetch Agents Error:", err);
       } finally {
         setIsLoading(false);
       }
@@ -119,29 +113,40 @@ export const Analytics: React.FC = () => {
         setIsLoading(true);
         const response = await axios.get(
           `list-call-sessions/?page=${page}`,
-          axiosConfig
+          axiosConfig,
         );
         if (response.data.status) {
-          const apiSessions = response.data.data.map((item: any) => ({
-            id: item.id.toString(),
-            clientName: `${item.first_name} ${item.last_name}`,
-            type: "audio", // Assuming "audio" if type is not provided
-            status: "completed", // Assuming "completed" if status is not provided
-            startTime: item.created_date,
-            duration: Math.ceil(item.duration / 60), // Convert seconds to minutes
-            tags: [item.agent_code], // Use agent_code for filtering
-            transcription: item.transcription,
-            summary: item.summary,
-          }));
+          const apiSessions: Session[] = response.data.data.map(
+            (item: {
+              id: number;
+              first_name: string;
+              last_name: string;
+              created_date: string;
+              duration: number;
+              agent_code: string;
+              transcription: string;
+              summary: string;
+            }) => ({
+              id: item.id.toString(),
+              clientName: `${item.first_name} ${item.last_name}`,
+              type: "audio", // Assuming "audio" if type is not provided
+              status: "completed", // Assuming "completed" if status is not provided
+              startTime: item.created_date,
+              duration: Math.ceil(item.duration / 60), // Convert seconds to minutes
+              tags: [item.agent_code],
+              transcription: item.transcription,
+              summary: item.summary,
+            }),
+          );
 
           setSessions(apiSessions);
           setTotalPages(response.data.total_pages || 1);
         } else {
           setError("Failed to fetch session data.");
         }
-      } catch (error) {
+      } catch (err) {
         setError("An error occurred while fetching session data.");
-        console.error(error);
+        console.error(err);
       } finally {
         setIsLoading(false);
       }
@@ -150,13 +155,11 @@ export const Analytics: React.FC = () => {
     fetchSessions(currentPage);
   }, [currentPage]);
 
-  // Handle opening modal
   const handleOpen = (session: Session) => {
     setSelectedSession(session);
     setShowCreatePlan(true);
   };
 
-  // Handle pagination
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
@@ -187,7 +190,6 @@ export const Analytics: React.FC = () => {
           <div className="text-center text-red-400 font-semibold">{error}</div>
         ) : (
           <div className="max-w-7xl mx-auto space-y-8">
-            {/* Metrics Section */}
             <SessionMetrics
               metrics={
                 metrics || {
@@ -200,11 +202,10 @@ export const Analytics: React.FC = () => {
               isLoading={isLoading}
             />
 
-            {/* Timeline Section */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
                 <SessionTimeline
-                  onOpen={(session) => handleOpen(session)}
+                  onOpen={handleOpen}
                   sessions={
                     filteredSessions.length > 0 ? filteredSessions : sessions
                   }
@@ -214,7 +215,7 @@ export const Analytics: React.FC = () => {
               <div className="space-y-6">
                 <SessionAgents
                   agents={agents || []}
-                  onAgentClick={(agentCode) => handleAgentClick(agentCode)}
+                  onAgentClick={handleAgentClick}
                 />
                 {filteredSessions.length > 0 && (
                   <button
@@ -228,7 +229,6 @@ export const Analytics: React.FC = () => {
               </div>
             </div>
 
-            {/* Pagination Controls */}
             <div className="flex justify-center items-center space-x-4 mt-8">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}

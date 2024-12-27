@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Mail, Lock, LogIn, AlertCircle } from "lucide-react";
+import { Mail, Lock, LogIn, AlertCircle, Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { FormInput } from "@/components/auth/FormInput";
@@ -18,6 +18,7 @@ export const Login: React.FC = () => {
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false); // Toggle visibility state
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ export const Login: React.FC = () => {
           email: formData.email,
           password: formData.password,
         },
-        axiosConfig3
+        axiosConfig3,
       );
 
       if (response.data.success) {
@@ -50,8 +51,13 @@ export const Login: React.FC = () => {
       } else {
         throw new Error(response.data.message || "Login failed");
       }
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Invalid email or password");
+    } catch (err: unknown) {
+      // Use 'unknown' instead of 'any'
+      if (axios.isAxiosError(err) && err.response) {
+        setError(err.response.data?.message || "Invalid email or password");
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -87,17 +93,31 @@ export const Login: React.FC = () => {
           placeholder="Enter your email"
         />
 
-        <FormInput
-          label="Password"
-          icon={Lock}
-          type="password"
-          value={formData.password}
-          onChange={(e) =>
-            setFormData({ ...formData, password: e.target.value })
-          }
-          required
-          placeholder="Enter your password"
-        />
+        <div className="relative">
+          <FormInput
+            label="Password"
+            icon={Lock}
+            type={passwordVisible ? "text" : "password"} // Toggle type
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            required
+            placeholder="Enter your password"
+          />
+          {/* Toggle Visibility Button */}
+          <button
+            type="button"
+            onClick={() => setPasswordVisible(!passwordVisible)}
+            className="absolute inset-y-14 right-3 flex items-center text-gray-700 hover:text-gray-700"
+          >
+            {passwordVisible ? (
+              <EyeOff className="w-5 h-5" />
+            ) : (
+              <Eye className="w-5 h-5" />
+            )}
+          </button>
+        </div>
 
         <motion.button
           whileHover={{ scale: 1.01 }}
@@ -116,6 +136,16 @@ export const Login: React.FC = () => {
           )}
         </motion.button>
       </form>
+
+      {/* Navigate to Forgot Password */}
+      <div className="mt-4 text-center">
+        <button
+          onClick={() => navigate("/forgotpassword")}
+          className="text-sm text-white/70 hover:text-white transition-colors"
+        >
+          Forgot Password?
+        </button>
+      </div>
     </AuthLayout>
   );
 };

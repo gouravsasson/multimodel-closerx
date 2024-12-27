@@ -13,7 +13,8 @@ export interface Session {
   startTime: string;
   duration: number;
   tags: string[];
-  notes?: string;
+  transcription?: string; // Make this optional if some components don't require it
+  summary?: string; // Make this optional if some components don't require it
 }
 
 export interface Note {

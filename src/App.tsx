@@ -7,13 +7,13 @@ import { Agency } from "./pages/Agency";
 import { Integrations } from "./pages/Integrations";
 import { Profile } from "./pages/Profile";
 import { Login } from "./pages/auth/Login";
-import { ResetPassword } from "./pages/auth/ResetPassword";
 import { Root } from "./root/Root";
 import ConsultationRoot from "./root/ConsultationRoot";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { AuthProvider } from "./pages/auth/AuthContext";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
-import Ghl from "./pages/ghl";
+import Ghl from "./pages/Ghl";
+import { NewPassword } from "./pages/auth/NewPassword";
 // import PaymentFailurePage from "./pages/PaymentFailure";
 
 function App() {
@@ -24,7 +24,10 @@ function App() {
           {/* Public Routes */}
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/resetpassword" element={<ResetPassword />} />
+          <Route
+            path="/resetpassword/:uidb64/:token"
+            element={<NewPassword />}
+          />
 
           {/* Protected Routes */}
           <Route

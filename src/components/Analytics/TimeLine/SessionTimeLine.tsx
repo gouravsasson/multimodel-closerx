@@ -6,7 +6,7 @@ import type { Session } from "../types";
 interface SessionTimelineProps {
   sessions: Session[];
   isLoading: boolean;
-  onOpen: (session: Session) => void; // Update the type for onOpen to accept a session
+  onOpen: (session: Session) => void; // Use the same `Session` type from `types.ts`
 }
 
 export const SessionTimeline: React.FC<SessionTimelineProps> = ({

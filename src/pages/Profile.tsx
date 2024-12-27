@@ -62,13 +62,15 @@ export const Profile: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    formik.setValues({
+    formik.setValues((prevValues) => ({
+      ...prevValues,
       name: profile.name,
       company: profile.company,
       email: profile.email,
       phone: profile.phone,
-    });
-  }, [profile, formik]); // Added `formik` to the dependency array
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile]);
 
   const subscription = {
     plan: "Professional",

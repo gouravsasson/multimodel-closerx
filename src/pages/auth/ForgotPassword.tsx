@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, ArrowLeft, AlertCircle } from "lucide-react";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { FormInput } from "@/components/auth/FormInput";
 import { ResetEmailSent } from "@/components/auth/ResetEmailSent";
+import { axiosConfig3 } from "./axiosConfig";
 
 export const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -18,11 +20,29 @@ export const ForgotPassword: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setEmailSent(true);
+      // Make API request using Axios
+      const response = await axios.post(
+        "auth/request-email/",
+        {
+          email,
+        },
+        axiosConfig3,
+      );
+
+      if (response.status === 200) {
+        setEmailSent(true);
+      } else {
+        throw new Error("Unexpected response status");
+      }
     } catch (err) {
-      setError("Failed to send reset email. Please try again.");
+      if (axios.isAxiosError(err)) {
+        setError(
+          err.response?.data?.message ||
+            "Failed to send reset email. Please try again.",
+        );
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -34,7 +54,7 @@ export const ForgotPassword: React.FC = () => {
 
   return (
     <AuthLayout
-      title="Reset Password"
+      title="Forgot Password"
       subtitle="We'll send you instructions to reset your password"
       icon={<Mail className="w-8 h-8 text-white" />}
     >
