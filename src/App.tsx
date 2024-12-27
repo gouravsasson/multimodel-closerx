@@ -12,7 +12,7 @@ import { ResetPassword } from "./pages/auth/ResetPassword";
 import { Root } from "./root/Root";
 import ConsultationRoot from "./root/ConsultationRoot";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
-import Home from "./stripe/Home";
+// import Home from "./stripe/Home";
 import { AuthProvider } from "./pages/auth/AuthContext";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
 import Redirect from "./stripe/Redirect";

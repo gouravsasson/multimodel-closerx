@@ -31,6 +31,7 @@ export const BillingConfig: React.FC<BillingConfigProps> = ({
 }) => {
   
   const schemaName = getCookie("schema_name");
+  
   const [isConnecting, setIsConnecting] = useState(false);
   const [stripeKey, setStripeKey] = useState("");
   const [showCreatePlan, setShowCreatePlan] = useState(false);
@@ -40,7 +41,7 @@ export const BillingConfig: React.FC<BillingConfigProps> = ({
 
   const handleConnect = () => {
     
-    window.location.href=`https://connect.stripe.com/oauth/authorize?response_type=code&client_id=${clientId}&scope=read_write&redirect_uri=${encodeURIComponent(redirectUri)}&state=${schemaName}`
+    window.location.href=`https://connect.stripe.com/oauth/authorize?response_type=code&client_id=${clientId}&scope=read_write&redirect_uri=${encodeURIComponent(redirectUri)}&state=5b7c4149-ad08-48e2-bca0-97dacdd319f5`
   };
 
   const handleCreatePlan = (plan: Plan) => {
