@@ -7,20 +7,26 @@ interface Option {
 }
 
 interface MultiSelectButtonProps {
-  options?: Option[];
-  onChange?: (selectedIds: string[]) => void;
+  options: { id: string; value: string; label: string }[];
+  onChange: (selectedIds: string[]) => void;
+  defaultValue?: string[]; // Add defaultValue
   placeholder?: string;
- 
 }
 
 const LeadConnectorSelect = ({
   options = [],
   onChange,
   placeholder = "Select options...",
+  defaultValue = [],
 }: MultiSelectButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [selectedIds, setSelectedIds] = useState<string[]>(defaultValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    // Sync with defaultValue when it changes
+    setSelectedIds(defaultValue);
+  }, [defaultValue]);
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

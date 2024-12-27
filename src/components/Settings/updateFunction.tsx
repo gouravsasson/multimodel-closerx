@@ -68,7 +68,7 @@ const UpdateFunction: React.FC<TagsAgentProps> = ({ onClose, updateFnArr }) => {
       const payload = { update_function: updatedArr };
 
       const response = await axios.patch(
-        `/agents/${id}/`,
+        `/agents/${id}/update/`,
         payload,
         axiosConfig
       );

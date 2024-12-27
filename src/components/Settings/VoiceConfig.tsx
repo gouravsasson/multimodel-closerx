@@ -53,6 +53,8 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
         setSelectedVoice(response.data.agent_voice);
         setTemperature(response.data.temperature);
         setUpdateFnArr(response.data.update_function);
+        setSelectedCalendarId(response.data.ghl_calendar_id || null);
+        setSelectedCalendarName(response.data.ghl_calendar_name || null);
         // console.log(response.data.agent_voice); // Set the prompt if it exists
       }
     } catch (error) {
@@ -82,7 +84,8 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
       if (Array.isArray(response.data)) {
         setOptions(
           response.data.map((calendar: any) => ({
-            id: calendar.id, // Calendar ID
+            id: calendar.id,
+            value: calendar.id, // Calendar ID
             label: calendar.name, // Calendar Name
           }))
         );
@@ -298,15 +301,15 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
             </div>
           </div>
           <div className="w-full bg-transparent rounded-lg pt-4 ">
-            {/* {ghl_registered === true ? (
-              <p>Loading LeadConnector status...</p>
-            ) : isConnected ? (
+            {/* {ghl === "true" ? (
               <LeadConnectorSelect
-                options={options}
-                onChange={(selectedIds) =>
-                  console.log("Selected IDs:", selectedIds)
-                }
-                placeholder="Select Leadconnecter"
+                options={options.map((option) => ({
+                  id: option.id,
+                  value: option.id,
+                  label: option.label,
+                }))}
+                onChange={handleCalendarChange}
+                placeholder="Select Leadconnector"
               />
             ) : (
               <p>LeadConnector is not connected for this ID</p>
@@ -319,6 +322,7 @@ export const VoiceConfig: React.FC<VoiceConfigProps> = ({ onNext }) => {
                   label: option.label,
                 }))}
                 onChange={handleCalendarChange}
+                defaultValue={selectedCalendarId ? [selectedCalendarId] : []}
                 placeholder="Select Leadconnector"
               />
             ) : (
