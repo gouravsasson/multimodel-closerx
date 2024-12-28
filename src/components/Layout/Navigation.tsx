@@ -31,9 +31,9 @@ export const Navigation: React.FC = () => {
                   }`}
               >
                 <LayoutDashboard className="w-4 h-4" />
-                <span>Agent</span>
+                <span>Analytics</span>
               </Link>
-              <Link
+              {/* <Link
                 to="/consultation"
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all
                   ${
@@ -44,9 +44,9 @@ export const Navigation: React.FC = () => {
               >
                 <Video className="w-4 h-4" />
                 <span>Consultation</span>
-              </Link>
+              </Link> */}
               <Link
-                to="/analytics"
+                to="/agent"
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all
                   ${
                     location.pathname === "/analytics"
@@ -55,7 +55,20 @@ export const Navigation: React.FC = () => {
                   }`}
               >
                 <BarChart className="w-4 h-4" />
-                <span>Analytics</span>
+                <span>Agent</span>
+              </Link>
+
+              <Link
+                to="/integrations"
+                className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-all
+                  ${
+                    location.pathname === "/integrations"
+                      ? "bg-primary/20 text-white"
+                      : "text-white/70 hover:text-white hover:bg-white/5"
+                  }`}
+              >
+                <Link2 className="w-4 h-4" />
+                <span>Integrations</span>
               </Link>
               <Link
                 to="/agency"
@@ -68,18 +81,6 @@ export const Navigation: React.FC = () => {
               >
                 <Building2 className="w-4 h-4" />
                 <span>Agency</span>
-              </Link>
-              <Link
-                to="/integrations"
-                className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-all
-                  ${
-                    location.pathname === "/integrations"
-                      ? "bg-primary/20 text-white"
-                      : "text-white/70 hover:text-white hover:bg-white/5"
-                  }`}
-              >
-                <Link2 className="w-4 h-4" />
-                <span>Integrations</span>
               </Link>
             </div>
           </div>

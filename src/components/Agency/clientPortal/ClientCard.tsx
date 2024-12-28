@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 // import { ComingSoonPopup } from "./ComingSoonPopup";
 import type { LucideIcon } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface ClientCardProps {
   name: string;
@@ -19,6 +20,7 @@ interface ClientCardProps {
   agents: number;
   price: number;
   status: "Active" | "Inactive";
+  schema_name: string;
 }
 
 interface ActionButtonProps {
@@ -90,14 +92,27 @@ export function ClientCard({
   agents,
   price,
   status,
+  schema_name,
 }: ClientCardProps) {
+  // console.log(schema_name);
+  const handleConnectGHL = (schema_name: string) => {
+    if (!schema_name) {
+      toast.error("Schema name is missing!");
+      return;
+    }
+
+    const redirectUrl = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=https://app.closerx.ai/g-h-l/success&state=${schema_name}&client_id=676906277d17de2a8a222a9d-m52bcifq&scope=contacts.write%20contacts.readonly%20calendars.readonly%20calendars.write%20calendars/events.readonly%20calendars/events.write%20locations/customValues.readonly%20locations/customValues.write%20locations/tags.write%20locations.readonly`;
+
+    window.location.href = redirectUrl;
+  };
+
   return (
     <div className="bg-[#2D2B3F] rounded-xl p-6 shadow-lg border border-[#3D3B54]">
       <div className="flex justify-between items-start mb-6">
         <div className="flex gap-4 items-center">
           <div className="w-12 h-12 bg-[#3D3B54] rounded-lg flex items-center justify-center">
             <span className="text-[#B4B3C5] font-semibold">
-              {name.substring(0, 2)}
+              {name.substring(0, 10)}
             </span>
           </div>
           <div>
@@ -138,13 +153,14 @@ export function ClientCard({
           icon={Phone}
           label="Connect GHL"
           color="blue"
-          onClick={() => {}}
+          onClick={() => handleConnectGHL(schema_name)}
         />
         <ActionButton
           icon={Video}
           label="Video Records"
           color="emerald"
-          onClick={() => {}}
+          // onClick={() => {}}
+          isComingSoon
         />
         <ActionButton
           icon={PlusCircle}

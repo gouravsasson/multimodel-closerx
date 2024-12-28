@@ -16,7 +16,7 @@ export function Layout({ children }: React.PropsWithChildren) {
            style={{
           
             minWidth: "100vh",
-            background: "linear-gradient(to bottom right, #111827, #6b21a8, #1e40af)",
+            // background: "linear-gradient(to bottom right, #111827, #6b21a8, #1e40af)",
             position: "relative",
           }}
           className=" h-full"

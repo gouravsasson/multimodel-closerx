@@ -100,9 +100,10 @@ function CnameUrl() {
             </div>
             {/* <Target className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" /> */}
             <input
-              type="file"
-              // value={logourl}
-              onChange={handleImageChange}
+              type="text"
+              value={logourl}
+              onChange={(e) => setlogourl(e.target.value)}
+              placeholder="Enter Favicon Icon file"
               className="w-full bg-black/20 border border-white/10 rounded-xl pl-12 pr-4 py-3
                        text-white placeholder-white/40 focus:outline-none focus:ring-2
                        focus:ring-primary/50"

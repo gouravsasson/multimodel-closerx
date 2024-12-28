@@ -14,6 +14,7 @@ import type { AgentType } from "./types";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { axiosConfig } from "../../pages/auth/axiosConfig";
+import { getCookie } from "@/pages/auth/cookieUtils";
 
 interface CreateAgentFormProps {
   agentName: string;
@@ -34,6 +35,9 @@ export const CreateAgentForm: React.FC<CreateAgentFormProps> = ({
   // onSubmit,
 }) => {
   const navigate = useNavigate();
+  // const ghl = getCookie("ghl_registered");
+  // console.log("ghl_registered cookie:", ghl);
+  
   const handleFormSubmit = async () => {
     try {
       const payload = {

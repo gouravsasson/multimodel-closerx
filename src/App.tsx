@@ -35,15 +35,15 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route path="/" element={<CreateAgent />} />
+            <Route path="/" element={<Analytics />} />
+            <Route path="/agent" element={<CreateAgent />} />
             <Route path="/agent/:id" element={<AgentConfig />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/agency" element={<Agency />} />
             <Route path="/integrations" element={<Integrations />} />
+            <Route path="/agency" element={<Agency />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/redirect" element={<Redirect />} />
           </Route>
-          <Route
+          {/* <Route
             element={
               <ProtectedRoute>
                 <ConsultationRoot />
@@ -51,7 +51,7 @@ function App() {
             }
           >
             <Route path="/consultation" element={<ConsultationRoom />} />
-          </Route>
+          </Route> */}
         </Routes>
       </Router>
      </AuthProvider>

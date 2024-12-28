@@ -1,3 +1,4 @@
+
 import { useState, useMemo } from "react";
 import { Client } from "../types/client";
 
@@ -8,13 +9,19 @@ export function useClientSearch(clients: Client[]) {
     const term = searchTerm.toLowerCase().trim();
     if (!term) return clients;
 
-    return clients.filter(
-      (client) =>
-        client.name.toLowerCase().includes(term) ||
-        client.companyName.toLowerCase().includes(term) ||
-        client.email.toLowerCase().includes(term) ||
-        client.phone.includes(term)
-    );
+    return clients.filter((client) => {
+      const first_name = client.first_name?.toLowerCase() || "";
+      const company_name = client.company_name?.toLowerCase() || "";
+      const email = client.email?.toLowerCase() || "";
+      const phone = client.phone || "";
+
+      return (
+        first_name.includes(term) ||
+        company_name.includes(term) ||
+        email.includes(term) ||
+        phone.includes(term)
+      );
+    });
   }, [clients, searchTerm]);
 
   const handleSearch = (value: string) => {
@@ -27,3 +34,4 @@ export function useClientSearch(clients: Client[]) {
     handleSearch,
   };
 }
+export default useClientSearch;
