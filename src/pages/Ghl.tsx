@@ -30,7 +30,11 @@ function Ghl() {
     }
   }, []);
 
-  return <div>Connected successfully</div>;
+  return (
+    <div className="w-full h-screen flex items-center justify-center text-3xl font-semibold">
+      Connected successfully
+    </div>
+  );
 }
 
 export default Ghl;
